@@ -1,0 +1,126 @@
+header.index-header{
+ 	width: 100%;
+ 	padding: 2rem 0;
+ 	background-color: #fff;
+  border-bottom: 3px solid #d1dcfa;
+ 	.nav-brand{
+ 		float: left;
+ 		font-size: 2.75rem;
+		color: #527cec;
+		font-family: 'bold';
+		text-decoration: none;
+ 		img{
+      width: 40px;
+ 			height: 40px;
+      margin-top: -.13rem;
+ 		}
+		&:hover{
+			color: #527cec;
+		}
+ 	}
+ 	nav {
+ 		float: right;
+ 		a {
+ 			margin-left: 1.5rem;
+ 			line-height: 2;
+ 			color: #9B9B9B;
+ 			text-decoration: none;
+ 			&:hover {
+ 				color: #50A7C7;
+ 			}
+ 		}
+ 	}
+}
+
+.banner{
+  background: #527cec;//linear-gradient(to bottom right, #527cec, #b1386a);
+  min-height: 50vh;
+  margin-bottom:4rem;
+  #intro {
+    color: #ffffff;
+  	text-align: center;
+  	font-size: 3rem;
+  	line-height: 1;
+    padding-top: 13rem;
+  	font-family: 'bold';
+  	span {
+  		font-size: 1.7rem!important;
+  		color: #d1dcfa;
+  	}
+  }
+}
+
+#notes {
+  h3.title{
+    font-size: 2.5rem;
+    font-family: 'bold';
+  }
+  .flex-grid{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    padding: 0;
+    .col-md-4{
+      margin-bottom:2rem;
+      .note {
+        border: 2px solid #d1dcfa;
+        border-radius: 5px;
+        margin: 1rem 1.5%;
+        align-items: stretch;
+        padding: 0!important;
+        .img-note {
+          img{
+            width: 100%!important;
+            border-radius:3px 3px 0 0;
+          }
+        }
+        .note_content {
+          padding: 1rem 9%;
+          p.info{
+            font-family: 'medium';
+            font-size: 1.4rem;
+            color: #b2bac2;
+            margin-top: 1.4rem;
+          }
+          h2.title {
+            margin: 0;
+            font-family: 'medium';
+            font-size: 1.7rem;
+            transition: color 200ms ease-in-out;
+            line-height: 2.4rem;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            a {
+              text-decoration: none;
+              color: #2e353b;
+              &:hover {
+                color: #2e353b;
+              }
+            }
+          }
+          p.body{
+            font-family: 'book';
+            font-size: 1.4rem;
+            color: #576366;
+            margin: 1rem 0;
+          }
+          p.buttons{
+            font-family: 'book';
+            font-size: 1.2rem;
+            color: #576366;
+            margin: 1rem 0;
+            span {
+              margin-right:.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

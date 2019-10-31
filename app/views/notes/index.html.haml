@@ -1,0 +1,56 @@
+%header.index-header
+  .wrapper.clearfix
+    %a{:href => root_path, :class => "nav-brand"}
+      = image_tag 'mrlogo.png'
+      %span= 'mattrab'
+
+    %nav
+      - if user_signed_in?
+        = link_to current_user.name, current_user
+        = link_to "Logout", destroy_user_session_path, method: :delete
+        = link_to "Add New Note", new_note_path, class: "button"
+      - else
+        = link_to "Sign In", new_user_session_path
+        = link_to "Sign Up", new_user_registration_path, class: "button"
+
+.banner
+  - if user_signed_in?
+    %p#intro
+      Hello
+      = current_user.name
+      %br/
+      %span
+        Learn from 100s of tutorials at mattrab.
+  - else
+    %p#intro
+      What's your question?
+      %br/
+      %span
+        Learn from 100s of tutorials at mattrab.
+
+#notes
+  .wrapper
+    %h3.title= 'Trending Notes'
+    .row.flex-grid
+      - @notes.each do |note|
+        .col-md-4
+          .note
+            = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+            .note_content
+              %p.info
+                = note.user.name
+                = '•'
+                = 'Science'
+              %h2.title= link_to note.title, note
+              %p.body
+                = truncate(note.body, :length => 150)
+              %p.buttons
+                %span
+                  %i.fa.fa-comments-o
+                  = pluralize(note.comments.count, "Comment")
+                %span
+                  %i.fa.fa-thumbs-o-up
+                  = pluralize(note.get_upvotes.size, "Like")
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(note.view, "View")

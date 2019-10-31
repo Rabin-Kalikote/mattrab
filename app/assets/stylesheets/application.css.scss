@@ -1,0 +1,72 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+ */
+
+// Font Faces
+@font-face {font-family: 'bold'; src: url('grbold.otf') format('opentype');}
+@font-face {font-family: 'book'; src: url('grbook.otf') format('opentype');}
+@font-face {font-family: 'lignt'; src: url('grlight.otf') format('opentype');}
+@font-face {font-family: 'medium'; src: url('grmedium.otf') format('opentype');}
+@font-face {font-family: 'nepali'; src: url('nepali.ttf') format('truetype');}
+
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+.centered-text{
+  text-align: center;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
+.wrapper {
+ 	width: 80%;
+ 	margin: 0 auto;
+}
+
+ .clearfix:before, .clearfix:after {
+ 	content: " ";
+ 	display: table;
+ }
+
+ .clearfix:after {
+ 	clear: both;
+ }
+
+.btn-hoverable{
+  margin-top: 3rem;
+  width: 70%;
+  margin-left: 15%;
+  font-size: 1.3rem;
+  font-family: 'medium';
+  border-radius: 4px;
+  padding: .7rem 1.25rem;
+  border: 2px solid #527cec;
+  &:hover{
+    text-decoration: none;
+    color: #ffffff!important;
+    background: #527cec;
+    border: 2px solid #527cec;
+  }
+}
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'home.css.scss';
+@import 'notes.css.scss';
+@import 'users.css.scss';

@@ -1,0 +1,3 @@
+= simple_form_for([@note, @note.comments.build]) do |f|
+  = f.input :content, label: "Add a comment", required: "true"
+  = f.button :submit, class: "button"
