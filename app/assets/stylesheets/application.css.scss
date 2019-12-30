@@ -2,7 +2,7 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * Any CSS and SCSS file wimedium this directory, lib/assets/stylesheets, or any plugin's
  * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
  * You're free to add application-wide styles to this file and they'll appear at the bottom of the
@@ -10,14 +10,16 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require trix
+ *= require_tree .
  *= require_self
  */
 
 // Font Faces
-@font-face {font-family: 'bold'; src: url('grbold.otf') format('opentype');}
-@font-face {font-family: 'book'; src: url('grbook.otf') format('opentype');}
-@font-face {font-family: 'lignt'; src: url('grlight.otf') format('opentype');}
-@font-face {font-family: 'medium'; src: url('grmedium.otf') format('opentype');}
+@font-face {font-family: 'thin'; src: url('lthin.ttf') format('truetype');}
+@font-face {font-family: 'light'; src: url('llight.ttf') format('truetype');}
+@font-face {font-family: 'medium'; src: url('lmedium.ttf') format('truetype');}
+@font-face {font-family: 'bold'; src: url('lbold.ttf') format('truetype');}
 @font-face {font-family: 'nepali'; src: url('nepali.ttf') format('truetype');}
 
 html, body{
@@ -34,6 +36,22 @@ html, body{
     margin: auto;
 }
 
+.border-0{border:0 !important;}
+.shadow-0{box-shadow:none !important;}
+.rounded-lg{border-radius:.6rem !important;}
+.rounded-sm{border-radius:.2rem !important;}
+.rounded-xl{border-radius:10rem !important;}
+
+.h-20{height:20% !important;}
+
+.header-space{
+  height: 64px;
+}
+
+.sticky-subnav-space{
+  height: 5rem;
+}
+
 .wrapper {
  	width: 80%;
  	margin: 0 auto;
@@ -48,24 +66,83 @@ html, body{
  	clear: both;
  }
 
+ .btn-block{
+   color: #ffffff!important;
+   background: #3bc464!important;
+   &:hover{
+     text-decoration: none;
+     color: #ffffff!important;
+     background: #5fcf80!important;
+   }
+ }
+
 .btn-hoverable{
-  margin-top: 3rem;
-  width: 70%;
-  margin-left: 15%;
-  font-size: 1.3rem;
-  font-family: 'medium';
-  border-radius: 4px;
-  padding: .7rem 1.25rem;
-  border: 2px solid #527cec;
+  font-size: .9rem;
+  border-radius: 100px;
+  padding: .5rem .7rem;
+  font-family: 'bold'!important;
+  border: 2px solid rgba(48,73,97,0.1);
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   &:hover{
     text-decoration: none;
-    color: #ffffff!important;
-    background: #527cec;
-    border: 2px solid #527cec;
+    border: 2px solid #5fcf80;
   }
 }
 
-@import "bootstrap-sprockets";
+@keyframes popup {
+  from {
+    -webkit-transform: translate3d(20%, 0, 0);
+    transform: translate3d(20%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.this-popup {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;width: 100%;
+  max-width: 370px;padding: 1.5rem;
+  border-radius: .1rem;border: solid #eee;
+  border-width: 1px 1px 2px 2px;
+  background-color: #fff;
+  -webkit-animation: popup .2s forwards;
+  animation: popup .2s forwards;
+  .close-popup {
+    position: absolute;
+    left: auto;
+    right: 8px;
+    bottom: auto;
+    top: 18px;
+    line-height: 0;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: rgba( 49, 91, 124, 1.00 );
+    &:hover{color: rgba( 32, 71, 111, 1.00 );}
+  }
+  .popup-head{
+    h3.popup-title{
+      color: #527cec;
+      font-size: 1.3rem;
+      font-family: 'medium';
+      i.fa{
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .popup-body{
+    p.notice{
+      color: #576366;
+      font-size: 1rem;
+      font-family: 'medium';
+      margin-bottom: 0!important;
+    }
+  }
+}
+
 @import "bootstrap";
 @import 'home.css.scss';
 @import 'notes.css.scss';

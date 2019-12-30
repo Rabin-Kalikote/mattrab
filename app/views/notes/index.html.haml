@@ -1,49 +1,74 @@
-%header.index-header
-  .wrapper.clearfix
-    %a{:href => root_path, :class => "nav-brand"}
-      = image_tag 'mrlogo.png'
-      %span= 'mattrab'
-
-    %nav
-      - if user_signed_in?
-        = link_to current_user.name, current_user
-        = link_to "Logout", destroy_user_session_path, method: :delete
-        = link_to "Add New Note", new_note_path, class: "button"
-      - else
-        = link_to "Sign In", new_user_session_path
-        = link_to "Sign Up", new_user_registration_path, class: "button"
 
 .banner
-  - if user_signed_in?
+  .banner-content
+    .search-bar.mt-5.p-3.p-lg-1.pl-lg-4
+      %form{:action => "/search"}
+        .row
+          .col-lg-9.d-flex.align-items-center.form-group
+            %input.form-control.border-0.shadow-0{"aria-label" => "Search", :placeholder => "Your Question...", :name => "query", :type => "search"}
+          .col-lg-3
+            %button.btn.btn-block.rounded-xl.h-100{:type => "submit"} Ask Mattrab
     %p#intro
-      Hello
-      = current_user.name
-      %br/
-      %span
-        Learn from 100s of tutorials at mattrab.
-  - else
-    %p#intro
-      What's your question?
-      %br/
-      %span
-        Learn from 100s of tutorials at mattrab.
+      What's your question? See how your friends have answered them at mattrab.
+
+.sticky-subnav
+  .subnav-row
+    .twelve.columns
+      %ul.sticky-subnav-list
+        %li.cat-item.cat-item-1541
+          = link_to "Science", notes_url(:category => :science)
+        %li.cat-item.cat-item-2042
+          = link_to "Social Education", notes_url(:category => :social)
+        %li.cat-item.cat-item-1313
+          = link_to "Physics", notes_url(:category => :physics)
+        %li.cat-item.cat-item-2054
+          = link_to "Chemistry", notes_url(:category => :chemistry)
+        %li.cat-item.cat-item-1311
+          = link_to "Mathematics", notes_url(:category => :maths)
+        %li.cat-item.cat-item-1320
+          = link_to "Computer", notes_url(:category => :computer)
+        %li.cat-item.cat-item-1320
+          = link_to "Past Pappers", notes_url(:category => :pastpapers)
+        %li.cat-item.cat-item-1320
+          = link_to "Solutions", notes_url(:category => :solution)
+        %li.cat-item.cat-item-1320
+          = link_to "Nepali", notes_url(:category => :nepali)
+        %li.cat-item.cat-item-1320
+          = link_to "English", notes_url(:category => :english)
+
+.sticky-subnav-space
+
+.sponsers
+  .sponsers-row
+    .twelve.columns
+      %ul.sponser-list
+        %li.sponser-item.desktop
+          = image_tag 'sponsor1.jpg'
+        %li.sponser-item.all
+          = image_tag 'sponsor2.png'
+        %li.sponser-item.all
+          = image_tag 'sponsor3.jpg'
+        %li.sponser-item.all
+          = image_tag 'sponsor4.jpg'
+        %li.sponser-item.desktop
+          = image_tag 'sponsor5.jpg'
 
 #notes
-  .wrapper
+  .container
     %h3.title= 'Trending Notes'
     .row.flex-grid
       - @notes.each do |note|
-        .col-md-4
+        .col-md-4.col-lg-3
           .note
             = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
             .note_content
-              %p.info
+              %p.info.mb-2
                 = note.user.name
                 = '•'
                 = 'Science'
               %h2.title= link_to note.title, note
               %p.body
-                = truncate(note.body, :length => 150)
+                = truncate(simple_format(note.body), :length => 150)
               %p.buttons
                 %span
                   %i.fa.fa-comments-o

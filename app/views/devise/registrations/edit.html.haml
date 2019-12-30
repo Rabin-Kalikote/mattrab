@@ -1,0 +1,101 @@
+
+#profile
+  #header
+    .container
+      .row.this-infos
+        .col-md-2
+          = image_tag @user.avatar.url(:pro), class: "img-circle center"
+        .col-md-10
+          = link_to "View Profile", current_user, class: 'btn pull-right btn-follow'
+          %h2.name
+            = @user.name
+            %span.badge
+              %i.fa.fa-check-circle
+              = 'Creator'
+          %p.email.mb-0= @user.email
+          %p.has.mb-2
+            = pluralize(@user.followers.count, "Follower")
+            = '•'
+            = pluralize(@user.notes.count, "Note")
+          %p.this-text.mb-0= @user.about
+
+  #editarea
+    .container
+      .row.this-edit-user-form
+        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'edit-user-form' }) do |f|
+          = f.error_notification
+          .form-inputs
+            .form-label-group.mb-3
+              %label.file-label{:for => "user_avatar"}
+                %i.fa.fa-camera
+                = 'Your Profile Photo'
+              = f.input :avatar, label: false, required: true, autofocus: true, input_html: { class: 'form-control' }
+            .form-label-group.mb-3
+              %label{:for => "user_name"} Your Name
+              = f.input :name, label: false, required: true, input_html: { class: 'form-control' }
+            .form-label-group.mb-3
+              %label{:for => "user_email"} Your Name
+              = f.input :email, label: false, required: true, input_html: { class: 'form-control' }
+            .form-label-group.mb-3
+              %label{:for => "user_about"} Add about Yourself
+              = f.input :about, label: false, required: false, input_html: { class: 'form-control' }
+              - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                %p
+                  Currently waiting confirmation for: #{resource.unconfirmed_email}
+            .form-label-group.mb-3
+              %label{:for => "user_password"} Password
+              = f.input :password, label: false, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password", class: 'form-control' }
+            .form-label-group.mb-3
+              %label{:for => "user_password_confirmation"} Password Confirmation
+              = f.input :password_confirmation, label: false, required: false, input_html: { autocomplete: "new-password", class: 'form-control' }
+            .form-label-group.mb-3
+              %label{:for => "user_current_password"} Current Password
+              = f.input :current_password, label: false, hint: "we need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password", class: 'form-control' }
+          .form-actions
+            = f.button :submit, "Update", class: 'btn btn-md btn-submit btn-update'
+        %h3.ask-delete.mt-5
+          %i.fa.fa-exclamation-circle
+          = 'Delete account'
+          %span.warn= 'Deleting the account permanently deletes all the resources you have created.'
+        = link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-md btn-danger btn-delete'
+
+
+
+-# <h2>Edit <%= resource_name.to_s.humanize %></h2>
+-#
+-# <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+-#   <%= f.error_notification %>
+-#
+-#   <div class="form-inputs">
+-#     <%= f.input :avatar, required: true, autofocus: true %>
+-#     <%= f.input :name, required: true %>
+-#     <%= f.input :email, required: true %>
+-#     <%= f.input :about, required: false %>
+-#
+-#     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+-#       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+-#     <% end %>
+-#
+-#     <%= f.input :password,
+-#                 hint: "leave it blank if you don't want to change it",
+-#                 required: false,
+-#                 input_html: { autocomplete: "new-password" } %>
+-#     <%= f.input :password_confirmation,
+-#                 required: false,
+-#                 input_html: { autocomplete: "new-password" } %>
+-#     <%= f.input :current_password,
+-#                 hint: "we need your current password to confirm your changes",
+-#                 required: true,
+-#                 input_html: { autocomplete: "current-password" } %>
+-#   </div>
+-#
+-#   <div class="form-actions">
+-#     <%= f.button :submit, "Update" %>
+-#   </div>
+-# <% end %>
+-#
+-# <h3>Cancel my account</h3>
+-#
+-# <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+-#
+-# <%= link_to "Back", :back %>

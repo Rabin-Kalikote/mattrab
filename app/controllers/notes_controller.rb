@@ -1,17 +1,23 @@
 class NotesController < ApplicationController
+  # load_and_authorize_resource
   before_action :find_note, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
-    @notes = Note.all.order("created_at DESC")
+    if params[:category].present?
+      @notes = Note.where(:category => params[:category]).order("created_at DESC")
+    else
+      @notes = Note.all.order("created_at DESC")
+    end
   end
 
   def search
-    @notes = Note.where("title LIKE ?", "%" + params[:query] + "%")
+    #@notes = Note.where("title LIKE ?", "%" + params[:query] + "%")
+    @notes = Note.search(params[:query]) || []
   end
 
   def show
-    @comments = Comment.where(note_id: @note)
+    @comments = Comment.where(note_id: @note).order("created_at DESC")
     @random_note = Note.where.not(id: @note).order("RANDOM()").first
     @note.update_attribute "view", @note.view += 1
   end
@@ -63,6 +69,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image)
+    params.require(:note).permit(:title, :body, :image, :category)
   end
 end

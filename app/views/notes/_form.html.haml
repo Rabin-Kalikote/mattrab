@@ -1,6 +1,9 @@
 = simple_form_for @note, html: { multipart: true } do |f|
   = f.input :image
   = f.input :title
-  = f.input :body
+  .form-label-group.mb-3
+    %label{:for => "note_category"} Category
+    = f.select :category, Note.categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
+  = f.input :body, as: :trix_editor
 
   = f.button :submit

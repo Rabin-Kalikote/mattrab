@@ -1,0 +1,11 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.explore-opt{
+  display: table;
+  width: 100%;
+  padding: 30px 80px;
+  box-sizing: border-box;
+}

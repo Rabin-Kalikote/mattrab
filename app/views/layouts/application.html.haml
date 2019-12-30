@@ -3,14 +3,35 @@
 %head
   %title Mattrab
   = csrf_meta_tags
-  = favicon_link_tag asset_path('mrlogo.png'), :rel => 'icon', :type =>  'image/png'
+  = favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png'
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = stylesheet_link_tag "http://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
   = stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Varela+Round&display=swap"
+
 %body
-  - if notice
-    %p.notice= notice
-  - elsif alert
-    %p.notice= alert
+
+  = render "layouts/header"
+  .header-space
   = yield
+  = render "layouts/footer"
+
+  - if notice
+    .this-popup
+      %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
+      .popup-head
+        %h3.popup-title
+          %i.fa.fa-exclamation-circle
+          = 'Notice'
+      .popup-body
+        %p.notice= notice
+  - elsif alert
+    .this-popup
+      %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
+      .popup-head
+        %h3.popup-title
+          %i.fa.fa-exclamation-triangle
+          = 'Alert'
+      .popup-body
+        %p.notice= alert

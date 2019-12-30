@@ -1,0 +1,30 @@
+%header
+  .container.clearfix
+    .row
+      .col-md-3
+        %a{:href => root_path, :class => "nav-brand"}
+          = image_tag 'mrlogo.png'
+      .col-md-5
+        - unless current_page?(root_path)
+          %form.form-inline.my-2.my-lg-0{:action => "/search"}
+            %input.form-control.mr-sm-2{"aria-label" => "Search", :placeholder => "Your Question...", :name => "query", :type => "search"}
+            %button.btn.btn-success.my-2.my-sm-0{:type => "submit"} Ask Mattrab
+      .col-md-4
+        %ul.nav.justify-content-end
+          - if !user_signed_in?
+            %li.nav-item= link_to "Sign In", new_user_session_path
+            %li.nav-item= link_to "Sign Up", new_user_registration_path
+          %li.nav-item= link_to "Create Note", new_note_path, class: 'btn-hoverable'
+
+          - if user_signed_in?
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,10" }
+                = image_tag current_user.avatar.url(:small)
+              .dropdown-menu.dropdown-menu-right
+                %p.nav-user-name.mb-0= current_user.name
+                %p.nav-user-email.mb-0= current_user.email
+                .dropdown-divider
+                = link_to "Your Profile", current_user, class: 'dropdown-item'
+                = link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item'
+                .dropdown-divider
+                = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item'

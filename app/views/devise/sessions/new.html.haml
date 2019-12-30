@@ -1,0 +1,23 @@
+.form-wrap.login
+  .this-form
+    .form-head
+      %p.mb-3= 'Sign In and reflect yourself.'
+    .form-body
+      = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-inputs
+          .form-label-group.mb-3
+            %label{:for => "user_email"} Email address
+            = f.input :email, required: false, label: false, autofocus: true, input_html: { autocomplete: "email", class: 'form-control' }
+          .form-label-group.mb-2
+            %label{:for => "user_password"} Password
+            - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+              = link_to "Forgot password?", new_password_path(resource_name)
+            = f.input :password, required: false, label: false, input_html: { autocomplete: "current-password", class: 'form-control' }
+          = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+        .form-actions.pt-3
+          = f.button :submit, "Sign In", class: 'btn btn-md btn-block btn-submit btn-login'
+      - if devise_mapping.registerable? && controller_name != 'registrations'
+        %p.other-action.mt-3
+          = 'New to Mattrab?'
+          = link_to "Sign up", new_registration_path(resource_name)
+          = 'to join the creative Mattrab family!'

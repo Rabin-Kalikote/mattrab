@@ -39,9 +39,17 @@ gem 'simple_form', '~> 5.0', '>= 5.0.1'
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'paperclip', '~> 6.1'
 gem 'acts_as_votable', '~> 0.12.1'
-gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
-gem 'jquery-rails'
 gem 'coffee-script-source', '~> 1.12', '>= 1.12.2'
+
+gem 'search_cop'
+
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+
+gem 'trix'
+gem 'pg'
+
+gem 'cancancan'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
