@@ -20,6 +20,7 @@
 @font-face {font-family: 'light'; src: url('llight.ttf') format('truetype');}
 @font-face {font-family: 'medium'; src: url('lmedium.ttf') format('truetype');}
 @font-face {font-family: 'bold'; src: url('lbold.ttf') format('truetype');}
+@font-face {font-family: 'ptsans'; src: url('ptsans.ttf') format('truetype');}
 @font-face {font-family: 'nepali'; src: url('nepali.ttf') format('truetype');}
 
 html, body{
@@ -27,15 +28,14 @@ html, body{
   padding: 0;
 }
 
-.centered-text{
-  text-align: center;
-}
+.centered-text,.c-t{text-align: center;}
 
 .center {
-    display: block;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+.pull-right{float: right;}
 .border-0{border:0 !important;}
 .shadow-0{box-shadow:none !important;}
 .rounded-lg{border-radius:.6rem !important;}
@@ -47,9 +47,16 @@ html, body{
 .header-space{
   height: 64px;
 }
-
 .sticky-subnav-space{
   height: 5rem;
+  background: #fbfbf9;
+}
+@media (max-width: 767.98px){.header-space{height: 195px;}}
+@media (max-width: 768px){.sticky-subnav-space{height: 7rem;}}
+
+.space{
+  height: 3rem;
+  background: #fbfbf9;
 }
 
 .wrapper {
@@ -76,6 +83,19 @@ html, body{
    }
  }
 
+ .btn-std{
+   font-size: 1.1rem;
+   padding: .4rem 1rem;
+   color: #fff!important;
+   background: #5fcf80!important;
+   border-radius: 3rem!important;
+   border: 2px solid #9de2b1!important;
+   transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+   &:hover{
+     border: 2px solid #5fcf80!important;
+   }
+ }
+
 .btn-hoverable{
   font-size: .9rem;
   border-radius: 100px;
@@ -87,6 +107,23 @@ html, body{
     text-decoration: none;
     border: 2px solid #5fcf80;
   }
+}
+
+.strip-row{
+  display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+  .bar{height: .2rem;width: 8.3333%!important;position: relative;padding-right: 15px;padding-left: 15px;}
+  .bar-1st{background: #E81E2B;}
+  .bar-2nd{background: #D29E2A;}
+  .bar-3rd{background: #2C9646;}
+  .bar-4th{background: #BF2035;}
+  .bar-5th{background: #EE4225;}
+  .bar-6th{background: #05A6D6;}
+  .bar-7th{background: #F9C131;}
+  .bar-8th{background: #921638;}
+  .bar-9th{background: #EE7120;}
+  .bar-10th{background: #DF157E;}
+  .bar-11th{background: #02548E;}
+  .bar-12th{background: #183659;}
 }
 
 @keyframes popup {
@@ -144,6 +181,7 @@ html, body{
 }
 
 @import "bootstrap";
+@import "summernote-bs4";
 @import 'home.css.scss';
 @import 'notes.css.scss';
 @import 'users.css.scss';

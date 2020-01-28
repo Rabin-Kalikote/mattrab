@@ -1,24 +1,26 @@
 class NotesController < ApplicationController
-  # load_and_authorize_resource
-  before_action :find_note, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
+  load_and_authorize_resource
   before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :find_note, only: [:show, :edit, :update, :destroy, :upvote, :downvote, :verify]
 
   def index
     if params[:category].present?
-      @notes = Note.where(:category => params[:category]).order("created_at DESC")
+      @notes = Note.where(:category => params[:category]).published.order("created_at DESC")
+      @category_title = params[:category].humanize + " Notes"
     else
-      @notes = Note.all.order("created_at DESC")
+      @notes = Note.published.order("created_at DESC")
+      @category_title = "Latest Notes"
     end
   end
 
   def search
-    #@notes = Note.where("title LIKE ?", "%" + params[:query] + "%")
-    @notes = Note.search(params[:query]) || []
+    @query = params[:query]
+    @notes = Note.search(@query).published
   end
 
   def show
     @comments = Comment.where(note_id: @note).order("created_at DESC")
-    @random_note = Note.where.not(id: @note).order("RANDOM()").first
+    @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
     @note.update_attribute "view", @note.view += 1
   end
 
@@ -30,7 +32,7 @@ class NotesController < ApplicationController
     @note = current_user.notes.build(note_params)
 
     if @note.save
-      redirect_to @note
+      redirect_to edit_note_url(@note)
     else
       render 'new'
     end
@@ -62,6 +64,11 @@ class NotesController < ApplicationController
     redirect_back fallback_location: @note
   end
 
+  def verify
+    @note.update_attribute(:is_verified, params[:is_verified])
+    redirect_back fallback_location: @note
+  end
+
   private
 
   def find_note
@@ -69,6 +76,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category)
+    params.require(:note).permit(:title, :body, :image, :category, :status)
   end
 end

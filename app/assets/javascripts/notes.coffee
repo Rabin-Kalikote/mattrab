@@ -9,4 +9,11 @@ $(document).scroll ->
     $('html').addClass 'scrolled-past-hero'
   else
     $('html').removeClass 'scrolled-past-hero'
+
+  settingsOffset = $('#settings').offset().top
+  if y+100 > settingsOffset
+    $('#settings').addClass 'fixed'
+  else
+    $('#settings').removeClass 'fixed'
+
   return

@@ -1,23 +1,27 @@
-.form-wrap.login
-  .this-form
-    .form-head
-      %p.mb-3= 'Sign In and reflect yourself.'
-    .form-body
-      = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        .form-inputs
-          .form-label-group.mb-3
-            %label{:for => "user_email"} Email address
-            = f.input :email, required: false, label: false, autofocus: true, input_html: { autocomplete: "email", class: 'form-control' }
-          .form-label-group.mb-2
-            %label{:for => "user_password"} Password
-            - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
-              = link_to "Forgot password?", new_password_path(resource_name)
-            = f.input :password, required: false, label: false, input_html: { autocomplete: "current-password", class: 'form-control' }
-          = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-        .form-actions.pt-3
-          = f.button :submit, "Sign In", class: 'btn btn-md btn-block btn-submit btn-login'
+
+.this-wrap
+  .container
+    .welcome.col-md-5
+      %h2.title Welcome Back!
+      %p.messege.d-sm-none.d-md-block
+        Share your knowledges and help your friends.
+        %br It helps you back, right?
       - if devise_mapping.registerable? && controller_name != 'registrations'
-        %p.other-action.mt-3
-          = 'New to Mattrab?'
-          = link_to "Sign up", new_registration_path(resource_name)
-          = 'to join the creative Mattrab family!'
+        %p.if.d-sm-none.d-md-block Haven't joined Mattrab yet?
+        = link_to new_registration_path(resource_name), class: "btn-std btn-else d-sm-none d-md-block" do
+          %i.fa.fa-sign-in-alt
+          Join Now
+    .form-wrap.login.col-md-7
+      .this-form
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          .form-inputs
+            .form-label-group.mb-3
+              = f.input :email, required: true, label: false, autofocus: true, placeholder: "you@mail.com", input_html: { autocomplete: "email", class: 'form-control' }
+            .form-label-group.mb-3
+              = f.input :password, required: true, label: false, placeholder: "Password", input_html: { autocomplete: "current-password", class: 'form-control' }
+
+            - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+              = link_to "Forgot password?", new_password_path(resource_name), class: "pull-right"
+            = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+          .form-actions.pt-2
+            = f.button :submit, "Sign In", class: 'btn-std btn-submit btn-login btn-block'

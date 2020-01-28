@@ -1,3 +1,39 @@
 
-%h1= 'Search Results'
-%p= @notes.first.try(:title)
+#search
+  .container.mb-5
+    .ad.col-md-8.offset-md-2.mt-5
+      = image_tag 'adhere.png'
+    .header.col-md-8.offset-md-2.mt-4
+      %h3.title= "Search Results for '#{@query}'"
+
+    - if @notes.present?
+      - @notes.each do |note|
+        .note-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
+          .note
+            .note_image.col-md-4.col-sm-12
+              = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+            .note_content.col-md-8.col-sm-12
+              %p.info.mb-0
+                = note.user.name
+                = '•'
+                = note.category.capitalize
+              = link_to note do
+                %h2.title.mb-1= note.title
+                %p.body.mb-4
+                  = truncate(simple_format(note.body), :length => 250)
+              %p.buttons.align-self-end.mb-2
+                %span
+                  %i.fa.fa-comment-alt
+                  = pluralize(note.comments.count, "Comment")
+                %span
+                  %i.fa.fa-thumbs-up
+                  = pluralize(note.get_upvotes.size, "Like")
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(note.view, "View")
+    - else
+      .no-note.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
+        %p.note Oops! No notes were found for your question.
+        %li.suggest Try asking question differently.
+        %li.suggest Make sure that all words are spelled correctly.
+        %li.suggest Try more general keywords.

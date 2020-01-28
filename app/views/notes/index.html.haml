@@ -4,9 +4,9 @@
     .search-bar.mt-5.p-3.p-lg-1.pl-lg-4
       %form{:action => "/search"}
         .row
-          .col-lg-9.d-flex.align-items-center.form-group
+          .col-md-9.d-flex.align-items-center.form-group
             %input.form-control.border-0.shadow-0{"aria-label" => "Search", :placeholder => "Your Question...", :name => "query", :type => "search"}
-          .col-lg-3
+          .col-md-3
             %button.btn.btn-block.rounded-xl.h-100{:type => "submit"} Ask Mattrab
     %p#intro
       What's your question? See how your friends have answered them at mattrab.
@@ -15,30 +15,46 @@
   .subnav-row
     .twelve.columns
       %ul.sticky-subnav-list
-        %li.cat-item.cat-item-1541
-          = link_to "Science", notes_url(:category => :science)
-        %li.cat-item.cat-item-2042
-          = link_to "Social Education", notes_url(:category => :social)
         %li.cat-item.cat-item-1313
-          = link_to "Physics", notes_url(:category => :physics)
+          = link_to  notes_url(:category => :physics) do
+            %i.fa.fa-satellite
+            = "Physics"
         %li.cat-item.cat-item-2054
-          = link_to "Chemistry", notes_url(:category => :chemistry)
+          = link_to notes_url(:category => :chemistry) do
+            %i.fa.fa-flask
+            = "Chemistry"
+        %li.cat-item.cat-item-2054
+          = link_to notes_url(:category => :biology) do
+            %i.fa.fa-microscope
+            = "Biology"
         %li.cat-item.cat-item-1311
-          = link_to "Mathematics", notes_url(:category => :maths)
+          = link_to notes_url(:category => :maths) do
+            %i.fa.fa-subscript
+            = "Mathematics"
         %li.cat-item.cat-item-1320
-          = link_to "Computer", notes_url(:category => :computer)
+          = link_to notes_url(:category => :computer) do
+            %i.fa.fa-plug
+            = "Computer"
         %li.cat-item.cat-item-1320
-          = link_to "Past Pappers", notes_url(:category => :pastpapers)
+          = link_to notes_url(:category => :nepali) do
+            %i.fa.fa-torah
+            = "Nepali"
         %li.cat-item.cat-item-1320
-          = link_to "Solutions", notes_url(:category => :solution)
-        %li.cat-item.cat-item-1320
-          = link_to "Nepali", notes_url(:category => :nepali)
-        %li.cat-item.cat-item-1320
-          = link_to "English", notes_url(:category => :english)
+          = link_to notes_url(:category => :english) do
+            %i.fa.fa-sort-alpha-up-alt
+            = "English"
+        %li.cat-item.cat-item-1541
+          = link_to notes_url(:category => :pastpapers) do
+            %i.fa.fa-paste
+            = "Past Pappers"
+        %li.cat-item.cat-item-2042
+          = link_to notes_url(:category => :solution) do
+            %i.fa.fa-pencil-ruler
+            = "Solutions"
 
 .sticky-subnav-space
 
-.sponsers
+.sponsers.pb-4
   .sponsers-row
     .twelve.columns
       %ul.sponser-list
@@ -55,27 +71,43 @@
 
 #notes
   .container
-    %h3.title= 'Trending Notes'
+    %h3.title= @category_title
     .row.flex-grid
       - @notes.each do |note|
-        .col-md-4.col-lg-3
+        .col-md-6.col-sm-12
           .note
-            = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
-            .note_content
-              %p.info.mb-2
+            .note_image.col-lg-5.col-md-12
+              = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+            .note_content.col-lg-7.col-md-12
+              %p.info.mb-0
                 = note.user.name
                 = '•'
-                = 'Science'
-              %h2.title= link_to note.title, note
-              %p.body
-                = truncate(simple_format(note.body), :length => 150)
-              %p.buttons
+                = note.category.capitalize
+              = link_to note do
+                %h2.title.mb-1= note.title
+                %p.body.mb-4
+                  = truncate(simple_format(note.body), :length => 170)
+              %p.buttons.align-self-end.mb-2
                 %span
-                  %i.fa.fa-comments-o
+                  %i.fa.fa-comment-alt
                   = pluralize(note.comments.count, "Comment")
                 %span
-                  %i.fa.fa-thumbs-o-up
+                  %i.fa.fa-thumbs-up
                   = pluralize(note.get_upvotes.size, "Like")
                 %span
                   %i.fa.fa-eye
                   = pluralize(note.view, "View")
+
+    .row.pagination-nav
+      %nav{"aria-label" => "Page navigation example"}
+        %ul.pagination.justify-content-center
+          %li.page-item.disabled
+            %a.page-link{:href => "#", :tabindex => "-1"} Previous
+          %li.page-item
+            %a.page-link{:href => "#"} 1
+          %li.page-item
+            %a.page-link{:href => "#"} 2
+          %li.page-item
+            %a.page-link{:href => "#"} 3
+          %li.page-item
+            %a.page-link{:href => "#"} Next

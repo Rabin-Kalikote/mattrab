@@ -1,0 +1,105 @@
+#about
+  .mission
+    .view-mission.mb-4
+      %h3.title Mission Statement
+      %p.mission-text.mx-auto Our mission is to help the students around the country share and seek the learning helps from the friends and enable their academic success and journey to betterment.
+    .feature.mx-auto.mb-4.justify-content-center
+      .col-md-4
+        .f-circle
+          .circle.m-auto.c-t
+            %i.fa.fa-file-alt
+          %p.f-text.pt-2 100s of Resources.
+      .col-md-4
+        .f-circle
+          .circle.m-auto.c-t
+            %i.fa.fa-star
+          %p.f-text.pt-2 Create and Share.
+      .col-md-4
+        .f-circle
+          .circle.m-auto.c-t
+            %i.fa.fa-hands-helping
+          %p.f-text.pt-2 Ask you friends.
+
+  .strip-row
+    .bar.bar-1st
+    .bar.bar-2nd
+    .bar.bar-3rd
+    .bar.bar-4th
+    .bar.bar-5th
+    .bar.bar-6th
+    .bar.bar-7th
+    .bar.bar-8th
+    .bar.bar-9th
+    .bar.bar-10th
+    .bar.bar-11th
+    .bar.bar-12th
+
+  .element.container
+    .col-md-5.mb-4
+      .element-img
+        = image_tag 'from.jpg'
+    .col-md-7.mt-3
+      .description
+        %h2.title Search, explore &amp; learn.
+        %p.text With the powerful search feature of Mattrab,  everything you need is right at your fingertips. And yes, whenever you have questions, don't ask your Ma'am, ask Mattrab!
+    .col-md-7.mt-4.mb-5
+      .description
+        %h2.title Create &amp; Share resources.
+        %p.text Mattrab also facilitates the registered user for creating their own resources. This will definitely sharpen your ability and increase your reputation. Join Mattrab Creator Community today!
+    .col-md-5.mb-5
+      .element-img
+        = image_tag 'create.jpg'
+    .col-md-5.mb-5
+      .element-img
+        = image_tag 'explore.jpg'
+    .col-md-7.mt-4.mb-5
+      .description
+        %h2.title See your friends' footsteps.
+        %p.text You can look around Mattrab Community and see what your friends are doing. Invest your time improving yourself and lead the Community around.
+
+  .f-p.container
+    .view-f-p.col-md-3.offset-md-1
+      .this-face-wrap.mb-5
+        %span.badge-base
+          %span.badge.center Founder
+        .this-face
+          .face= image_tag @president.avatar.url(:pro), class: "img-circle center"
+          %h2.name.mt-3.mb-2
+            = @president.name
+            - if @president.notes.count >= 5
+              %span
+                %i.fa.fa-check-circle
+          .follow.edit
+            - if user_signed_in?
+              - if current_user != @president
+                - if !current_user.following?(@president)
+                  = form_for(current_user.active_relationships.build) do |f|
+                    = hidden_field_tag :followed_id, @president.id
+                    = f.submit "Follow", class: "btn-std btn-sm btn-follow-edit"
+                - else
+                  = form_for(current_user.active_relationships.find_by(followed_id: @president.id), html: { method: :delete }) do |f|
+                    = f.submit "Unfollow", class: "btn-std btn-sm btn-follow-edit"
+              - else
+                = link_to "Edit Profile", edit_user_registration_path, class: 'btn-std btn-sm btn-follow-edit'
+          %p.has.mt-4.mb-0
+            = pluralize(@president.followers.count, "Follower")
+            = '•'
+            = pluralize(@president.notes.count, "Note")
+          %p.email.mb-0= @president.email
+    .text-f-p.col-md-7
+      %p.text
+        %span.mb-3
+          I am extremely delighted to anounce the founding of Mattrab.
+          %br
+          Welcome to Mattrab Creative Community!
+        %span.mb-3.text-justify.t-small
+          I believe that every student has ability to understand everything and make other understand. So, why not we actually share what we have understood and help eachother towards the success.
+          %br
+          Here at mattrab, anybody can create their own notes/resources, explore and sharpen their ability and help many others around simultaneously.
+          %br
+          I would like to express my sincere thanks to my reverent sir Matt Bubbernak who helped me during all the process of engineering, developing and deploying Mattrab.
+        %span
+          Good luck everyone! Create, explore and share!
+      %p.speaker.mb-5
+        %span Rabin K. Kalikote
+        Founder and President of Mattrab/Community.

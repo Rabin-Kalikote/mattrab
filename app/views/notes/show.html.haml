@@ -1,52 +1,85 @@
 
-#note-show
-  #header
-    .container
-      .show-head-title.pt-5
-        %h2.show-title.mb-2= @note.title
-      .show-head-nav.row
-        .col-md-12
-          %nav.nav
-            = link_to like_note_path(@note), method: :get, class: "nav-link first" do
-              %i.fa.fa-thumbs-o-up
-              = pluralize(@note.get_upvotes.size, "Like")
-            = link_to dislike_note_path(@note), method: :get, class: "nav-link" do
-              %i.fa.fa-thumbs-o-down
-              = pluralize(@note.get_downvotes.size, "Dislike")
-            %p.nav-link.mb-0
-              %i.fa.fa-comments
-              = pluralize(@note.comments.count, "Comment")
-            %p.nav-link.mb-0
-              %i.fa.fa-eye
-              = pluralize(@note.view, "View")
-            %p.nav-link.mb-0
-              %i.fa.fa-hashtag
-              = @note.category
-            %p.nav-link.mb-0
-              %i.fa.fa-share-alt
-              by
-              = link_to @note.user.name, @note.user
-              = time_ago_in_words(@note.created_at)
-              ago
-            - if @note.user == current_user
-              = link_to "Edit", edit_note_path(@note), class: "nav-link note-action"
-              = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
+:javascript
+  $(document).ready( function() {
+    alert('Fired!');
+    $("#like").on("ajax:success", (event) =>
+      {$("#like").attr("disabled", true);}
+    ).on( "ajax:error", (event) =>
+      {alert('Error!');}
+      )
+  } );
 
-  #page
-    .container
-      .row.py-5
-        .col-md-8.this-note
-          .body= simple_format(@note.body)
-          = image_tag @note.image.url(:medium), class:'banner-img mb-3'
-          .author.my-5
-            .row.author-info
-              = link_to (image_tag @note.user.avatar.url(:medium)), @note.user, class: 'author-avatar'
-              = link_to @note.user.name, @note.user, class: 'author-name'
-            .row.author-description
-              %p.about
-                = truncate(@note.user.about, :length => 250)
-                %span.followers.mt-2= pluralize(@note.user.followers.count, "Follower")
-          .comments.pt-3
+#note-show
+  .container
+    .row.py-5
+      .this-note.col-md-9
+        .page
+          .unit-head
+            .headline
+              .col-md-8.heading
+                %p.unit-name.mb-0= @note.title
+              .col-md-4.image
+                = image_tag @note.image.url(:small)
+            -# .objective.row
+            -#   %ul.items
+            -#     - @note.tags.each do |tag|
+            -#       %li
+            -#         %i.fa.fa-check-square-o
+            -#         = tag
+          .head-nav
+            .col-md-12
+              %nav.nav.justify-content-center
+                - if user_signed_in?
+                  = link_to like_note_path(@note), method: :get, remote: true, id: "like", class: "nav-link first" do
+                    %i.fa.fa-thumbs-o-up
+                    = pluralize(@note.get_upvotes.size, "Like")
+                  = link_to dislike_note_path(@note), method: :get, remote: true, id: "dislike", class: "nav-link" do
+                    %i.fa.fa-thumbs-o-down
+                    = pluralize(@note.get_downvotes.size, "Dislike")
+                - else
+                  %p.nav-link.first.mb-0
+                    = link_to "Sign In", new_user_session_path
+                    = 'to like or dislike.'
+                %p.nav-link.mb-0
+                  %i.fa.fa-comments
+                  = pluralize(@note.comments.count, "Comment")
+                %p.nav-link.mb-0
+                  %i.fa.fa-eye
+                  = pluralize(@note.view, "View")
+                %p.nav-link.mb-0
+                  %i.fa.fa-hashtag
+                  = @note.category
+                %p.nav-link.mb-0
+                  %i.fa.fa-share-alt
+                  by
+                  = link_to @note.user.name, @note.user
+                  = time_ago_in_words(@note.created_at)
+                  ago
+                - if can? :update, @note
+                  = link_to "Edit", edit_note_path(@note), class: "nav-link note-action"
+                - if can? :destroy, @note
+                  = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
+          .unit-body
+            = simple_format(@note.body)
+            %p.title 1.1 Introduction
+            %p.paragraph
+              In our daily life,we apply a force to perform various activities.Pull, push, squeeze, stretch,etc. denote a force. The force of our hands can push or pull objects. A force can change the position and shape of a body. Simalarly, a force can change the direction of motion and speed of a moving body. However, if a force is applied to move a tree or a fixed wall, the effort will not be effective. Hence,
+              %span.paragraph.hilighted force is a pull or push which changes or tends to change the state of rest or of uniform motion or the shape and size of the body.
+              Force is called a vector quantity as it has both magnitude and direction. In the SI system, force is measured in Newton (N) and in the CGS system, it measured in dyne [1N = 10^5 dyne].
+            .ad
+              = image_tag 'adhere.png'
+
+        .author.mt-3.mb-5
+          .author-info
+            = link_to (image_tag @note.user.avatar.url(:medium)), @note.user, class: 'author-avatar'
+            = link_to @note.user.name, @note.user, class: 'author-name'
+          .author-description
+            %p.about.mb-0
+              = truncate(@note.user.about, :length => 250)
+              %span.followers.mt-2= pluralize(@note.user.followers.count, "Follower")
+
+        .comments.pt-5
+          .form-pane
             .form.row
               - if user_signed_in?
                 .col-md-1.avatar
@@ -58,35 +91,130 @@
                   = 'Please '
                   = link_to "Sign In", new_user_session_path
                   = 'to write your comment.'
+          #comments-pane
             - @comments.each do |comment|
-              .comment.row
-                .col-md-1.avatar
-                  = image_tag comment.user.avatar.url(:small)
-                .col-md-11.body
-                  = link_to comment.user.name, comment.user, class: 'username'
-                  %span.at
-                    = time_ago_in_words(comment.created_at)
-                    ago
-                  %p.content= comment.content
-        .col-md-4.random-notes
-          %h3.title.mb-3 Related Notes
-          .random-note
-            = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
-            .note_content
-              %p.info.mb-2
-                = @random_note.user.name
-                = '•'
-                = 'Science'
-              %h2.title= link_to @random_note.title, @random_note
-              %p.body
-                = truncate(simple_format(@random_note.body), :length => 150)
-              %p.buttons
-                %span
-                  %i.fa.fa-comments-o
-                  = pluralize(@random_note.comments.count, "Comment")
-                %span
-                  %i.fa.fa-thumbs-o-up
-                  = pluralize(@random_note.get_upvotes.size, "Like")
-                %span
-                  %i.fa.fa-eye
-                  = pluralize(@random_note.view, "View")
+              = render 'comments/comment', comment: comment
+
+      .random-notes.col-md-3
+        -# %h3.title.mb-3 Related Notes
+        .random-note
+          = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
+          .note_content
+            %p.info.mb-2
+              = @random_note.user.name
+              = '•'
+              = @random_note.category.capitalize
+            %h2.title= link_to @random_note.title, @random_note
+            %p.body
+              = truncate(simple_format(@random_note.body), :length => 150)
+            %p.buttons
+              %span
+                %i.fa.fa-comments-o
+                = pluralize(@random_note.comments.count, "Comment")
+              %span
+                %i.fa.fa-thumbs-o-up
+                = pluralize(@random_note.get_upvotes.size, "Like")
+              %span
+                %i.fa.fa-eye
+                = pluralize(@random_note.view, "View")
+
+
+
+
+
+
+-# #note-show
+-#   #header
+-#     .container
+-#       .show-head-title.pt-5
+-#         %h2.show-title.mb-2= @note.title
+-#       .show-head-nav.row
+-#         .col-md-12
+-#           %nav.nav
+-#             - if user_signed_in?
+-#               = link_to like_note_path(@note), method: :get, remote: true, class: "nav-link first" do
+-#                 %i.fa.fa-thumbs-o-up
+-#                 = pluralize(@note.get_upvotes.size, "Like")
+-#               = link_to dislike_note_path(@note), method: :get, remote: true, class: "nav-link" do
+-#                 %i.fa.fa-thumbs-o-down
+-#                 = pluralize(@note.get_downvotes.size, "Dislike")
+-#             - else
+-#               %p.nav-link.first.mb-0
+-#                 = link_to "Sign In", new_user_session_path
+-#                 = 'to like or dislike.'
+-#             %p.nav-link.mb-0
+-#               %i.fa.fa-comments
+-#               = pluralize(@note.comments.count, "Comment")
+-#             %p.nav-link.mb-0
+-#               %i.fa.fa-eye
+-#               = pluralize(@note.view, "View")
+-#             %p.nav-link.mb-0
+-#               %i.fa.fa-hashtag
+-#               = @note.category
+-#             %p.nav-link.mb-0
+-#               %i.fa.fa-share-alt
+-#               by
+-#               = link_to @note.user.name, @note.user
+-#               = time_ago_in_words(@note.created_at)
+-#               ago
+-#             - if can? :update, @note
+-#               = link_to "Edit", edit_note_path(@note), class: "nav-link note-action"
+-#             - if can? :destroy, @note
+-#               = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
+-#
+-#   #page
+-#     .container
+-#       .row.py-5
+-#         .col-md-8.this-note
+-#           %p
+-#             = @note.status
+-#             = @note.is_verified
+-#           .body= simple_format(@note.body)
+-#           = image_tag @note.image.url(:medium), class:'banner-img mb-3'
+-#           .author.my-5
+-#             .row.author-info
+-#               = link_to (image_tag @note.user.avatar.url(:medium)), @note.user, class: 'author-avatar'
+-#               = link_to @note.user.name, @note.user, class: 'author-name'
+-#             .row.author-description
+-#               %p.about
+-#                 = truncate(@note.user.about, :length => 250)
+-#                 %span.followers.mt-2= pluralize(@note.user.followers.count, "Follower")
+-#           .comments.pt-3
+-#             .form-pane
+-#               .form.row
+-#                 - if user_signed_in?
+-#                   .col-md-1.avatar
+-#                     = image_tag current_user.avatar.url(:small)
+-#                   .col-md-11.body
+-#                     = render "comments/form"
+-#                 - else
+-#                   %p.login-msg
+-#                     = 'Please '
+-#                     = link_to "Sign In", new_user_session_path
+-#                     = 'to write your comment.'
+-#             #comments-pane
+-#               - @comments.each do |comment|
+-#                 = render 'comments/comment', comment: comment
+-#
+-#         .col-md-4.random-notes
+-#           %h3.title.mb-3 Related Notes
+-#           .random-note
+-#             = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
+-#             .note_content
+-#               %p.info.mb-2
+-#                 = @random_note.user.name
+-#                 = '•'
+-#                 = @random_note.category.capitalize
+-#               %h2.title= link_to @random_note.title, @random_note
+-#               %p.body
+-#                 = truncate(simple_format(@random_note.body), :length => 150)
+-#               %p.buttons
+-#                 %span
+-#                   %i.fa.fa-comments-o
+-#                   = pluralize(@random_note.comments.count, "Comment")
+-#                 %span
+-#                   %i.fa.fa-thumbs-o-up
+-#                   = pluralize(@random_note.get_upvotes.size, "Like")
+-#                 %span
+-#                   %i.fa.fa-eye
+-#                   = pluralize(@random_note.view, "View")

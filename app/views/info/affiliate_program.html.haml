@@ -1,0 +1,36 @@
+#affiliate_program
+  .ad-appeal
+    .view-ad-appeal.mb-4
+      %h3.title Advertise and Grow you Business.
+      %p.appeal-text.mx-auto Join Mattrab affiliate program and healthily advertise/promote your business. Company or organization benefitting the students are always helped by Mattrab. Come and join us!
+  .strip-row
+    .bar.bar-1st
+    .bar.bar-2nd
+    .bar.bar-3rd
+    .bar.bar-4th
+    .bar.bar-5th
+    .bar.bar-6th
+    .bar.bar-7th
+    .bar.bar-8th
+    .bar.bar-9th
+    .bar.bar-10th
+    .bar.bar-11th
+    .bar.bar-12th
+  .container
+    .col-md-5.offset-md-1
+      .ad-placement-img
+        = image_tag 'affiliate.jpg'
+    .col-md-5
+      .highlights.mt-4
+        %h3.hl-title Ads at Mattrab.
+        %li.hl-item Display highly competitive and high resolution ads.
+        %li.hl-item Gather and help students build their next footprints.
+        %li.hl-item Become a Mattrab Sponsor party.
+    .col-md-12.mt-5
+      .contact
+        %h3.c-title.mb-4 Let's Connect.
+        %form{:action => "https://formspree.io/rabinkalikote33@gmail.com", :method => "POST"}
+          %input#name{:name => "company_name", :placeholder => "Company name..", :style => "width:49%; float:left;", :type => "text"}
+          %input#email{:name => "company_email", :placeholder => "Company email..", :style => "width:49%; float:left; margin-left:2%;", :type => "email"}
+          %textarea#messeges{:name => "description", :placeholder => "Description..", :style => "height:92px"}
+          %input{:type => "submit", :value => "Send"}

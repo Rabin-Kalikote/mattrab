@@ -1,3 +1,9 @@
-%h1 Add new Note!
 
-= render 'form'
+#note-edition.pt-5
+  .edition-head-nav.container
+    .d-flex.flex-row-reverse.py-2
+      -# - if can? :destroy, @note
+      -#   = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "note-action ml-3 delete"
+      -# - if can? :verify, @note
+      -#   = link_to @note.is_verified? ? "Unverify" : "Verify", verify_note_path(@note, :is_verified => !@note.is_verified), method: :get, class: "note-action ml-3"
+  = render 'form'

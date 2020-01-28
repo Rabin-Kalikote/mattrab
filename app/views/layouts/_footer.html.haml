@@ -1,19 +1,48 @@
 
 %footer#footer
-  .footer-brand.mt-5
-    = image_tag 'mrlogo.png'
-  %h2= 'Built by students for students'
-  %p
-    ©2019 Mattrab. All right reserved.
-    %br/
-    %br/
-    %a{:href => "https://teamtreehouse.com/about"} About Mattrab
-    •
-    %a{:href => "https://teamtreehouse.com/affiliate-program"} Affiliate Program
-    •
-    %a{:href => "https://teamtreehouse.com/terms"} Terms
-    •
-    %a{:href => "https://teamtreehouse.com/privacy"} Privacy
-    •
-    %a{:href => "https://teamtreehouse.com/support"} Contact
-  %p.pb-4.site-info= 'Mattrab is a community of students where the students share notes and learning assets to share and learn simultanously.'
+  .encourage-row
+    .container
+      .message.col-md-8
+        %p.message-text.mb-1
+          If learning is a game, mattrab is a stadium.
+          %span.focused And every student wins here.
+      .action.col-md-4
+        = link_to new_note_path, class: 'action-button mx-auto' do
+          %i.fa.fa-rocket
+          Create Note
+  .strip-row
+    .bar.bar-1st
+    .bar.bar-2nd
+    .bar.bar-3rd
+    .bar.bar-4th
+    .bar.bar-5th
+    .bar.bar-6th
+    .bar.bar-7th
+    .bar.bar-8th
+    .bar.bar-9th
+    .bar.bar-10th
+    .bar.bar-11th
+    .bar.bar-12th
+  .app-info-row
+    .container
+      .copyright.col-md-6
+        %p.mb-0
+          ©2020 Mattrab. All right reserved.
+          %span.focused By students, for students.
+      .links.col-md-6
+        %li.link-item
+          = link_to privacy_path do
+            %i.fa.fa-user-secret
+            Privacy
+        %li.link-item
+          = link_to terms_path do
+            %i.fa.fa-info-circle
+            Terms &amp; Conditions
+        %li.link-item
+          = link_to affiliate_program_path do
+            %i.fa.fa-bullhorn
+            Affiliate Program
+        %li.link-item
+          = link_to about_path do
+            %i.fa.fa-award
+            About Mattrab

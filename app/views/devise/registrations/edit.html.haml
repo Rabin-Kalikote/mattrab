@@ -1,65 +1,81 @@
 
-#profile
-  #header
-    .container
-      .row.this-infos
-        .col-md-2
-          = image_tag @user.avatar.url(:pro), class: "img-circle center"
-        .col-md-10
-          = link_to "View Profile", current_user, class: 'btn pull-right btn-follow'
-          %h2.name
-            = @user.name
-            %span.badge
-              %i.fa.fa-check-circle
-              = 'Creator'
-          %p.email.mb-0= @user.email
-          %p.has.mb-2
-            = pluralize(@user.followers.count, "Follower")
-            = '•'
-            = pluralize(@user.notes.count, "Note")
-          %p.this-text.mb-0= @user.about
-
-  #editarea
-    .container
-      .row.this-edit-user-form
-        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'edit-user-form' }) do |f|
-          = f.error_notification
-          .form-inputs
-            .form-label-group.mb-3
-              %label.file-label{:for => "user_avatar"}
-                %i.fa.fa-camera
-                = 'Your Profile Photo'
-              = f.input :avatar, label: false, required: true, autofocus: true, input_html: { class: 'form-control' }
-            .form-label-group.mb-3
-              %label{:for => "user_name"} Your Name
-              = f.input :name, label: false, required: true, input_html: { class: 'form-control' }
-            .form-label-group.mb-3
-              %label{:for => "user_email"} Your Name
-              = f.input :email, label: false, required: true, input_html: { class: 'form-control' }
-            .form-label-group.mb-3
-              %label{:for => "user_about"} Add about Yourself
-              = f.input :about, label: false, required: false, input_html: { class: 'form-control' }
+#profile-edition-layout
+  .this-wrap
+    = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'edit-user-form' }) do |f|
+      .container
+        .col-md-3
+          .this-face-wrap.mb-4
+            %span.badge-base
+            - if @user.admin? or @user.notes.published.count > 0
+              %span.badge.center= @user.role
+            - else
+              %span.badge.center= "Learner"
+            .this-face
+              .face
+                = image_tag @user.avatar.url(:pro), class: "img-circle center"
+                %label{:for => "user_avatar"}
+                  %i.fa.fa-camera
+                = f.input :avatar, label: false, required: true
+              = f.input :name, label: false, required: true
+              = f.input :email, label: false, required: true
               - if devise_mapping.confirmable? && resource.pending_reconfirmation?
                 %p
                   Currently waiting confirmation for: #{resource.unconfirmed_email}
-            .form-label-group.mb-3
-              %label{:for => "user_password"} Password
-              = f.input :password, label: false, hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password", class: 'form-control' }
-            .form-label-group.mb-3
-              %label{:for => "user_password_confirmation"} Password Confirmation
-              = f.input :password_confirmation, label: false, required: false, input_html: { autocomplete: "new-password", class: 'form-control' }
-            .form-label-group.mb-3
-              %label{:for => "user_current_password"} Current Password
-              = f.input :current_password, label: false, hint: "we need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password", class: 'form-control' }
-          .form-actions
-            = f.button :submit, "Update", class: 'btn btn-md btn-submit btn-update'
-        %h3.ask-delete.mt-5
-          %i.fa.fa-exclamation-circle
-          = 'Delete account'
-          %span.warn= 'Deleting the account permanently deletes all the resources you have created.'
-        = link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-md btn-danger btn-delete'
-
-
+              - Note.grades.keys.each do |grade|
+                = f.radio_button :grade, grade
+                = f.label grade.to_sym
+              = f.input :password, label: false, placeholder: "New Password", hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password"}
+              = f.input :password_confirmation, label: false, placeholder: "Confirm New Password", required: false, input_html: { autocomplete: "new-password"}
+              = f.input :current_password, label: false, placeholder: "Current Password", hint: "we need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password"}
+              .form-actions.pt-4.pb-3
+                = f.button :submit, "Update", class: 'btn-std btn-sm btn-follow-edit btn-update'
+                = link_to "Cancel Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn-std btn-sm btn-delete'
+        .col-md-9
+          .this-property
+            %p.this-text.mb-4
+              %span.intro
+                Hey, I'm
+                = @user.name
+                %br
+              = f.input :about, label: false, required: false, placeholder: "Type about yourself here..."
+            = f.error_notification
+            .notes
+              %h3.title.mb-3= 'Latest Notes'
+              - @user.notes.each do |note|
+                .col-lg-9.col-md-10.col-sm-12
+                  .note
+                    .note_image.col-md-5.col-sm-12
+                      = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+                    .note_content.col-md-7.col-sm-12
+                      %p.info.mb-0
+                        = note.user.name
+                        = '•'
+                        = note.category.capitalize
+                      = link_to note do
+                        %h2.title.mb-1= note.title
+                        %p.body.mb-4
+                          = truncate(simple_format(note.body), :length => 170)
+                      %p.buttons.align-self-end.mb-2
+                        %span
+                          %i.fa.fa-comment-alt
+                          = pluralize(note.comments.count, "Comment")
+                        %span
+                          %i.fa.fa-thumbs-up
+                          = pluralize(note.get_upvotes.size, "Like")
+                        %span
+                          %i.fa.fa-eye
+                          = pluralize(note.view, "View")
+                .col-lg-3.col-md-2.col-sm-12
+                  %p.status.mb-3
+                    = note.is_verified ? "Verified" : "Not Verified"
+                    = '•'
+                    = note.status.humanize
+                  - if can? :update, note
+                    = link_to "Edit", edit_note_path(note), class: "btn-sm"
+                  - if can? :destroy, note
+                    = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
+            .space
+            
 
 -# <h2>Edit <%= resource_name.to_s.humanize %></h2>
 -#

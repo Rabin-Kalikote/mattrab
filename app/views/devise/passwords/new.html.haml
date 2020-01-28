@@ -1,26 +1,23 @@
-.form-wrap.login
-  .this-form
-    .form-head
-      %p.mb-3= 'Forgot your password?'
-    .form-body
-      = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-        = f.error_notification
-        .form-inputs
-          .form-label-group.mb-3
-            %label{:for => "user_email"} Email address
-            = f.input :email, required: true, label: false, autofocus: true, input_html: { autocomplete: "email", class: 'form-control' }
-        .form-actions.pt-3
-          = f.button :submit, "Send me instructions", class: 'btn btn-md btn-block btn-submit'
+
+.this-wrap
+  .container
+    .welcome.col-md-5
+      %h2.title Forgot Password?
+      %p.messege.d-sm-none.d-md-block
+        Nothing to worry, we can help you recover it.
+        %br Mattrab always wants to help you!
       - if controller_name != 'sessions'
-        %p.other-action.mt-3
-          = 'Or remembered?'
-          = link_to "Sign in", new_session_path(resource_name)
-          = 'to reach your road.'
-
-
-
-
-
+        %p.if.d-sm-none.d-md-block Or remembered? Sign in here.
+        = link_to "Sign In", new_session_path(resource_name), class: "btn-std btn-else d-sm-none d-md-block"
+    .form-wrap.login.col-md-7
+      .this-form
+        = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+          = f.error_notification
+          .form-inputs
+            .form-label-group.mb-3
+              = f.input :email, required: true, label: false, placeholder: "recoveryemail@mail.com", autofocus: true, input_html: { autocomplete: "email", class: 'form-control' }
+          .form-actions.pt-3
+            = f.button :submit, "Send Me Instructions", class: 'btn-std btn-block btn-submit'
 
 
 -# <h2>Forgot your password?</h2>

@@ -1,15 +1,24 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_note
   def create
-    @note = Note.find(params[:note_id])
-    @comment = Comment.create(params[:comment].permit(:content))
+    @comment = @note.comments.new(comment_params)
     @comment.user_id = current_user.id
-    @comment.note_id = @note.id
+    @comment.save
+  end
 
-    if @comment.save
-      redirect_to note_path(@note)
-    else
-      render 'new'
-    end
+  def destroy
+    @comment = @note.comments.find(params[:id])
+    @comment.destroy
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content, :note_id)
+  end
+
+  def find_note
+    @note = Note.find(params[:note_id])
   end
 end

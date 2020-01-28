@@ -1,9 +1,52 @@
-= simple_form_for @note, html: { multipart: true } do |f|
-  = f.input :image
-  = f.input :title
-  .form-label-group.mb-3
-    %label{:for => "note_category"} Category
-    = f.select :category, Note.categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
-  = f.input :body, as: :trix_editor
 
-  = f.button :submit
+= simple_form_for @note, html: { multipart: true } do |f|
+  #note-edition-form-layout
+    .container
+      .row.pt-3.pb-5
+        .this-note.col-md-9.mb-4
+          .page
+            .unit-head-edit
+              .headline
+                .col-md-8.heading
+                  = f.input :title, placeholder: "What is Energy Crisis?"
+                .col-md-4.image
+                  = image_tag @note.image.url(:small)
+                  %label{:for => "note_image"}
+                    %i.fa.fa-camera
+                  = f.input :image
+              -# .objective.row
+              -#   %ul.items
+              -#     - @note.tags.each do |tag|
+              -#       %li
+              -#         %i.fa.fa-check-square-o
+              -#         = tag
+
+            .editor.unit-body
+              = f.input :body, as: :trix_editor, placeholder: "An energy crisis is any significant bottleneck in the supply of energy resources to an economy. In literature, it often refers to one of the energy sources used at a ..."
+
+        .this-controls.col-md-3
+          .control-wrap#settings
+            %h3.title.mb-3= 'Settings'
+            - if @note.is_verified
+              .form-label-group.mb-3
+                %p.label.mb-1= "Status"
+                - Note.statuses.keys.each do |status|
+                  = f.radio_button :status, status
+                  = f.label status.to_sym
+                  %br
+            .form-label-group.mb-3
+              %label.label.mb-1{:for => "note_category"} Category
+              = f.select :category, Note.categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
+            .form-label-group.mb-3
+              %p.label.mb-1= "Grade"
+              - Note.grades.keys.each do |grade|
+                = f.radio_button :grade, grade
+                = f.label grade.to_sym
+                %br
+            = f.button :submit, class: 'update'
+            %p.note-status.mt-2.mb-0
+              %i.fa.fa-info-circle
+              = 'Your note is'
+              = @note.is_verified? ? "verified" : "not verified"
+              = 'and'
+              = @note.status
