@@ -14,12 +14,13 @@ class Ability
     cannot :verify, Note
 
     return unless user.present?
-    can :update, Note, user_id: user.id
-    can :destroy, Note, user_id: user.id
-    can :upvote, Note
-    can :downvote, Note
-    can :destroy, Comment, user_id: user.id
+    can :manage, Note, user_id: user.id
+    can :manage, Question, note: { user: { id: user.id } }
+    can :manage, Question, user_id: user.id
+    can :vote, Note
+
     return unless user.admin?
-    can :manage, :all
+    can :manage, Note
+    can :manage, Question
   end
 end

@@ -1,13 +1,22 @@
 
 :javascript
   $(document).ready( function() {
-    alert('Fired!');
-    $("#like").on("ajax:success", (event) =>
-      {$("#like").attr("disabled", true);}
-    ).on( "ajax:error", (event) =>
-      {alert('Error!');}
-      )
-  } );
+    $("#like").click(function(){
+      $.ajax({
+        url: "#{like_note_path(@note)}",
+        type: "put",
+        data: {},
+        success: function(data) {
+          if (data.count == 1){
+            $(".likes-count").html(data.count + "Like");
+          }else{
+            $(".likes-count").html(data.count + "Likes");
+          }
+        },
+        error: function(data) {}
+      })
+    });
+  });
 
 #note-show
   .container
@@ -30,19 +39,16 @@
             .col-md-12
               %nav.nav.justify-content-center
                 - if user_signed_in?
-                  = link_to like_note_path(@note), method: :get, remote: true, id: "like", class: "nav-link first" do
-                    %i.fa.fa-thumbs-o-up
-                    = pluralize(@note.get_upvotes.size, "Like")
-                  = link_to dislike_note_path(@note), method: :get, remote: true, id: "dislike", class: "nav-link" do
-                    %i.fa.fa-thumbs-o-down
-                    = pluralize(@note.get_downvotes.size, "Dislike")
+                  %button#like.nav-link.first
+                    %i.fa.fa-thumbs-up
+                    %span.likes-count= pluralize(@note.get_upvotes.size, "Like")
                 - else
                   %p.nav-link.first.mb-0
                     = link_to "Sign In", new_user_session_path
-                    = 'to like or dislike.'
+                    = 'to like the note.'
                 %p.nav-link.mb-0
                   %i.fa.fa-comments
-                  = pluralize(@note.comments.count, "Comment")
+                  = pluralize(@note.questions.count, "Question")
                 %p.nav-link.mb-0
                   %i.fa.fa-eye
                   = pluralize(@note.view, "View")
@@ -61,11 +67,6 @@
                   = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
           .unit-body
             = simple_format(@note.body)
-            %p.title 1.1 Introduction
-            %p.paragraph
-              In our daily life,we apply a force to perform various activities.Pull, push, squeeze, stretch,etc. denote a force. The force of our hands can push or pull objects. A force can change the position and shape of a body. Simalarly, a force can change the direction of motion and speed of a moving body. However, if a force is applied to move a tree or a fixed wall, the effort will not be effective. Hence,
-              %span.paragraph.hilighted force is a pull or push which changes or tends to change the state of rest or of uniform motion or the shape and size of the body.
-              Force is called a vector quantity as it has both magnitude and direction. In the SI system, force is measured in Newton (N) and in the CGS system, it measured in dyne [1N = 10^5 dyne].
             .ad
               = image_tag 'adhere.png'
 
@@ -85,15 +86,15 @@
                 .col-md-1.avatar
                   = image_tag current_user.avatar.url(:small)
                 .col-md-11.body
-                  = render "comments/form"
+                  = render "questions/form"
               - else
                 %p.login-msg
                   = 'Please '
                   = link_to "Sign In", new_user_session_path
-                  = 'to write your comment.'
+                  = 'to ask your question.'
           #comments-pane
-            - @comments.each do |comment|
-              = render 'comments/comment', comment: comment
+            - @questions.each do |question|
+              = render 'questions/question', question: question
 
       .random-notes.col-md-3
         -# %h3.title.mb-3 Related Notes
@@ -110,13 +111,14 @@
             %p.buttons
               %span
                 %i.fa.fa-comments-o
-                = pluralize(@random_note.comments.count, "Comment")
+                = pluralize(@random_note.questions.count, "Question")
               %span
                 %i.fa.fa-thumbs-o-up
                 = pluralize(@random_note.get_upvotes.size, "Like")
               %span
                 %i.fa.fa-eye
                 = pluralize(@random_note.view, "View")
+
 
 
 

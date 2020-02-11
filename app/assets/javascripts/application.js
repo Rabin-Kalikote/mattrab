@@ -11,12 +11,10 @@
 // about supported directives.
 //
 
-//= require trix
 //= require turbolinks
 //= require jquery
 //= require popper
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require summernote/summernote-bs4.min
-//= require summernote-init
 //= require_tree .

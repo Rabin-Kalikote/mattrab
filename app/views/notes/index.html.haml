@@ -54,20 +54,20 @@
 
 .sticky-subnav-space
 
-.sponsers.pb-4
-  .sponsers-row
-    .twelve.columns
-      %ul.sponser-list
-        %li.sponser-item.desktop
-          = image_tag 'sponsor1.jpg'
-        %li.sponser-item.all
-          = image_tag 'sponsor2.png'
-        %li.sponser-item.all
-          = image_tag 'sponsor3.jpg'
-        %li.sponser-item.all
-          = image_tag 'sponsor4.jpg'
-        %li.sponser-item.desktop
-          = image_tag 'sponsor5.jpg'
+-# .sponsers.pb-4
+-#   .sponsers-row
+-#     .twelve.columns
+-#       %ul.sponser-list
+-#         %li.sponser-item.desktop
+-#           = image_tag 'sponsor1.jpg'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor2.png'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor3.jpg'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor4.jpg'
+-#         %li.sponser-item.desktop
+-#           = image_tag 'sponsor5.jpg'
 
 #notes
   .container
@@ -90,7 +90,7 @@
               %p.buttons.align-self-end.mb-2
                 %span
                   %i.fa.fa-comment-alt
-                  = pluralize(note.comments.count, "Comment")
+                  = pluralize(note.questions.count, "Question")
                 %span
                   %i.fa.fa-thumbs-up
                   = pluralize(note.get_upvotes.size, "Like")
@@ -99,15 +99,4 @@
                   = pluralize(note.view, "View")
 
     .row.pagination-nav
-      %nav{"aria-label" => "Page navigation example"}
-        %ul.pagination.justify-content-center
-          %li.page-item.disabled
-            %a.page-link{:href => "#", :tabindex => "-1"} Previous
-          %li.page-item
-            %a.page-link{:href => "#"} 1
-          %li.page-item
-            %a.page-link{:href => "#"} 2
-          %li.page-item
-            %a.page-link{:href => "#"} 3
-          %li.page-item
-            %a.page-link{:href => "#"} Next
+      = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;'

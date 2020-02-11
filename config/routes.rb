@@ -21,11 +21,10 @@ Rails.application.routes.draw do
   get 'search', to: 'notes#search'
   resources :notes do
     member do
-      get "like", to: "notes#upvote"
-      get "dislike", to: "notes#downvote"
+      put "like", to: "notes#vote"
       get "verify", to: "notes#verify"
     end
-    resources :comments, only: [:create, :destroy]
+    resources :questions, only: [:create, :destroy]
   end
   root 'notes#index'
 end

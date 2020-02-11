@@ -21,9 +21,13 @@
               - if devise_mapping.confirmable? && resource.pending_reconfirmation?
                 %p
                   Currently waiting confirmation for: #{resource.unconfirmed_email}
-              - Note.grades.keys.each do |grade|
+              - User.grades.keys.each do |grade|
                 = f.radio_button :grade, grade
                 = f.label grade.to_sym
+              - if @user.admin?
+                %br
+                %label.label.mb-1{:for => "user_admin_category"} Category
+                = f.select :admin_category, User.admin_categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
               = f.input :password, label: false, placeholder: "New Password", hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password"}
               = f.input :password_confirmation, label: false, placeholder: "Confirm New Password", required: false, input_html: { autocomplete: "new-password"}
               = f.input :current_password, label: false, placeholder: "Current Password", hint: "we need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password"}
@@ -58,7 +62,7 @@
                       %p.buttons.align-self-end.mb-2
                         %span
                           %i.fa.fa-comment-alt
-                          = pluralize(note.comments.count, "Comment")
+                          = pluralize(note.questions.count, "Question")
                         %span
                           %i.fa.fa-thumbs-up
                           = pluralize(note.get_upvotes.size, "Like")
@@ -75,7 +79,7 @@
                   - if can? :destroy, note
                     = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
             .space
-            
+
 
 -# <h2>Edit <%= resource_name.to_s.humanize %></h2>
 -#

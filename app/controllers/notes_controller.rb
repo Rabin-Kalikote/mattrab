@@ -1,25 +1,25 @@
 class NotesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: [:index, :show, :search]
-  before_action :find_note, only: [:show, :edit, :update, :destroy, :upvote, :downvote, :verify]
+  before_action :find_note, only: [:show, :edit, :update, :destroy, :vote, :verify]
 
   def index
     if params[:category].present?
-      @notes = Note.where(:category => params[:category]).published.order("created_at DESC")
+      @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 8).order("created_at DESC")
       @category_title = params[:category].humanize + " Notes"
     else
-      @notes = Note.published.order("created_at DESC")
+      @notes = Note.published.paginate(page: params[:page], per_page: 8).order("created_at DESC")
       @category_title = "Latest Notes"
     end
   end
 
   def search
     @query = params[:query]
-    @notes = Note.search(@query).published
+    @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 5)
   end
 
   def show
-    @comments = Comment.where(note_id: @note).order("created_at DESC")
+    @questions = Question.where(note_id: @note).order("created_at DESC")
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
     @note.update_attribute "view", @note.view += 1
   end
@@ -54,14 +54,13 @@ class NotesController < ApplicationController
     redirect_to root_path
   end
 
-  def upvote
-    @note.upvote_by current_user
-    redirect_back fallback_location: @note
-  end
-
-  def downvote
-    @note.downvote_by current_user
-    redirect_back fallback_location: @note
+  def vote
+    if !current_user.liked? @note
+      @note.liked_by current_user
+    else
+      @note.unliked_by current_user
+    end
+    render :json => { :count => @note.get_upvotes.size }
   end
 
   def verify

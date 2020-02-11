@@ -10,7 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require trix
  *= require_tree .
  *= require_self
  */
@@ -178,6 +177,71 @@ html, body{
       margin-bottom: 0!important;
     }
   }
+}
+
+@-webkit-keyframes slide-in-nav {
+	0% {
+		-webkit-transform: translateY(0);
+	}
+	100% {
+		-webkit-transform: translateY(28px);
+	}
+}
+@-moz-keyframes slide-in-nav {
+	0% {
+		-moz-transform: translateY(0);
+	}
+	100% {
+		-moz-transform: translateY(28px);
+	}
+}
+@keyframes slide-in-nav {
+	0% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
+	100% {
+		-webkit-transform: translateY(28px);
+		-moz-transform: translateY(28px);
+		-ms-transform: translateY(28px);
+		-o-transform: translateY(28px);
+		transform: translateY(28px);
+	}
+}
+@-webkit-keyframes slide-in-hero {
+	0% {
+		-webkit-transform: translateY(-48px);
+	}
+	100% {
+		-webkit-transform: translateY(0);
+	}
+}
+@-moz-keyframes slide-in-hero {
+	0% {
+		-moz-transform: translateY(-48px);
+	}
+	100% {
+		-moz-transform: translateY(0);
+	}
+}
+@keyframes slide-in-hero {
+	0% {
+		-webkit-transform: translateY(-48px);
+		-moz-transform: translateY(-48px);
+		-ms-transform: translateY(-48px);
+		-o-transform: translateY(-48px);
+		transform: translateY(-48px);
+	}
+	100% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
 }
 
 @import "bootstrap";

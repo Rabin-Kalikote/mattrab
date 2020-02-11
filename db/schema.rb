@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200108135536) do
+ActiveRecord::Schema.define(version: 20200210160146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "comments", force: :cascade do |t|
-    t.text "content"
-    t.bigint "note_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["note_id"], name: "index_comments_on_note_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
 
   create_table "notes", force: :cascade do |t|
     t.string "title"
@@ -51,6 +41,16 @@ ActiveRecord::Schema.define(version: 20200108135536) do
     t.string "notifiable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "content"
+    t.bigint "note_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id"], name: "index_questions_on_note_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20200108135536) do
     t.datetime "avatar_updated_at"
     t.integer "role", default: 0
     t.integer "grade", default: 0
+    t.integer "admin_category", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -102,6 +103,6 @@ ActiveRecord::Schema.define(version: 20200108135536) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
-  add_foreign_key "comments", "notes"
-  add_foreign_key "comments", "users"
+  add_foreign_key "questions", "notes"
+  add_foreign_key "questions", "users"
 end

@@ -5,4 +5,8 @@ class Notification < ApplicationRecord
 
   scope :unread, -> { where(read_at: nil) }
   scope :read, -> { where.not(read_at: nil) }
+
+  def notifiable_type
+    notifiable.class.name
+  end
 end

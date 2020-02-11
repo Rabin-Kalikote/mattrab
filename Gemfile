@@ -33,20 +33,21 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'haml', '~> 5.1', '>= 5.1.2'
-gem 'simple_form', '~> 5.0', '>= 5.0.1'
-gem 'devise', '~> 4.7', '>= 4.7.1'
-gem 'paperclip', '~> 6.1'
-gem 'acts_as_votable', '~> 0.12.1'
-gem 'coffee-script-source', '~> 1.12', '>= 1.12.2'
-gem 'bootstrap', '~> 4.3.1'
+gem 'haml'
+gem 'simple_form'
+gem 'devise'
+gem 'paperclip'
+gem 'acts_as_votable'
+gem 'coffee-script-source'
+gem 'bootstrap'
 gem 'jquery-rails'
-gem 'trix'
 gem 'pg'
 gem 'pg_search'
 gem 'cancancan'
 gem 'summernote-rails'
-gem 'activestorage'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap4'
+gem 'rails_refactor'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

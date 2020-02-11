@@ -272,3 +272,95 @@
     }
   }
 }
+
+// Terms & Conditions
+#terms{
+  width: 100%;
+  background: #fbfbf9;
+  .terms-head{
+    background: #ebf9ef;
+    display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+    .view-terms-head{
+      width: 100%;
+      position: relative;
+      padding-top: 5rem;
+      min-height: 15rem;
+      h3.title{
+        color: #35b15a;
+        text-align: center;
+        font-size: 2rem;
+        font-family: 'ptsans';
+      }
+      p.head-text{
+        color: #333;
+        max-width: 720px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-family: 'ptsans';
+      }
+      @media (max-width: 767.98px) {padding: 0 1.5rem;}
+    }
+  }
+  .container{
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+    .col-md-10{
+      .terms-list{
+        list-style-position: outside;
+        li.hl-item{
+          color: #1d6232;
+          font-size: 1.1rem;
+          font-family: 'ptsans';
+          margin-bottom: .7rem;
+        }
+      }
+    }
+  }
+}
+
+// Privacy Policy
+#privacy{
+  width: 100%;
+  background: #fbfbf9;
+  .privacy-head{
+    background: #ebf9ef;
+    display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+    .view-privacy-head{
+      width: 100%;
+      position: relative;
+      padding-top: 5rem;
+      min-height: 15rem;
+      h3.title{
+        color: #35b15a;
+        text-align: center;
+        font-size: 2rem;
+        font-family: 'ptsans';
+      }
+      p.head-text{
+        color: #333;
+        max-width: 720px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-family: 'ptsans';
+      }
+      @media (max-width: 767.98px) {padding: 0 1.5rem;}
+    }
+  }
+  .container{
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+    .col-md-10{
+      .privacy-list{
+        list-style-position: outside;
+        li.hl-item{
+          color: #1d6232;
+          font-size: 1.1rem;
+          font-family: 'ptsans';
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

@@ -8,14 +8,14 @@ class Note < ApplicationRecord
 
   acts_as_votable
   belongs_to :user
-  has_many :comments, dependent: :delete_all
+  has_many :questions, dependent: :delete_all
   has_attached_file :image, styles: { medium: "700x500#", small: "350x250>" }, default_url: "/images/small/missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
   include PgSearch
   pg_search_scope :search, against: [:title, :body],
     using: {tsearch: {dictionary: 'english'}},
-    associated_against: {user: :name, comments: :content}
+    associated_against: {user: :name, questions: :content}
 
   def unpublish_if_unverified
     if self.is_verified_changed? and self.is_verified == false and self.published?

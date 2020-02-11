@@ -39,7 +39,7 @@ class Notifications
               </div>
             </div>
             <div class='col-md-10 col-sm-10 col-xs-10 pd-l0'>
-              <p>#{notification.actor.name} #{notification.action} #{notification.notifiable.type}</p>
+              <p>#{notification.actor.name} #{notification.action} #{notification.type}</p>
               <span>#{notification.created_at}</span>
             </div>
           </div>
@@ -53,7 +53,7 @@ class Notifications
               </div>
             </div>
             <div class='col-md-10 col-sm-10 col-xs-10 pd-l0'>
-              <p>#{notification.actor.name} #{notification.action} #{notification.notifiable.type}</p>
+              <p>#{notification.actor.name} #{notification.action} #{notification.type}</p>
               <span>#{notification.created_at}</span>
             </div>
           </div>

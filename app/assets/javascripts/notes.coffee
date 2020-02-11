@@ -2,6 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+$(document).on 'turbolinks:load', ->
+  $('[data-provider="summernote"]').each ->
+    $(this).summernote
+      placeholder: 'An energy crisis is any significant bottleneck in the supply of energy resources to an economy. In literature, it often refers to one of the energy sources used at a ...',
+      tabsize: 2,
+      # focus: true,
+      height: 300
+
 #sticky cta
 $(document).scroll ->
   y = $(this).scrollTop()
@@ -10,10 +18,9 @@ $(document).scroll ->
   else
     $('html').removeClass 'scrolled-past-hero'
 
-  settingsOffset = $('#settings').offset().top
-  if y+100 > settingsOffset
-    $('#settings').addClass 'fixed'
+  if y > 440
+    $('html').addClass 'toolbar-fixed'
   else
-    $('#settings').removeClass 'fixed'
+    $('html').removeClass 'toolbar-fixed'
 
   return

@@ -63,7 +63,7 @@
                     %p.buttons.align-self-end.mb-2
                       %span
                         %i.fa.fa-comment-alt
-                        = pluralize(note.comments.count, "Comment")
+                        = pluralize(note.questions.count, "Question")
                       %span
                         %i.fa.fa-thumbs-up
                         = pluralize(note.get_upvotes.size, "Like")

@@ -87,8 +87,10 @@
 						.nav-link{
 							color:#969696;
 							font-size: .8rem;
+							background: #f9f9f9;
 							font-family: 'medium';
 							text-decoration: none;
+							outline: none; border: none;
 							padding: .5rem .7rem !important;
 							i.fa{
 								color: #b3b3b3!important;
@@ -115,10 +117,9 @@
             font-size: 18px;
             width:100% !important;
             font-weight:normal;
-            color: #00b38f;
         	}
 					p.title{
-            font-family: corbel;
+            font-family: 'ptsans';
             font-size: 22px;
             width:100% !important;
             font-weight:normal;
@@ -126,7 +127,7 @@
             text-shadow:0 .06em .4em #aaa;
         	}
 					p.paragraph{
-            font-family: corbel;
+            font-family: 'ptsans';
             font-size: 16px;
             font-weight:normal;
             color: #00b38f;
@@ -320,7 +321,7 @@
 			.this-note{
 				.page{
 	    		padding: 0 !important;
-	        min-height:150vh !important;
+	        min-height:330vh !important;
 	        background:#fff;
 					-webkit-box-shadow: 0px 0px 11px 1px rgba(217,217,217,1);
 					-moz-box-shadow: 0px 0px 11px 1px rgba(217,217,217,1);
@@ -424,44 +425,25 @@
 							label[for="note_body"]{
 								display: none;
 							}
-							.trix-editor-wrapper{
-								#trix-toolbar-1{
-									padding: .6rem 3.2rem 0 3.2rem;
+							.note-editor{
+								border: none !important;
+								.note-toolbar{
+									padding: 0 3.2rem .3rem 3.2rem;
 									background: #f9f9f9;
 									border-bottom:1px solid #E5E4E2;
+									position: initial;
 								}
-								@media (max-width: 767.98px) {#trix-toolbar-1{padding: .5rem 1rem 0 1rem !important;}}
+								@media (max-width: 767.98px) {.note-toolbar{padding: .5rem 1rem 0 1rem !important;}}
 							}
-							trix-editor[input="note_body"]{
-								padding: 2rem 3.2rem;
-								border: none !important;
+							.note-editing-area{
+								.note-placeholder{padding: 2rem 3.2rem;}
+								.note-editable{
+									padding: 2rem 3.2rem;
+									min-height: 300vh;
+								}
+								@media (max-width: 767.98px) {.note-placeholder,.note-editable{padding: 1.5rem 2rem !important;}}
 							}
-							@media (max-width: 767.98px) {trix-editor[input="note_body"]{padding: 1.5rem 2rem !important;}}
 						}
-						p{
-	            font-family: 'ptsans';
-	            font-size: 18px;
-	            width:100% !important;
-	            font-weight:normal;
-	            color: #00b38f;
-	        	}
-						p.title{
-	            font-family: corbel;
-	            font-size: 22px;
-	            width:100% !important;
-	            font-weight:normal;
-	            color: #00b38f;
-	            text-shadow:0 .06em .4em #aaa;
-	        	}
-						p.paragraph{
-	            font-family: corbel;
-	            font-size: 16px;
-	            font-weight:normal;
-	            color: #00b38f;
-	        	}
-						.paragraph.hilighted{
-	            color: #FF7F50;
-	        	}
 	        }
 	      }
 			}
@@ -565,6 +547,7 @@
 				}
 			}
 		}
+		.pagination-nav{padding: 3rem 0; width: 100%;}
 		.no-note.col-md-8.col-sm-12{
 			min-height: 37vh;
 			p.note{
