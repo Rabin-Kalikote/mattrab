@@ -24,7 +24,9 @@ Rails.application.routes.draw do
       put "like", to: "notes#vote"
       get "verify", to: "notes#verify"
     end
-    resources :questions, only: [:create, :destroy]
+    resources :questions, only: [:create, :destroy] do
+      resources :answers, only: [:create, :destroy]
+    end
   end
   root 'notes#index'
 end

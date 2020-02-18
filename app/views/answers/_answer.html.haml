@@ -1,0 +1,11 @@
+.comment.row.my-4{:id => "comment-#{answer.id}"}
+  .col-md-1.avatar
+    = image_tag answer.user.avatar.url(:small)
+  .col-md-11.body
+    = link_to answer.user.name, answer.user, class: 'username'
+    %span.at
+      = time_ago_in_words(answer.created_at)
+      ago
+      - if can? :destroy, answer #current_user and comment.user == current_user or current_user.admin?
+        = link_to 'Delete', question_answer_path(@question, answer), method: :delete, remote: true, class: 'pull-right'
+    %p.content= answer.content

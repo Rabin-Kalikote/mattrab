@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   belongs_to :note
   belongs_to :user
+  has_many :answers, dependent: :destroy
 
   after_create :create_notifications
 

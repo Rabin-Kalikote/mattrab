@@ -95,6 +95,20 @@
           #comments-pane
             - @questions.each do |question|
               = render 'questions/question', question: question
+              .form-pane
+                .form.row
+                  - if user_signed_in?
+                    .col-md-1.avatar
+                      = image_tag current_user.avatar.url(:small)
+                    .col-md-11.body
+                      = render "answers/form"
+                  - else
+                    %p.login-msg
+                      = 'Please '
+                      = link_to "Sign In", new_user_session_path
+                      = 'to answer question.'
+              - @answers.each do |answer|
+                = render 'answers/answer', answer: answer
 
       .random-notes.col-md-3
         -# %h3.title.mb-3 Related Notes
