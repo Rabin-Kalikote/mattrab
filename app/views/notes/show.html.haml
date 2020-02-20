@@ -101,7 +101,7 @@
                     .col-md-1.avatar
                       = image_tag current_user.avatar.url(:small)
                     .col-md-11.body
-                      = render "answers/form"
+                      = render "answers/form", :question => question
                   - else
                     %p.login-msg
                       = 'Please '
@@ -109,32 +109,6 @@
                       = 'to answer question.'
               - @answers.each do |answer|
                 = render 'answers/answer', answer: answer
-
-      .random-notes.col-md-3
-        -# %h3.title.mb-3 Related Notes
-        .random-note
-          = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
-          .note_content
-            %p.info.mb-2
-              = @random_note.user.name
-              = '•'
-              = @random_note.category.capitalize
-            %h2.title= link_to @random_note.title, @random_note
-            %p.body
-              = truncate(simple_format(@random_note.body), :length => 150)
-            %p.buttons
-              %span
-                %i.fa.fa-comments-o
-                = pluralize(@random_note.questions.count, "Question")
-              %span
-                %i.fa.fa-thumbs-o-up
-                = pluralize(@random_note.get_upvotes.size, "Like")
-              %span
-                %i.fa.fa-eye
-                = pluralize(@random_note.view, "View")
-
-
-
 
 
 
@@ -214,23 +188,4 @@
 -#
 -#         .col-md-4.random-notes
 -#           %h3.title.mb-3 Related Notes
--#           .random-note
--#             = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
--#             .note_content
--#               %p.info.mb-2
--#                 = @random_note.user.name
--#                 = '•'
--#                 = @random_note.category.capitalize
--#               %h2.title= link_to @random_note.title, @random_note
--#               %p.body
--#                 = truncate(simple_format(@random_note.body), :length => 150)
--#               %p.buttons
--#                 %span
--#                   %i.fa.fa-comments-o
--#                   = pluralize(@random_note.comments.count, "Comment")
--#                 %span
--#                   %i.fa.fa-thumbs-o-up
--#                   = pluralize(@random_note.get_upvotes.size, "Like")
--#                 %span
--#                   %i.fa.fa-eye
--#                   = pluralize(@random_note.view, "View")
+-#         
