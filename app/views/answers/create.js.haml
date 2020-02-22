@@ -1,3 +1,4 @@
 :plain
-  $('#comments-pane').prepend('#{ j render @answer}');
-  $('#comment_content').val('');
+  $('#answers-#{@question.id}').prepend('#{ j render @answer}');
+  $('#answer_content').val('');
+  alert("fired");

@@ -2,13 +2,14 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_note
   def create
-    @questions = @note.questions
-    @answer = @questions.answers.new(answer_params)
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.new(answer_params)
     @answer.user_id = current_user.id
     @answer.save
   end
 
   def destroy
+    @question = @note.questions.find(params[:question_id])
     @answer = @question.answers.find(params[:id])
     @answer.destroy
   end

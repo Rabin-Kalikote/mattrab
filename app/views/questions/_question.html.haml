@@ -1,11 +1,15 @@
-.comment.row.my-4{:id => "comment-#{question.id}"}
-  .col-md-1.avatar
-    = image_tag question.user.avatar.url(:small)
-  .col-md-11.body
-    = link_to question.user.name, question.user, class: 'username'
-    %span.at
-      = time_ago_in_words(question.created_at)
-      ago
-      - if can? :destroy, question #current_user and comment.user == current_user or current_user.admin?
-        = link_to 'Delete', note_question_path(@note, question), method: :delete, remote: true, class: 'pull-right'
-    %p.content= question.content
+%hr
+.question.mt-4.mb-2{:id => "question-#{question.id}"}
+  .col-md-12
+    .avatar.d-inline
+      = image_tag question.user.avatar.url(:small)
+    .body.d-inline.ml-1
+      = link_to question.user.name, question.user, class: 'username'
+      %span.at
+        = 'asked'
+        = time_ago_in_words(question.created_at)
+        ago
+    - if can? :destroy, question
+      = link_to 'Delete thread', note_question_path(@note, question), method: :delete, remote: true, class: 'btn-delete pull-right'
+  .col-md-12.q-content
+    %p.content.my-2= question.content

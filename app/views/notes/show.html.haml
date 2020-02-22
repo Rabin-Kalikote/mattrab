@@ -70,7 +70,7 @@
             .ad
               = image_tag 'adhere.png'
 
-        .author.mt-3.mb-5
+        .author.mt-3.mb-2
           .author-info
             = link_to (image_tag @note.user.avatar.url(:medium)), @note.user, class: 'author-avatar'
             = link_to @note.user.name, @note.user, class: 'author-name'
@@ -79,36 +79,40 @@
               = truncate(@note.user.about, :length => 250)
               %span.followers.mt-2= pluralize(@note.user.followers.count, "Follower")
 
-        .comments.pt-5
-          .form-pane
-            .form.row
+        .discussions.mt-3.mb-2
+          %h3.title.mb-3 Discussions
+          .ask.pb-2
+            .question-form.form.row
               - if user_signed_in?
-                .col-md-1.avatar
-                  = image_tag current_user.avatar.url(:small)
-                .col-md-11.body
+                -# .col-md-1.avatar
+                -#   = image_tag current_user.avatar.url(:small)
+                .col-md-12.body
                   = render "questions/form"
               - else
                 %p.login-msg
                   = 'Please '
                   = link_to "Sign In", new_user_session_path
                   = 'to ask your question.'
-          #comments-pane
+
+          #qa-threads
             - @questions.each do |question|
-              = render 'questions/question', question: question
-              .form-pane
-                .form.row
+              .qa-thread.mt-3.mb-4{:id => "qa-thread-#{question.id}"}
+                = render 'questions/question', question: question
+
+                .answers{:id => "answers-#{question.id}"}
+                  - question.answers.each do |answer|
+                    = render 'answers/answer', question: question, answer: answer
                   - if user_signed_in?
-                    .col-md-1.avatar
-                      = image_tag current_user.avatar.url(:small)
-                    .col-md-11.body
-                      = render "answers/form"
+                    %a.btn-sm{"aria-controls" => "#question-#{question.id}-answer-form", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#question-#{question.id}-answer-form", :role => "button"}
+                      = 'Answer this thread'
+                    .answer-form.form.row.collapse.mt-3{:id => "question-#{question.id}-answer-form"}
+                      .col-md-12.body
+                        = render "answers/form", :question => question
                   - else
                     %p.login-msg
                       = 'Please '
                       = link_to "Sign In", new_user_session_path
                       = 'to answer question.'
-              - @answers.each do |answer|
-                = render 'answers/answer', answer: answer
 
       .random-notes.col-md-3
         -# %h3.title.mb-3 Related Notes

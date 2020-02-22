@@ -1,3 +1,4 @@
 :plain
-  $('#comments-pane').prepend('#{ j render @question}');
-  $('#comment_content').val('');
+  $('#qa-threads').prepend('#{ j render @question}');
+  $('#question-#{@question.id}').append('Please refresh to answer this thread.');
+  $('#question_content').val('');

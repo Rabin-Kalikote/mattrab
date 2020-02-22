@@ -25,7 +25,8 @@ class Note < ApplicationRecord
 
   def request_verification
     if self.is_verified == false
-      Notification.create(recipient: self.user, actor: self.user, action: 'asked for Verification of', notifiable: self)
+      @recipient = User.where(admin_category: self.category).first
+      Notification.create(recipient: @recipient, actor: self.user, action: 'asked for Verification of', notifiable: self)
     end
   end
 

@@ -20,7 +20,6 @@ class NotesController < ApplicationController
 
   def show
     @questions = Question.where(note_id: @note).order("created_at DESC")
-    @answers = Answer.where(question_id: @note.questions).order("created_at DESC")
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
     @note.update_attribute "view", @note.view += 1
   end

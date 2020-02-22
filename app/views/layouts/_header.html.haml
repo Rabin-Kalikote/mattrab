@@ -9,7 +9,7 @@
           - unless current_page?(root_path)
             %form{:action => "/search"}
               %i.fa.fa-search
-              %input.ask-ah{"aria-label" => "Search", :placeholder => "Ask your question...", :name => "query", :type => "search"}
+              %input.ask-ah{"aria-label" => "Search", :placeholder => "Search...", :name => "query", :type => "search"}
         .col-md-5.d-flex.justify-content-center.justify-content-md-end
           %ul.nav.justify-content-end
             - if !user_signed_in?
