@@ -37,9 +37,9 @@ development:
 
 production:
   <<: *default
-  database: mattrab_production
-  username: mattrab
-  password: <%= ENV['MATTRAB_DATABASE_PASSWORD'] %>
+  database: myapp_production
+  username: myapp
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
 
 test:
   adapter: postgresql
