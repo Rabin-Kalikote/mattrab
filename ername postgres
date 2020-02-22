@@ -1,0 +1,71 @@
+[33mcommit a4b3e4139ff02940c9643067b7ad28c699e83488[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Sat Feb 22 16:09:43 2020 +0545
+
+    Fixing admin abilities.
+
+[33mcommit fed2a0e58044bfdf93a5e7f54e2a9933320d4adb[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Sat Feb 22 15:51:35 2020 +0545
+
+    Setting up the Disscussions and refining the abilities.
+
+[33mcommit c20491e9aa2c764ea637eb0de2d40ec4aba1fc35[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Tue Feb 18 23:03:16 2020 +0545
+
+    Working to implement questioning and answering.
+
+[33mcommit f9a084be9fd8d71a5051a0bfc99e0f4fe357048b[m
+Author: Rabin-Kalikote <rabinkalikote33@gmail.com>
+Date:   Tue Feb 11 23:17:53 2020 +0545
+
+    Update README.md
+
+[33mcommit 3bcfc8b8ae8f262743ccba1bd8ad36254491f3b6[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Tue Feb 11 23:16:05 2020 +0545
+
+    Renamed Comments to Questions.
+
+[33mcommit 49ab6a2e21511270bb4d06e28035887d0525b4e0[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Tue Jan 28 22:13:26 2020 +0545
+
+    Added functionalities, improved designs and many more.
+
+[33mcommit 1fe0c2aa1f5e84d57532485c7058aca329f8fea5[m
+Author: Rabin-Kalikote <rabinkalikote33@gmail.com>
+Date:   Mon Dec 30 23:34:09 2019 +0545
+
+    Update README.md
+
+[33mcommit 88504128f6e1be93976016b5ed3d9aa4a672dce4[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Mon Dec 30 23:31:33 2019 +0545
+
+    Updated the design, functionalities and database.
+
+[33mcommit 2db86d73eb57c97d02418f64435f2cc10df3a30c[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Thu Oct 31 15:41:56 2019 +0545
+
+    ReadMe.md
+
+[33mcommit 4aada3895e7b90d93737324f4b7df41d3bbd2577[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Thu Oct 31 15:37:27 2019 +0545
+
+    Modified ReadMe.md
+
+[33mcommit 001fccdd605dd16b1097e7bf8f53ab0951e224db[m
+Author: Rabin Kalikote <rabinkalikote33@gmail.com>
+Date:   Thu Oct 31 15:31:53 2019 +0545
+
+    Now mattrab is almost functional.
+
+[33mcommit 0398c3b65e4cc91f12e424c92a50a13977469ced[m
+Author: Rabin-Kalikote <rabinkalikote33@gmail.com>
+Date:   Thu Oct 31 15:15:30 2019 +0545
+
+    Initial commit

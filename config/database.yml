@@ -35,6 +35,12 @@ development:
   username: postgres
   password: adgjmp014po
 
+production:
+  <<: *default
+  database: myapp_production
+  username: myapp
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+
 test:
   adapter: postgresql
   encoding: unicode
