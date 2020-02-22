@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :recipient_id
 
   acts_as_voter
-  enum role: [:general, :creator, :admin]
+  enum role: [:learner, :creator, :admin]
   enum admin_category: [:physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum grade: [:twelve, :eleven, :teacher]
 

@@ -5,10 +5,7 @@
       .col-md-3
         .this-face-wrap.mb-4
           %span.badge-base
-          - if @user.admin? or @user.notes.published.count > 0
             %span.badge.center= @user.role
-          - else
-            %span.badge.center= "Learner"
           .this-face
             .face= image_tag @user.avatar.url(:pro), class: "img-circle center"
             %h2.name.mt-3.mb-2

@@ -25,6 +25,8 @@ class Ability
     can :manage, Answer, user_id: user.id
 
     return unless user.admin?
+    can :read, Note, status: 'draft'
+    can :verify, Note
     can :manage, Note
     can :manage, Question
     can :manage, Answer
