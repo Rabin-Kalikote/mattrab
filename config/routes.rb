@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     member do
       put "like", to: "notes#vote"
       get "verify", to: "notes#verify"
+      get "request_verification",  to: "notes#request_verification"
     end
     resources :questions, only: [:create, :destroy] do
       resources :answers, only: [:create, :destroy]

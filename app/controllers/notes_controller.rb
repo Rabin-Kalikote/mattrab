@@ -68,6 +68,10 @@ class NotesController < ApplicationController
     redirect_back fallback_location: @note
   end
 
+  def request_verification
+    @note.request_verification
+  end
+
   private
 
   def find_note

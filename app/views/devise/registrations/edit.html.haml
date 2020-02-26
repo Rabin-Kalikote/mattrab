@@ -26,7 +26,7 @@
                 = f.label grade.to_sym
               - if @user.admin?
                 %br
-                %label.label.mb-1{:for => "user_admin_category"} Category
+                %label.label.mb-1{:for => "user_admin_category"} Admin
                 = f.select :admin_category, User.admin_categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
               = f.input :password, label: false, placeholder: "New Password", hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password"}
               = f.input :password_confirmation, label: false, placeholder: "Confirm New Password", required: false, input_html: { autocomplete: "new-password"}

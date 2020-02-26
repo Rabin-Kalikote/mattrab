@@ -243,7 +243,7 @@ header{
 .banner{
   z-index: 2!important;
   position: relative;
-  background-image: linear-gradient(rgba(95,207,128,.7),rgba(95,207,128,.7)),url(banner.jpg);
+  background-image: linear-gradient(rgba(95,207,128,.7),rgba(95,207,128,.7)),image-url(banner.jpg);
   min-height: 50vh;
   background-position: center;
   background-repeat: no-repeat;

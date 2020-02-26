@@ -9,7 +9,7 @@
         = 'answered'
         = time_ago_in_words(answer.created_at)
         ago
-    - if cannot? :destroy, answer
+    - if can? :destroy, answer
       = link_to 'Delete', note_question_answer_path(@note.id, question.id, answer.id), method: :delete, remote: true, class: 'btn-delete pull-right'
   .col-md-12.q-content
     .content.my-2

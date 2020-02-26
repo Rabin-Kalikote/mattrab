@@ -3,9 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   has_many :notes, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
+
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
@@ -14,7 +16,7 @@ class User < ApplicationRecord
 
   acts_as_voter
   enum role: [:learner, :creator, :admin]
-  enum admin_category: [:physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
+  enum admin_category: [:category, :physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum grade: [:twelve, :eleven, :teacher]
 
   ## helper methods

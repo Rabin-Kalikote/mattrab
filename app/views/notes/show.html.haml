@@ -87,7 +87,10 @@
                 -# .col-md-1.avatar
                 -#   = image_tag current_user.avatar.url(:small)
                 .col-md-12.body
-                  = render "questions/form"
+                  - if can? :create, Question
+                    = render "questions/form"
+                  - else
+                    %p= 'You cannot create questions.'
               - else
                 %p.login-msg
                   = 'Please '
@@ -107,7 +110,10 @@
                       = 'Answer this thread'
                     .answer-form.form.row.collapse.mt-3{:id => "question-#{question.id}-answer-form"}
                       .col-md-12.body
-                        = render "answers/form", :question => question
+                        - if can? :create, Answer
+                          = render "answers/form", :question => question
+                        - else
+                          %p= 'You cannot create answers.'
                   - else
                     %p.login-msg
                       = 'Please '
@@ -125,7 +131,7 @@
               = @random_note.category.capitalize
             %h2.title= link_to @random_note.title, @random_note
             %p.body
-              = truncate(simple_format(@random_note.body), :length => 150)
+              = truncate sanitize(@random_note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 150
             %p.buttons
               %span
                 %i.fa.fa-comments-o

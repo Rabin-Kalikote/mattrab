@@ -56,7 +56,7 @@
                     = link_to note do
                       %h2.title.mb-1= note.title
                       %p.body.mb-4
-                        = truncate(simple_format(note.body), :length => 170)
+                        = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
                     %p.buttons.align-self-end.mb-2
                       %span
                         %i.fa.fa-comment-alt
