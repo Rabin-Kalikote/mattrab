@@ -10,7 +10,7 @@
             .face= image_tag @user.avatar.url(:pro), class: "img-circle center"
             %h2.name.mt-3.mb-2
               = @user.name
-              - if @user.notes.count >= 5
+              - if @user.notes.count >= 15 or @user.creator? or @user.admin?
                 %span
                   %i.fa.fa-check-circle
             .follow.edit
