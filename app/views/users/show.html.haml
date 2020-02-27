@@ -68,7 +68,7 @@
                         %i.fa.fa-eye
                         = pluralize(note.view, "View")
               .col-lg-3.col-md-2.col-sm-12
-                - if note.user == current_user
+                - if note.user == current_user or current_user.admin?
                   %p.status.mb-3
                     = note.is_verified ? "Verified" : "Not Verified"
                     = '•'
