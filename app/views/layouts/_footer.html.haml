@@ -7,9 +7,14 @@
           If learning is a game, mattrab is a stadium.
           %span.focused And every student wins here.
       .action.col-md-4
-        = link_to new_note_path, class: 'action-button mx-auto' do
-          %i.fa.fa-rocket
-          Create Note
+        - if can? :create, Note
+          = link_to new_note_path, class: 'action-button mx-auto' do
+            %i.fa.fa-rocket
+            Create Note
+        - else
+          = link_to creator_appeal_path, class: 'action-button mx-auto' do
+            %i.fa.fa-rocket
+            Create Note
   .strip-row
     .bar.bar-1st
     .bar.bar-2nd

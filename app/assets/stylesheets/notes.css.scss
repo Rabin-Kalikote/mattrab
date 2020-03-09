@@ -117,6 +117,8 @@
             font-size: 18px;
             width:100% !important;
             font-weight:normal;
+						img{max-width: 100%;}
+						img.note-float-right{float: right;}
         	}
 					p.title{
             font-family: 'ptsans';

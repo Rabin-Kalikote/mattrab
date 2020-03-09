@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
     redirect_to notes_url, :alert => exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    redirect_to notes_url, :notice => "'404' Page not found! The page might have been broken or removed."
+  end
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

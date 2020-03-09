@@ -7,8 +7,9 @@ $(document).on 'turbolinks:load', ->
     $(this).summernote
       # placeholder: 'An energy crisis is any significant bottleneck in the supply of energy resources to an economy. In literature, it often refers to one of the energy sources used at a ...',
       tabsize: 2,
-      # focus: true,
-      height: 200
+      height: 200,
+      #airMode: true,
+      # focus: true
 
 #sticky cta
 $(document).scroll ->

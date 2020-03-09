@@ -7,5 +7,5 @@
       - if can? :verify, @note
         = link_to @note.is_verified? ? "Unverify Note" : "Verify Note", verify_note_path(@note, :is_verified => !@note.is_verified), method: :get, class: "note-action ml-3"
       - if @note.is_verified == false and !current_user.admin?
-        = link_to "Request Verification",  request_verification_note_path(@note), remote: true, class: "note-action ml-3"
+        = link_to "Request Verification",  request_verification_note_path(@note), remote: true, class: "note-action ml-3 request_verification"
   = render 'form'

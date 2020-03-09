@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  %w[about affiliate_program terms privacy].each do |page|
+  %w[about affiliate_program terms privacy creator_appeal].each do |page|
     get page, controller: "info", action: page
   end
 

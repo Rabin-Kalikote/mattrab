@@ -5,17 +5,17 @@ class NotesController < ApplicationController
 
   def index
     if params[:category].present?
-      @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 8).order("created_at DESC")
+      @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
       @category_title = params[:category].humanize + " Notes"
     else
-      @notes = Note.published.paginate(page: params[:page], per_page: 8).order("created_at DESC")
+      @notes = Note.published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
       @category_title = "Latest Notes"
     end
   end
 
   def search
     @query = params[:query]
-    @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 5)
+    @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 7)
   end
 
   def show
@@ -70,6 +70,7 @@ class NotesController < ApplicationController
 
   def request_verification
     @note.request_verification
+    redirect_back fallback_location: @note
   end
 
   private

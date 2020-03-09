@@ -66,7 +66,7 @@
                 - if can? :destroy, @note
                   = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
           .unit-body
-            = simple_format(@note.body)
+            = simple_format(@note.body, {}, :sanitize => false)
             .ad
               = image_tag 'adhere.png'
 

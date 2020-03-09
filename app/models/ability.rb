@@ -20,16 +20,15 @@ class Ability
     can :create, Question
     can :manage, Question, note: { user: { id: user.id } }
     can :manage, Question, user_id: user.id
-    cannot :create, Answer
-
-    return unless user.creator? or user.admin?
     can :manage, Answer, question: { note: { user: { id: user.id } } }
     can :manage, Answer, question: { user: { id: user.id } }
     can :manage, Answer, user_id: user.id
 
+    return unless user.creator? or user.admin?
+    can :manage, Answer
+
     return unless user.admin?
     can :manage, Note
     can :manage, Question
-    can :manage, Answer
   end
 end
