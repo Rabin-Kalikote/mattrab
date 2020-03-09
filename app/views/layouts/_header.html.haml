@@ -15,7 +15,7 @@
             - if !user_signed_in?
               %li.nav-item= link_to "Sign In", new_user_session_path
               %li.nav-item= link_to "Sign Up", new_user_registration_path
-            - if can? :create, Note
+            - if !user_signed_in? or can? :create, Note
               %li.nav-item= link_to "Create Note", new_note_path, class: 'btn-action btn-std'
             - else
               %li.nav-item= link_to "Create Note", creator_appeal_path, class: 'btn-action btn-std'

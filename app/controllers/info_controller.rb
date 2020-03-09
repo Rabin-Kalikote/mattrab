@@ -11,4 +11,7 @@ class InfoController < ApplicationController
 
   def privacy
   end
+
+  def creator_appeal
+  end
 end
