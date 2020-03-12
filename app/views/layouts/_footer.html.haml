@@ -7,7 +7,11 @@
           If learning is a game, mattrab is a stadium.
           %span.focused And every student wins here.
       .action.col-md-4
-        - if !user_signed_in? or can? :create, Note
+        - if !user_signed_in?
+          = link_to new_user_session_path, class: 'action-button mx-auto' do
+            %i.fa.fa-rocket
+            Create Note
+        - elsif can? :create, Note
           = link_to new_note_path, class: 'action-button mx-auto' do
             %i.fa.fa-rocket
             Create Note

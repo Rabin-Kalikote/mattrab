@@ -25,6 +25,8 @@
                       = f.submit "Unfollow", class: "btn-std btn-sm btn-follow-edit"
                 - else
                   = link_to "Edit Profile", edit_user_registration_path, class: 'btn-std btn-sm btn-follow-edit'
+              - else
+                = link_to "Follow", new_user_session_path, class: "btn-std btn-sm btn-follow-edit"
             %p.has.mt-4.mb-0
               = pluralize(@user.followers.count, "Follower")
               = '•'

@@ -5,10 +5,18 @@ class NotesController < ApplicationController
 
   def index
     if params[:category].present?
-      @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      if user_signed_in? and !current_user.teacher?
+        @notes = Note.where(:category => params[:category], :grade => current_user.grade).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      else
+        @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      end
       @category_title = params[:category].humanize + " Notes"
     else
-      @notes = Note.published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      if user_signed_in? and !current_user.teacher?
+        @notes = Note.where(:grade => current_user.grade).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      else
+        @notes = Note.published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      end
       @category_title = "Latest Notes"
     end
   end
@@ -80,6 +88,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category, :status)
+    params.require(:note).permit(:title, :body, :image, :category, :status, :grade)
   end
 end
