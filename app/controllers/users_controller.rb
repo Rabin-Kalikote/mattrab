@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!#, except: [:show]
   def show
     @user = User.find(params[:id])
+    set_meta_tags title: @user.name, site: 'Mattrab '+@user.role.humanize, description: @user.about, keywords: @user.name,
+                  og: { title: @user.name, description: @user.about.truncate(500), type: 'website', url: user_url(@user), image: @user.avatar },
+                  twitter: { card: 'user', site: '@askmattrab', title: @user.name, description: @user.about.truncate(500), image: @user.avatar }
     @user_notes = @user.notes.all.order("created_at DESC")
   end
 end

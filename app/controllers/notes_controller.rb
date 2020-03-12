@@ -24,9 +24,19 @@ class NotesController < ApplicationController
   def search
     @query = params[:query]
     @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 7)
+    if @notes.present?
+      set_meta_tags title: @notes.first.title, site: 'Mattrab Search', description: @notes.first.body, keywords: @notes.first.category+" class "+@notes.first.grade,
+                    og: { title: @notes.first.title, description: @notes.first.body.truncate(500), type: 'website', url: note_url(@notes.first), image: @notes.first.image },
+                    twitter: { card: 'note', site: '@askmattrab', title: @notes.first.title, description: @notes.first.body.truncate(500), image: @notes.first.image }
+    else
+      set_meta_tags title: 'No results found', site: 'Mattrab Search'
+    end
   end
 
   def show
+    set_meta_tags title: @note.title, site: 'Mattrab', description: @note.body, keywords: @note.category+" class "+@note.grade,
+                  og: { title: @note.title, description: @note.body.truncate(500), type: 'website', url: note_url(@note), image: @note.image },
+                  twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.truncate(500), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
     @note.update_attribute "view", @note.view += 1
@@ -47,6 +57,7 @@ class NotesController < ApplicationController
   end
 
   def edit
+    set_meta_tags title: 'Edit '+@note.title, site: 'Mattrab'
   end
 
   def update

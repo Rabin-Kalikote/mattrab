@@ -1,43 +1,43 @@
 !!!
 %html
-%head
-  %title Mattrab
-  = csrf_meta_tags
-  = favicon_link_tag 'favicon.ico', rel: 'icon', type: 'image/ico'
-  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
-  = stylesheet_link_tag "http://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-  = stylesheet_link_tag "https://use.fontawesome.com/releases/v5.12.0/css/all.css", crossorigin: "anonymous", integrity: "sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M"
-  = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Varela+Round&display=swap"
-  %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
+  %head
+    = csrf_meta_tags
+    = display_meta_tags(default_meta_tags)
+    = favicon_link_tag 'favicon.ico', rel: 'icon', type: 'image/ico'
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag "http://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    = stylesheet_link_tag "https://use.fontawesome.com/releases/v5.12.0/css/all.css", crossorigin: "anonymous", integrity: "sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Varela+Round&display=swap"
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
 
-%body
+  %body
 
-  = render "layouts/header"
-  .header-space
-  = yield
-  = render "layouts/footer"
+    = render "layouts/header"
+    .header-space
+    = yield
+    = render "layouts/footer"
 
-  -# Badge Code - Do Not Change The Code
-  -# :javascript
-  -#   document.write("<script type='text/javascript' src='https://visitorshitcounter.com/js/hitCounter.js?v="+Date.now()+"'><\/script>");
-  -# Badge Code End Here
+    -# Badge Code - Do Not Change The Code
+    -# :javascript
+    -#   document.write("<script type='text/javascript' src='https://visitorshitcounter.com/js/hitCounter.js?v="+Date.now()+"'><\/script>");
+    -# Badge Code End Here
 
-  - if notice
-    .this-popup
-      %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
-      .popup-head
-        %h3.popup-title
-          %i.fa.fa-exclamation-circle
-          = 'Notice'
-      .popup-body
-        %p.notice= notice
-  - elsif alert
-    .this-popup
-      %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
-      .popup-head
-        %h3.popup-title
-          %i.fa.fa-exclamation-triangle
-          = 'Alert'
-      .popup-body
-        %p.notice= alert
+    - if notice
+      .this-popup
+        %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
+        .popup-head
+          %h3.popup-title
+            %i.fa.fa-exclamation-circle
+            = 'Notice'
+        .popup-body
+          %p.notice= notice
+    - elsif alert
+      .this-popup
+        %i.fa.fa-times-circle.close-popup{:onclick => "this.parentElement.style.display='none';"}
+        .popup-head
+          %h3.popup-title
+            %i.fa.fa-exclamation-triangle
+            = 'Alert'
+        .popup-body
+          %p.notice= alert

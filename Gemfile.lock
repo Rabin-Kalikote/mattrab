@@ -109,6 +109,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    meta-tags (2.13.0)
+      actionpack (>= 3.2.0, < 6.1)
     method_source (0.9.2)
     mime-types (1.25.1)
     mimemagic (0.3.3)
@@ -248,6 +250,7 @@ DEPENDENCIES
   haml
   jbuilder (~> 2.5)
   jquery-rails
+  meta-tags
   paperclip
   pg
   pg_search
