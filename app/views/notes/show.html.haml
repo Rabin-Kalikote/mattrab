@@ -43,9 +43,9 @@
                     %i.fa.fa-thumbs-up
                     %span.likes-count= pluralize(@note.get_upvotes.size, "Like")
                 - else
-                  %p.nav-link.first.mb-0
-                    = link_to "Sign In", new_user_session_path
-                    = 'to like the note.'
+                  = link_to new_user_session_path, class: "nav-link first mb-0" do
+                    %i.fa.fa-thumbs-up
+                    %span.likes-count= pluralize(@note.get_upvotes.size, "Like")
                 %p.nav-link.mb-0
                   %i.fa.fa-comments
                   = pluralize(@note.questions.count, "Question")

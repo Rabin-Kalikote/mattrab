@@ -79,4 +79,6 @@
                   = link_to "Edit", edit_note_path(note), class: "btn-sm"
                 - if can? :destroy, note
                   = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
+          .pagination-nav.pt-4
+            = will_paginate @user_notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;'
           .space

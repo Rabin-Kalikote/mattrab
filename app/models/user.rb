@@ -19,6 +19,10 @@ class User < ApplicationRecord
   enum admin_category: [:category, :physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum grade: [:twelve, :eleven, :teacher]
 
+  def to_param
+    "#{id} #{name}".parameterize
+  end
+
   ## helper methods
   # follow another user
   def follow(other)

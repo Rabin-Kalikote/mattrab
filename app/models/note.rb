@@ -17,6 +17,10 @@ class Note < ApplicationRecord
     using: {tsearch: {dictionary: 'english'}},
     associated_against: {user: :name, questions: :content}
 
+  def to_param
+    "#{id} #{title}".parameterize
+  end
+
   def unpublish_if_unverified
     if self.is_verified_changed? and self.is_verified == false and self.published?
       self.status = "draft"

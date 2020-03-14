@@ -79,6 +79,80 @@
       }
     }
   }
+  .admins.container{
+    margin-top: 2rem;
+    display: -webkit-box; display: flex; flex-wrap: wrap;
+    .message-f-a{
+      h4.title{
+        color: #35b15a;
+        text-align: center;
+        font-size: 1.8rem;
+        font-family: 'ptsans';
+      }
+      p.text{
+        color: #333;
+        text-align: justify;
+        font-size: 1.1rem;
+        font-style: italic;
+        font-family: 'ptsans';
+      }
+    }
+    .p_admins, .c_admins, .b_admins,
+    .m_admins, .n_admins, .e_admins{
+      span.badge-base{
+        width: 100%;
+        height: .5rem;
+        display: block;
+        background: #89dca2;
+        border-radius: .3rem .3rem 0 0;
+      }
+      span.badge{
+        display: inline-block;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        font-size: .7rem;
+        background: #5fcf80;
+        width: 12rem;
+        height: 1.1rem;
+        border-radius: 1rem;
+        position: absolute;
+        top: -.3rem; left: 3%;
+      }
+      .view-admins{
+        background: #fff;
+        border-radius: 0 0 .3rem .3rem;
+        border-left: 1px solid #E5E4E2;
+        border-right: 1px solid #E5E4E2;
+        border-bottom: 1px solid #E5E4E2;
+        padding: 0 1.4rem 0 1.4rem;
+        .view-admin{
+          .this-face{
+            padding: 2rem 0 .2rem 0;
+            .face{img{
+              width: 70%;
+              margin-left: 15%;
+              padding: 2px;
+              border-radius: 50%;
+              border: 3px solid #5fcf80;
+            }}
+            h2.name{
+              font-size: 1.2rem;
+              font-family: 'ptsans';
+              text-align: center;
+              font-weight: bold;
+              span{font-size: .7rem;color: #b3b3b3; vertical-align: middle;}
+            }
+            p.details{
+              font-size: 1rem;
+              font-family: 'ptsans';
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
   .f-p.container{
     margin-top: 2rem;
     display: -webkit-box; display: flex; flex-wrap: wrap;
