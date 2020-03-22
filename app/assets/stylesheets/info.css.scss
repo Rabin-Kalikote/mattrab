@@ -117,7 +117,9 @@
         height: 1.1rem;
         border-radius: 1rem;
         position: absolute;
-        top: -.3rem; left: 3%;
+        top: -.3rem; left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
       }
       .view-admins{
         background: #fff;
@@ -126,6 +128,7 @@
         border-right: 1px solid #E5E4E2;
         border-bottom: 1px solid #E5E4E2;
         padding: 0 1.4rem 0 1.4rem;
+        display: -webkit-box; display: flex; flex-wrap: wrap;
         .view-admin{
           .this-face{
             padding: 2rem 0 .2rem 0;

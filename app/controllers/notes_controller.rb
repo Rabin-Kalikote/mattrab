@@ -38,7 +38,10 @@ class NotesController < ApplicationController
                   og: { title: @note.title, description: @note.body.truncate(500), type: 'website', url: note_url(@note), image: @note.image },
                   twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.truncate(500), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
-    @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
+    @random_note = Note.published.where(category: @note.category).where.not(id: @note).order("RANDOM()").first
+    if !@random_note.present?
+      @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
+    end
     @note.update_attribute "view", @note.view += 1
   end
 
