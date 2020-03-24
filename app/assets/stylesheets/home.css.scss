@@ -549,75 +549,57 @@ header{
   .pagination-nav{ padding: 3rem 0; nav{width: 100%; }}
 }
 
-#footer {
+footer{
   .encourage-row{
     width: 100% !important;
     height: auto;
-    color: #b0e8c0;
-    background: #35b15a;
-    padding: 1.7rem 0;
-    .container{
-      display: -webkit-box; display: flex; flex-wrap: wrap;
-      .message{
-        p.message-text{
-          font-size: 1.4rem;
-          font-family: 'ptsans';
-          text-align: center;
-          span.focused{color:#fff;}
-        }
-      }
-      .action{
-        .action-button{
-          color: #fff;
-          width: 80%;
-          display: block;
-          font-size: 1.2rem;
-          font-family: 'ptsans';
-          padding: .4rem 1rem;
-          background-color: #5fcf80;
-          text-align: center;
-          text-decoration: none;
-          -webkit-transition: all .1s ease-in-out;
-          transition: all .1s ease-in-out;
-          border-radius: .2rem;
-          border: 1px solid rgba(0,0,0,0.1);
-          &:hover{
-            background-color: #4eca73;
-          }
-        }
-      }
+    color: #515457;
+    background: #fbfbf9;
+    text-align:center;
+    font-family: 'ptsans';
+    padding: 1.4rem 0 3.4rem 0;
+    .en-message{max-width:640px;margin:0 auto 30px;}
+    .action-button{
+      padding: 12px 60px;
+      color: #fff!important;
+      background-color: #2ec66d!important;
+      text-decoration: none!important;
+      border-radius: 50px!important;
+      display: inline-block;
+      &:hover{background-color: #2cba67!important;text-decoration: none;}
     }
   }
   .app-info-row{
     width: 100% !important;
     height: auto;
-    color: #9de2b1;
-    background: #309f51;
+    color: #515457;
+    background: #fbfbf9;
     padding: .7rem 0;
     .container{
       display: -webkit-box; display: flex; flex-wrap: wrap;
-      .copyright{
-        p{
-          font-size: .9rem; font-family: 'ptsans'; color: #fff;
-          span.focused{color: #b0e8c0;}
-        }
-      }
       .links{
         li.link-item{
           list-style: none;
           display: inline;
           float: right;
           margin-left: 1rem;
+          margin-top: 11px;
           a{
             text-decoration: none;
             font-size: .9rem;
             font-family: 'ptsans';
-            color: #fff;
+            color: #515457;
             -webkit-transition: all .1s ease-in-out;
             transition: all .1s ease-in-out;
-            i.fa{font-size: .7rem;}
-            &:hover{color: #d8f3e0;}
+            i.fab{font-size: 1.1rem;}
+            &:hover{text-decoration: underline;}
           }
+        }
+        p{
+          font-size: .9rem;
+          font-family: 'ptsans';
+          display: inline;
+          margin-top: 13px;
         }
       }
     }

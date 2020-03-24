@@ -107,6 +107,11 @@ html, body{
   }
 }
 
+.pagination{
+  li.page-item{.page-link{color: #2ec66d;}}
+  li.page-item.active{.page-link{color: #fff;background-color: #2ec66d;border-color: #2ec66d;}}
+}
+
 .strip-row{
   display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
   .bar{height: .2rem;width: 8.3333%!important;position: relative;padding-right: 15px;padding-left: 15px;}

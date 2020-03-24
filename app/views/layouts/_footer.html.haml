@@ -1,57 +1,27 @@
 
 %footer#footer
+
   .encourage-row
-    .container
-      .message.col-md-8
-        %p.message-text.mb-1
-          If learning is a game, mattrab is a stadium.
-          %span.focused And every student wins here.
-      .action.col-md-4
-        - if !user_signed_in?
-          = link_to new_user_session_path, class: 'action-button mx-auto' do
-            %i.fa.fa-rocket
-            Create Note
-        - elsif can? :create, Note
-          = link_to new_note_path, class: 'action-button mx-auto' do
-            %i.fa.fa-rocket
-            Create Note
-        - else
-          = link_to creator_appeal_path, class: 'action-button mx-auto' do
-            %i.fa.fa-rocket
-            Create Note
-  .strip-row
-    .bar.bar-1st
-    .bar.bar-2nd
-    .bar.bar-3rd
-    .bar.bar-4th
-    .bar.bar-5th
-    .bar.bar-6th
-    .bar.bar-7th
-    .bar.bar-8th
-    .bar.bar-9th
-    .bar.bar-10th
-    .bar.bar-11th
-    .bar.bar-12th
+    - if !user_signed_in?
+      %h2 Join Mattrab Community
+    - else
+      %h2 Uncover your Creativity
+    %p.en-message Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
+    - if !user_signed_in?
+      = link_to "Create note, it's free!", new_user_session_path, class: 'action-button mx-auto'
+    - elsif can? :create, Note
+      = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
+    - else
+      = link_to "Create note, it's free!", creator_appeal_path, class: 'action-button mx-auto'
+
   .app-info-row
     .container
-      .copyright.col-md-6
-        %p.mb-0
-          ©2020 Mattrab. All right reserved.
-          %span.focused By students, for students.
-      .links.col-md-6
+      .links.col-md-12.d-flex.justify-content-center
+        %p.mb-0 © 2020 Mattrab. All right reserved. By students, for students.
         %li.link-item
-          = link_to privacy_path do
-            %i.fa.fa-user-secret
-            Privacy
-        %li.link-item
-          = link_to terms_path do
-            %i.fa.fa-info-circle
-            Terms &amp; Conditions
-        %li.link-item
-          = link_to affiliate_program_path do
-            %i.fa.fa-bullhorn
-            Affiliate Program
-        %li.link-item
-          = link_to about_path do
-            %i.fa.fa-award
-            About Mattrab
+          %a{:href => 'https://www.facebook.com/mattrabcommunity', :target => '_blank'}
+            %i.fab.fa-facebook
+        %li.link-item= link_to 'Privacy', privacy_path
+        %li.link-item= link_to 'Terms & Conditions', terms_path
+        %li.link-item= link_to 'Affiliate Program', affiliate_program_path
+        %li.link-item= link_to 'About Mattrab', about_path

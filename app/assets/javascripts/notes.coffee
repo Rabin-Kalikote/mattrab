@@ -9,7 +9,7 @@ $(document).on 'turbolinks:load', ->
       tabsize: 2,
       height: 200,
       toolbar: [['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
-                ['font', ['style', 'fontname', 'color']],
+                ['font', ['style', 'color']],
                 ['para', ['ul', 'ol', 'paragraph', 'height']],
                 ['insert', ['link', 'picture', 'video', 'hr', 'table']],
                 ['view', ['fullscreen', 'help']]]
