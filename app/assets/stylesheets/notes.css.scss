@@ -535,6 +535,7 @@
 									background: #f9f9f9;
 									border-bottom:1px solid #E5E4E2;
 									position: initial;
+									button.note-btn{background: #fff!important;border-color: #E5E4E2;}
 								}
 								@media (max-width: 767.98px) {.note-toolbar{padding: .5rem 1rem 0 1rem !important;}}
 							}

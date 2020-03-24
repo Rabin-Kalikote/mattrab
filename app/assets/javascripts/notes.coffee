@@ -8,8 +8,13 @@ $(document).on 'turbolinks:load', ->
       # placeholder: 'An energy crisis is any significant bottleneck in the supply of energy resources to an economy. In literature, it often refers to one of the energy sources used at a ...',
       tabsize: 2,
       height: 200,
+      toolbar: [['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                ['font', ['style', 'fontname', 'color']],
+                ['para', ['ul', 'ol', 'paragraph', 'height']],
+                ['insert', ['link', 'picture', 'video', 'hr', 'table']],
+                ['view', ['fullscreen', 'help']]]
       #airMode: true,
-      # focus: true
+      #focus: true
 
 #sticky cta
 $(document).scroll ->
