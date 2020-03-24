@@ -57,115 +57,115 @@
         %h2.title See your friends' footsteps.
         %p.text You can look around Mattrab Community and see what your friends are doing. Invest your time improving yourself and lead the Community around.
 
-  .admins.container
-    .message-f-a.col-md-12
-      %h4.title Message from the Admins
-      %p.text.mb-3
-        We are proud that our students have started helping eachother and their friends all over the country. It is stunning to know about our students have started the platform which promtes the creativity, questioning and shared learning. Probably, this is the results of our guidance for them to emerge above the habit of rote learning. It is our privilege to be the part of Mattrab Community and help the students.
-        %br
-        Welcome and good luck to all the students.
-    - if @p_admins.present?
-      .p_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center physics admins
-        .view-admins.justify-content-center
-          - @p_admins.each do |p_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag p_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = p_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of Physics
-                  %br
-                  St. Xavier's College
-    - if @c_admins.present?
-      .c_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center chemistry admins
-        .view-admins.justify-content-center
-          - @c_admins.each do |c_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag c_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = c_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of Chemistry
-                  %br
-                  St. Xavier's College
-    - if @b_admins.present?
-      .b_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center biology admins
-        .view-admins.justify-content-center
-          - @b_admins.each do |b_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag b_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = b_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of Biology
-                  %br
-                  St. Xavier's College
-    - if @m_admins.present?
-      .m_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center maths admins
-        .view-admins.justify-content-center
-          - @m_admins.each do |m_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag m_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = m_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of Mathematics
-                  %br
-                  St. Xavier's College
-    - if @n_admins.present?
-      .n_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center nepali admins
-        .view-admins.justify-content-center
-          - @n_admins.each do |n_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag n_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = n_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of Nepali
-                  %br
-                  St. Xavier's College
-    - if @e_admins.present?
-      .e_admins.col-md-12.mb-4
-        %span.badge-base
-          %span.badge.center english admins
-        .view-admins.justify-content-center
-          - @e_admins.each do |e_admin|
-            .view-admin.col-md-3
-              .this-face
-                .face= image_tag e_admin.avatar.url(:pro), class: "img-circle center"
-                %h2.name.mt-3.mb-1
-                  = e_admin.name
-                  %span
-                    %i.fa.fa-check-circle
-                %p.details
-                  Department of English
-                  %br
-                  St. Xavier's College
+  -# .admins.container
+  -#   .message-f-a.col-md-12
+  -#     %h4.title Message from the Admins
+  -#     %p.text.mb-3
+  -#       We are proud that our students have started helping eachother and their friends all over the country. It is stunning to know about our students have started the platform which promtes the creativity, questioning and shared learning. Probably, this is the results of our guidance for them to emerge above the habit of rote learning. It is our privilege to be the part of Mattrab Community and help the students.
+  -#       %br
+  -#       Welcome and good luck to all the students.
+  -#   - if @p_admins.present?
+  -#     .p_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center physics admins
+  -#       .view-admins.justify-content-center
+  -#         - @p_admins.each do |p_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag p_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = p_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of Physics
+  -#                 %br
+  -#                 St. Xavier's College
+  -#   - if @c_admins.present?
+  -#     .c_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center chemistry admins
+  -#       .view-admins.justify-content-center
+  -#         - @c_admins.each do |c_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag c_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = c_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of Chemistry
+  -#                 %br
+  -#                 St. Xavier's College
+  -#   - if @b_admins.present?
+  -#     .b_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center biology admins
+  -#       .view-admins.justify-content-center
+  -#         - @b_admins.each do |b_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag b_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = b_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of Biology
+  -#                 %br
+  -#                 St. Xavier's College
+  -#   - if @m_admins.present?
+  -#     .m_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center maths admins
+  -#       .view-admins.justify-content-center
+  -#         - @m_admins.each do |m_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag m_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = m_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of Mathematics
+  -#                 %br
+  -#                 St. Xavier's College
+  -#   - if @n_admins.present?
+  -#     .n_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center nepali admins
+  -#       .view-admins.justify-content-center
+  -#         - @n_admins.each do |n_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag n_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = n_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of Nepali
+  -#                 %br
+  -#                 St. Xavier's College
+  -#   - if @e_admins.present?
+  -#     .e_admins.col-md-12.mb-4
+  -#       %span.badge-base
+  -#         %span.badge.center english admins
+  -#       .view-admins.justify-content-center
+  -#         - @e_admins.each do |e_admin|
+  -#           .view-admin.col-md-3
+  -#             .this-face
+  -#               .face= image_tag e_admin.avatar.url(:pro), class: "img-circle center"
+  -#               %h2.name.mt-3.mb-1
+  -#                 = e_admin.name
+  -#                 %span
+  -#                   %i.fa.fa-check-circle
+  -#               %p.details
+  -#                 Department of English
+  -#                 %br
+  -#                 St. Xavier's College
 
   .f-p.container
     .view-f-p.col-md-3.offset-md-1

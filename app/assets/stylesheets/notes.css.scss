@@ -386,7 +386,21 @@
 	background: #fbfbf9;
 	.edition-head-nav{
 		.d-flex{
-			a.note-action{
+			select#admin{
+				display: inline-block;
+				padding: .1rem .5rem;
+		    font-size: 1rem;
+				font-family: 'ptsans';
+				color: #111!important;
+		    border-left: 2px solid #111!important;
+				border-top: 2px solid #111!important;
+				border-bottom: 2px solid #111!important;
+				border-right: none!important;
+				transition: .3s all ease-in-out;
+				&:focus{outline: none;}
+			}
+			a.note-action,
+			button.note-action{
 				display: inline-block;
 				padding: .1rem .5rem;
 		    font-size: 1rem;
@@ -395,10 +409,10 @@
 		    background: #fbfbf9!important;
 		    border: 2px solid #111!important;
 				transition: .3s all ease-in-out;
-				&:hover{
-					text-decoration: none !important;
-				}
+				&:hover{text-decoration: none !important;}
+				&:focus{outline: none;}
 			}
+			button.note-action,
 			a.note-action.delete{
 				color: #fff!important;
 		    background: #111!important;

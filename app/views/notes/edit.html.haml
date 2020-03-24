@@ -1,4 +1,24 @@
 
+:javascript
+  $(document).ready( function() {
+    $("#req_veri").click(function(){
+      $.ajax({
+        url: "#{request_verification_note_path(@note)}?admin="+$('#admin :selected').val(),
+        type: "get",
+        data: {},
+        success: function(data) {
+          $("#req_veri").html("Requested");
+        },
+        error: function(data) {
+          $("#req_veri").html("Couldn't Request");
+        }
+      })
+    });
+    $('#admin').change(function(){
+      $("#req_veri").html("Request Verification");
+    });
+  });
+
 #note-edition.pt-5
   .edition-head-nav.container
     .d-flex.flex-row-reverse.py-2
@@ -7,5 +27,7 @@
       - if can? :verify, @note
         = link_to @note.is_verified? ? "Unverify Note" : "Verify Note", verify_note_path(@note, :is_verified => !@note.is_verified), method: :get, class: "note-action ml-3"
       - if @note.is_verified == false and !current_user.admin?
-        = link_to "Request Verification",  request_verification_note_path(@note), remote: true, class: "note-action ml-3 request_verification"
+        %button#req_veri.note-action.ml-0.request_verification
+          = 'Request Verification'
+        = select_tag "admin", options_from_collection_for_select(@admins, "id", "name")
   = render 'form'

@@ -60,6 +60,11 @@ class NotesController < ApplicationController
   end
 
   def edit
+    if @note.pastpapers? or @note.solution?
+      @admins = User.where(:role => 'admin')
+    else
+      @admins = User.where(:admin_category => @note.category)
+    end
     set_meta_tags title: 'Edit '+@note.title, site: 'Mattrab'
   end
 
@@ -91,7 +96,7 @@ class NotesController < ApplicationController
   end
 
   def request_verification
-    @note.request_verification
+    @note.request_verification(User.find(params[:admin]))
     redirect_back fallback_location: @note
   end
 

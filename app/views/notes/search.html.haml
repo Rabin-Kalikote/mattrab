@@ -32,7 +32,7 @@
                   %i.fa.fa-eye
                   = pluralize(note.view, "View")
       .row.pagination-nav.justify-content-center
-        = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;'
+        = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
     - else
       .no-note.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
         %p.note Oops! No notes were found for your question.

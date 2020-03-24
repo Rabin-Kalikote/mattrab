@@ -114,7 +114,13 @@ header{
           }
           &::-webkit-scrollbar {
             width: 7px;
+            display: none;
+            -webkit-transition: display .1s ease-in-out;
+            transition: display .1s ease-in-out;
           }
+          // &:hover{ &::-webkit-scrollbar{
+          //   display: block;
+          // }}
           &::-webkit-scrollbar-track {
             background: #fff;
           }
@@ -145,6 +151,8 @@ header{
               padding-top:.5rem;
               padding-bottom:.5rem;
               &:focus{background: #f2f2f2;}
+              &:nth-child(even) {background: #ebf9ef}
+              &:nth-child(odd) {background: #fff}
               .col-md-2{
                 .n-img{
                   img{
@@ -161,6 +169,8 @@ header{
                 padding: 0 1.5rem;
                 // background-image: linear-gradient(to right,#73D2F6,#08C 22%,#7FC400 36%,#FFD583 48%,#FFB21E 63%,#FF4D4D 76%,#503873);
                 p{
+                  word-break: break-word;
+                  white-space: normal;
                   margin-bottom: 0;
                   font-size: 1rem;
                   color: #333;
@@ -469,7 +479,7 @@ header{
 
 #notes {
   background: #fbfbf9;
-  h3.title{
+  h2.title{
     font-size: 1.4rem;
     font-family: 'ptsans';
     margin-bottom: 1.5rem !important;
@@ -507,7 +517,7 @@ header{
           }
           a{
             text-decoration: none;
-            h2.title {
+            h3.title {
               color: #333;
               font-family: 'ptsans';
               font-size: 1.1rem;
@@ -522,7 +532,7 @@ header{
               font-size: .8rem;
               color: #576366;
             }
-            &:hover{ h2.title { color: #35b15a;}}
+            &:hover{ h3.title { color: #35b15a;}}
           }
           p.buttons{
             font-family: 'medium';
