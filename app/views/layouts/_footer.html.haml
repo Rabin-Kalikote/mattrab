@@ -1,27 +1,11 @@
 
 %footer#footer
-
-  .encourage-row
-    - if !user_signed_in?
-      %h2 Join Mattrab Community
-    - else
-      %h2 Showcase your Knowledge
-    %p.en-message Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
-    - if !user_signed_in?
-      = link_to "Create note, it's free!", new_user_session_path, class: 'action-button mx-auto'
-    - elsif can? :create, Note
-      = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
-    - else
-      = link_to "Create note, it's free!", creator_appeal_path, class: 'action-button mx-auto'
-
-  .app-info-row
-    .container
-      .links.col-md-12.d-flex.justify-content-center
-        %p.mb-0 © 2020 Mattrab. All right reserved. By students, for students.
+  .container.clearfix
+    .app-info-row.row
+      %ul.links.list-style-none.d-block.col-12.justify-content-center.mb-2.mb-lg-0
         %li.link-item
-          %a{:href => 'https://www.facebook.com/mattrabcommunity', :target => '_blank'}
-            %i.fab.fa-facebook
-        %li.link-item= link_to 'Privacy', privacy_path
-        %li.link-item= link_to 'Terms & Conditions', terms_path
-        %li.link-item= link_to 'Affiliate Program', affiliate_program_path
-        %li.link-item= link_to 'About Mattrab', about_path
+          %a{:href => 'https://www.facebook.com/mattrabcommunity', :target => '_blank'} © 2020 Mattrab Community.
+        %li.link-item= link_to 'Privacy.', privacy_path
+        %li.link-item= link_to 'Terms & Conditions.', terms_path
+        %li.link-item= link_to 'Affiliate Program.', affiliate_program_path
+        %li.link-item= link_to 'About Mattrab.', about_path

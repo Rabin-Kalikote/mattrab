@@ -9,20 +9,20 @@
       padding-top: 4rem;
       h2.title{
         text-align: center;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         font-size: 2.5rem;
-        color: #333;
         font-weight: bold;
+        color: #333;
       }
       p.messege{
         text-align: center;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         font-size: 1.1rem;
         color: #333;
       }
       p.if{
         text-align: center;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         font-size: 1rem;
         color: #333;
         margin-top: 4rem;
@@ -54,7 +54,7 @@
           border: 1px solid #d8dee2;
           .form-inputs{
             a{
-              color: #b3b3b3; float:right; font-family:'ptsans'; font-size:.8rem!important;text-decoration: none;
+              color: #b3b3b3; float:right; font-family:'mattrab-content-sans-serif-font'; font-size:.8rem!important;text-decoration: none;
               &:hover{color: #5fcf80;}
             }
             input{
@@ -62,10 +62,10 @@
               border-radius: 3rem;
               padding: 0 1rem;
             }
-            span.hint{color: #b3b3b3;font-family:'ptsans'; font-size:.8rem!important; }
+            span.hint{color: #b3b3b3;font-family:'mattrab-content-sans-serif-font'; font-size:.8rem!important; }
             .input.boolean.optional{
               font-size: .8rem!important;
-              font-family:'ptsans';
+              font-family:'mattrab-content-sans-serif-font';
               color: #b3b3b3;
               input.boolean.optional{
                 margin-right: .4rem!important;
@@ -124,7 +124,7 @@
         }}
         h2.name{
           font-size: 1.5rem;
-          font-family: 'ptsans';
+          font-family: 'mattrab-content-sans-serif-font';
           text-align: center;
           font-weight: bold;
           span{font-size: .7rem;color: #b3b3b3; vertical-align: middle;}
@@ -141,7 +141,7 @@
         p.has,p.email{
           color: #b3b3b3;
           font-size: .9rem;
-          font-family: 'ptsans';
+          font-family: 'mattrab-content-sans-serif-font';
           text-align: center;
         }
         p.email{font-size:.8rem!important;}
@@ -153,7 +153,7 @@
         color: #333;
         background: #ebf9ef;
         font-size: 1rem;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         border-left: 3px solid #89dca2;
         margin-right: 12px; margin-left: 12px;
         span.intro{font-size: 1.1rem;font-weight: bold;}
@@ -165,7 +165,7 @@
           width: 100%;
           color: #333;
           font-size: 1.2rem;
-          font-family: 'ptsans';
+          font-family: 'mattrab-content-sans-serif-font';
           margin-left: 13px;
         }
         .col-lg-9.col-md-10.col-sm-12{
@@ -185,7 +185,7 @@
             .note_content {
               padding: .4rem 4%;
               p.info{
-                font-family: 'ptsans';
+                font-family: 'mattrab-content-sans-serif-font';
                 font-size: .7rem;
                 color: #b2bac2;
                 margin-top: .4rem;
@@ -194,23 +194,23 @@
                 text-decoration: none;
                 h2.title {
                   color: #333;
-                  font-family: 'ptsans';
+                  font-family: 'mattrab-content-sans-serif-font';
                   font-size: 1.1rem;
-                  font-weight: bold;
                   display: -webkit-box;
+                  font-weight: bold;
                   overflow: hidden;
                   color: #2e353b;
                   transition: color 100ms ease-in-out;
                 }
                 p.body{
-                  font-family: 'medium';
+                  font-family: 'mattrab-content-sans-serif-font';
                   font-size: .8rem;
                   color: #576366;
                 }
                 &:hover{ h2.title { color: #35b15a;}}
               }
               p.buttons{
-                font-family: 'ptsans';
+                font-family: 'mattrab-content-sans-serif-font';
                 font-size: .7rem;
                 color: #7e8c9a;
                 position: absolute;
@@ -225,7 +225,7 @@
           a.btn-sm{
             color: #333;
             font-size: .9rem;
-            font-family: 'ptsans';
+            font-family: 'mattrab-content-sans-serif-font';
             border: 2px solid rgba(48,73,97,0.1);
             transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
             &:hover{
@@ -234,7 +234,7 @@
             }
           }
           a.btn-sm.delete{&:hover{border: 2px solid #ff4d4d;}}
-          p.status{font-family: 'ptsans'; font-size: .8rem; color: #35b15a;}
+          p.status{font-family: 'mattrab-content-sans-serif-font'; font-size: .8rem; color: #35b15a;}
         }
       }
     }
@@ -303,14 +303,14 @@
           input{
             width: 100%;
             background: #ebf9ef;
-            font-family: 'ptsans';
+            font-family: 'mattrab-content-sans-serif-font';
             padding: .5rem .3rem;
             margin: .5rem 0;
             font-size: .9rem;
             outline: none; border: none;
             border-left: 3px solid #89dca2;
           }
-          span.hint{display: block;font-size: .7rem;font-family: 'ptsans';color: #35b15a;line-height: 1!important;margin-top: -0.1rem!important;}
+          span.hint{display: block;font-size: .7rem;font-family: 'mattrab-content-sans-serif-font';color: #35b15a;line-height: 1!important;margin-top: -0.1rem!important;}
         }
         .user_name{
           margin: 1.5rem 0 .5rem 0;
@@ -357,7 +357,7 @@
         padding: .7rem .8rem;
         color: #333;
         background: #ebf9ef;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         border-left: 3px solid #89dca2;
         margin-right: 12px; margin-left: 12px;
         span.intro{font-size: 1.1rem;font-weight: bold;}
@@ -367,7 +367,7 @@
         color: #333;
         width: 97%;
         background: #ebf9ef;
-        font-family: 'ptsans';
+        font-family: 'mattrab-content-sans-serif-font';
         outline: none; border: none;
         border-left: 3px solid #89dca2;
         margin-right: 12px; margin-left: 12px;

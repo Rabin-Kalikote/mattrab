@@ -9,7 +9,7 @@
               %span.badge.center= @user.role
             .this-face
               .face
-                = image_tag @user.avatar.url(:pro), class: "img-circle center"
+                = image_tag @user.avatar.url(:pro), class: "img-circle center img-edit-preview"
                 %label{:for => "user_avatar"}
                   %i.fa.fa-camera
                 = f.input :avatar, label: false, required: true

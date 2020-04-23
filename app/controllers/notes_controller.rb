@@ -38,7 +38,11 @@ class NotesController < ApplicationController
                   og: { title: @note.title, description: ActionController::Base.helpers.sanitize(@note.body).truncate(150), type: 'website', url: note_url(@note), image: @note.image },
                   twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: ActionController::Base.helpers.sanitize(@note.body).truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
-    @random_note = Note.published.where(category: @note.category, grade: current_user.grade).where.not(id: @note).order("RANDOM()").first
+    if user_signed_in?
+      @random_note = Note.published.where(category: @note.category, grade: current_user.grade).where.not(id: @note).order("RANDOM()").first
+    else
+      @random_note = Note.published.where(category: @note.category).where.not(id: @note).order("RANDOM()").first
+    end
     if !@random_note.present?
       @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
     end

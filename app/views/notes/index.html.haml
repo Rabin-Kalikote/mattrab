@@ -1,15 +1,21 @@
 
 .banner
   .banner-content
-    .search-bar.mt-5.p-3.p-lg-1.pl-lg-4
-      %form{:action => "/search"}
-        .row
-          .col-md-9.d-flex.align-items-center.form-group
-            %input.form-control.border-0.shadow-0{"aria-label" => "Search", :placeholder => "Your Question...", :name => "query", :type => "search"}
-          .col-md-3
-            %button.btn.btn-block.rounded-xl.h-100{:type => "submit"} Ask Mattrab
-    %p#intro
+    .index-search
+      %form.search_form{:action => "/search"}
+        %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
+        %button.search_button{:type => "submit"}
+          %i.fas.fa-search
+    %p#intro.mb-0
       What's your question? See how your friends have answered them at mattrab.
+
+    -# .search-bar.mt-5.p-3.p-lg-1.pl-lg-4
+    -#   %form{:action => "/search"}
+    -#     .row
+    -#       .col-md-9.d-flex.align-items-center.form-group
+    -#         %input.form-control.border-0.shadow-0{"aria-label" => "Search", :placeholder => "Your Question...", :name => "query", :type => "search"}
+    -#       .col-md-3
+    -#         %button.btn.btn-block.rounded-xl.h-100{:type => "submit"} Ask Mattrab
 
 .sticky-subnav
   .subnav-row
@@ -100,3 +106,17 @@
 
     .row.pagination-nav
       = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+
+    .encourage-row.row
+      - if !user_signed_in?
+        %h2.en-title Join Mattrab Community
+      - else
+        %h2.en-title Showcase your Knowledge
+      %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
+      .actions
+        - if !user_signed_in?
+          = link_to "Create note, it's free!", new_user_session_path, class: 'action-button mx-auto'
+        - elsif can? :create, Note
+          = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
+        - else
+          = link_to "Create note, it's free!", creator_appeal_path, class: 'action-button mx-auto'

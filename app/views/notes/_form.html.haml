@@ -10,7 +10,7 @@
                 .col-md-8.heading
                   = f.input :title, placeholder: "Title"
                 .col-md-4.image
-                  = image_tag @note.image.url(:small)
+                  = image_tag @note.image.url(:small), class: "note-img-preview"
                   %label{:for => "note_image"}
                     %i.fa.fa-camera
                   = f.input :image

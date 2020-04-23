@@ -15,16 +15,17 @@
  */
 
 // Font Faces
-@font-face {font-family: 'thin'; src: url('lthin.ttf') format('truetype');}
-@font-face {font-family: 'light'; src: url('llight.ttf') format('truetype');}
-@font-face {font-family: 'medium'; src: url('lmedium.ttf') format('truetype');}
-@font-face {font-family: 'bold'; src: url('lbold.ttf') format('truetype');}
-@font-face {font-family: 'ptsans'; src: url('ptsans.ttf') format('truetype');}
-@font-face {font-family: 'nepali'; src: url('nepali.ttf') format('truetype');}
+@font-face {font-family: 'mattrab-content-sans-serif-font'; src: url('sansserif.ttf') format('truetype');}
+@font-face {font-family: 'mattrab-content-light-font'; src: url('light.ttf') format('truetype');}
+@font-face {font-family: 'mattrab-content-bold-font'; src: url('bold.ttf') format('truetype');}
+@font-face {font-family: 'mattrab-content-serif-font'; src: url('serif.ttf') format('truetype');}
+
+// Variables
 
 html, body{
   margin: 0;
   padding: 0;
+  background: #fbfbf9;
 }
 .centered-text,.c-t{text-align: center;}
 
@@ -43,7 +44,7 @@ html, body{
 .h-20{height:20% !important;}
 
 .header-space{
-  height: 64px;
+  height: 50px;
 }
 .sticky-subnav-space{
   height: 5rem;
@@ -98,7 +99,7 @@ html, body{
   font-size: .9rem;
   border-radius: 100px;
   padding: .5rem .7rem;
-  font-family: 'bold'!important;
+  font-family: 'mattrab-content-bold-font'!important;
   border: 2px solid rgba(48,73,97,0.1);
   transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   &:hover{
@@ -167,7 +168,7 @@ html, body{
     h3.popup-title{
       color: #527cec;
       font-size: 1.3rem;
-      font-family: 'medium';
+      font-family: 'mattrab-content-sans-serif-font';
       i.fa{
         font-size: 1.5rem;
       }
@@ -177,7 +178,7 @@ html, body{
     p.notice{
       color: #576366;
       font-size: 1rem;
-      font-family: 'medium';
+      font-family: 'mattrab-content-sans-serif-font';
       margin-bottom: 0!important;
     }
   }

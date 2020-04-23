@@ -1,4 +1,7 @@
 
+// Variables
+$content-font-size: 17px;
+
 #note-show {
 	background: #fbfbf9;
 	.container{
@@ -24,7 +27,7 @@
 						display: flex;
 						flex-wrap: wrap;
 						.unit-name{
-							font-family: 'ptsans';
+							font-family: 'mattrab-content-sans-serif-font';
 							font-size: 1.4rem;
 							padding: .5rem 0;
 							vertical-align: middle;
@@ -88,7 +91,7 @@
 							color:#969696;
 							font-size: .8rem;
 							background: #f9f9f9;
-							font-family: 'medium';
+							font-family: 'mattrab-content-sans-serif-font';
 							text-decoration: none;
 							outline: none; border: none;
 							padding: .5rem .7rem !important;
@@ -109,34 +112,20 @@
           width: 100%;
           padding: 2.5em 3.2rem;
           min-height:50vh;
-					font-size: 17px;
-					font-family: 'ptsans';
+					line-height: 29px;
+					font-size: $content-font-size;
+					font-family: 'mattrab-content-sans-serif-font';
 					p{
-            font-family: 'ptsans'!important;
-            font-size: 17px!important;
+            font-family: 'mattrab-content-sans-serif-font'!important;
+            font-size: $content-font-size!important;
             width:100% !important;
+						color: #333333 !important;
             font-weight:normal;
+						line-height: 29px;
 						img{max-width: 100%;}
 						img.note-float-right{float: right;}
         	}
-					p.title{
-            font-family: 'ptsans';
-            font-size: 22px;
-            width:100% !important;
-            font-weight:normal;
-            color: #00b38f;
-            text-shadow:0 .06em .4em #aaa;
-        	}
-					p.paragraph{
-            font-family: 'ptsans';
-            font-size: 16px;
-            font-weight:normal;
-            color: #00b38f;
-        	}
-					.paragraph.hilighted{
-            color: #FF7F50;
-        	}
-					.ad{padding-top: 1rem;img{width: 100%;}}
+					.ad{padding-top: 1rem;display: none;img{width: 100%;}}
         }
 				@media (max-width: 767.98px) {.unit-body{padding: 1.5em 2rem !important;}}
       }
@@ -156,19 +145,19 @@
 						color: #1a1a1a;
 						margin: .5rem 1rem;
 						text-decoration: none;
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 						font-size: 1.3rem;
 					}
 				}
 				.author-description{
 					p.about{
 						margin:.5rem 1.5rem 0 1.5rem;
-						font-family: 'ptsans';
-						font-size: 16px;
+						font-family: 'mattrab-content-sans-serif-font';
+						font-size: 15px;
 						.followers{
 							display: block;
 							color: #5fcf80;
-							font-family: 'ptsans';
+							font-family: 'mattrab-content-sans-serif-font';
 						}
 					}
 				}
@@ -181,7 +170,7 @@
 					color: #1a1a1a;
 					margin: .5rem 0;
 					text-decoration: none;
-					font-family: 'ptsans';
+					font-family: 'mattrab-content-sans-serif-font';
 					font-size: 1.3rem;
 				}
 				.ask{
@@ -192,10 +181,10 @@
 					        color: #333;
 									width: 100%;
 					        background: #ebf9ef;
-					        font-size: 1rem;
+					        font-size: $content-font-size;
 									min-height: 7rem;
 									padding: .7rem .8rem;
-					        font-family: 'ptsans';
+					        font-family: 'mattrab-content-sans-serif-font';
 									border: none; outline: none;
 					        border-left: 3px solid #89dca2;
 									&:focus{
@@ -225,7 +214,7 @@
 									.username {
 										font-size: 1rem;
 										color: #333233;
-										font-family: 'ptsans';
+										font-family: 'mattrab-content-sans-serif-font';
 										text-decoration: none;
 									}
 									.at{
@@ -236,7 +225,7 @@
 								.btn-delete{
 									color: #333;
 			            font-size: .8rem;
-			            font-family: 'ptsans';
+			            font-family: 'mattrab-content-sans-serif-font';
 									border-radius: .2rem;
 									padding: 0 .3rem;
 			            border: 2px solid rgba(48,73,97,0.1);
@@ -248,8 +237,9 @@
 								}
 								p.content {
 									color: #333;
-									font-size: 1rem;
-									font-family: 'ptsans';
+									font-size: $content-font-size;
+									line-height: 28px;
+									font-family: 'mattrab-content-sans-serif-font';
 									background: #ebfafa;
 									padding: .5rem .7rem;
 								}
@@ -272,7 +262,7 @@
 										.username {
 											font-size: 1rem;
 											color: #333233;
-											font-family: 'ptsans';
+											font-family: 'mattrab-content-sans-serif-font';
 											text-decoration: none;
 										}
 										.at{
@@ -283,7 +273,7 @@
 									.btn-delete{
 										color: #333;
 				            font-size: .8rem;
-				            font-family: 'ptsans';
+				            font-family: 'mattrab-content-sans-serif-font';
 										border-radius: .2rem;
 										padding: 0 .3rem;
 				            border: 2px solid rgba(48,73,97,0.1);
@@ -295,8 +285,9 @@
 									}
 									div.content {
 										color: #333;
-										font-size: 1rem;
-										font-family: 'ptsans';
+										font-size: $content-font-size;
+										line-height: 28px;
+										font-family: 'mattrab-content-sans-serif-font';
 										background: #f9ecec;
 										padding: .1rem .7rem;
 									}
@@ -306,7 +297,7 @@
 						a.btn-sm{
 	            color: #333;
 	            font-size: .9rem;
-	            font-family: 'ptsans';
+	            font-family: 'mattrab-content-sans-serif-font';
 	            border: 2px solid rgba(48,73,97,0.1);
 	            transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 	            &:hover{
@@ -321,7 +312,7 @@
 		.random-notes{
 			h3.title{
 		    font-size: 1.3rem;
-		    font-family: 'bold';
+		    font-family: 'mattrab-content-bold-font';
 		  }
 			.random-note {
 				background: #fff;
@@ -338,14 +329,14 @@
         .note_content {
           padding: .5rem 7%;
           p.info{
-            font-family: 'medium';
+            font-family: 'mattrab-content-sans-serif-font';
             font-size: .8rem;
             color: #b2bac2;
             margin-top: .4rem;
           }
           h2.title {
             margin: 0;
-            font-family: 'medium';
+            font-family: 'mattrab-content-bold-font';
             font-size: .9rem;
             transition: color 200ms ease-in-out;
             // line-height: 1rem;
@@ -362,13 +353,13 @@
             }
           }
           p.body{
-            font-family: 'medium';
+            font-family: 'mattrab-content-sans-serif-font';
             font-size: .8rem;
             color: #576366;
             margin: .4rem 0;
           }
           p.buttons{
-            font-family: 'medium';
+            font-family: 'mattrab-content-sans-serif-font';
             font-size: .7rem;
             color: #576366;
             margin: .7rem 0;
@@ -390,7 +381,7 @@
 				display: inline-block;
 				padding: .1rem .5rem;
 		    font-size: 1rem;
-				font-family: 'ptsans';
+				font-family: 'mattrab-content-sans-serif-font';
 				color: #111!important;
 		    border-left: 2px solid #111!important;
 				border-top: 2px solid #111!important;
@@ -404,7 +395,7 @@
 				display: inline-block;
 				padding: .1rem .5rem;
 		    font-size: 1rem;
-				font-family: 'ptsans';
+				font-family: 'mattrab-content-sans-serif-font';
 				color: #111!important;
 		    background: #fbfbf9!important;
 		    border: 2px solid #111!important;
@@ -454,7 +445,7 @@
 									padding: .2rem;
 									background:#5fcf80;
 			            color:#fff;
-									font-family: 'ptsans';
+									font-family: 'mattrab-content-sans-serif-font';
 									font-size: 1.4rem;
 									vertical-align: middle;
 									outline: none;
@@ -521,9 +512,10 @@
 					.unit-body{
 						width: 100%; padding: 0;
 	          min-height:50vh;
-						font-size: 17px;
+						line-height: 29px;
+						font-size: $content-font-size;
 						color: #515151;
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 						.note_body{
 							label[for="note_body"]{
 								display: none;
@@ -531,13 +523,14 @@
 							.note-editor{
 								border: none !important;
 								.note-toolbar{
-									padding: 0 3.2rem .3rem 3.2rem;
+									text-align: center;
+									padding: .3rem auto;
 									background: #f9f9f9;
 									border-bottom:1px solid #E5E4E2;
 									position: initial;
 									button.note-btn{background: #fff!important;border-color: #E5E4E2;}
 								}
-								@media (max-width: 767.98px) {.note-toolbar{padding: .5rem 1rem 0 1rem !important;}}
+								@media (max-width: 767.98px) {.note-toolbar{padding: .3rem auto!important;text-align: center;}}
 							}
 							.note-editing-area{
 								.note-placeholder{padding: 2rem 3.2rem;}
@@ -561,26 +554,24 @@
 	        padding: 2rem;
 					h3.title{
 				    font-size: 1.3rem;
-				    font-family: 'ptsans';
-						font-weight: bold;
+				    font-family: 'mattrab-content-bold-font';
 				  }
 					.label{
 						width: 100%;
 						font-size: .9rem;
-				    font-family: 'ptsans';
-						font-weight: bold;
+				    font-family: 'mattrab-content-bold-font';
 					}
 					input.update{
 						padding: .1rem .5rem;
 				    font-size: 1rem;
 						border-radius: 0 !important;
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 						color: #111!important;
 				    border: 2px solid #111!important;
 					}
 					p.note-status{
 						font-size: .8rem;
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 					}
 	      }
 			}
@@ -593,9 +584,9 @@
 	background: #fbfbf9;
 	.container{
 		display: -webkit-box; display: flex; flex-wrap: wrap;
-		.ad{img{width: 100%;}}
+		.ad{img{width: 100%; display: none;}}
 		.header{h3.title{
-			font-family: 'ptsans';
+			font-family: 'mattrab-content-sans-serif-font';
 			font-size: 1.5rem;
 			color: #333;
 		}}
@@ -616,7 +607,7 @@
 				.note_content {
 					padding: .4rem 4%;
 					p.info{
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 						font-size: .7rem;
 						color: #b2bac2;
 						margin-top: .4rem;
@@ -625,23 +616,23 @@
 						text-decoration: none;
 						h2.title {
 							color: #333;
-							font-family: 'ptsans';
+							font-family: 'mattrab-content-sans-serif-font';
 							font-size: 1.1rem;
-							font-weight: bold;
 							display: -webkit-box;
+							font-weight: bold;
 							overflow: hidden;
 							color: #2e353b;
 							transition: color 100ms ease-in-out;
 						}
 						p.body{
-							font-family: 'medium';
+							font-family: 'mattrab-content-sans-serif-font';
 							font-size: .8rem;
 							color: #576366;
 						}
 						&:hover{ h2.title { color: #35b15a;}}
 					}
 					p.buttons{
-						font-family: 'ptsans';
+						font-family: 'mattrab-content-sans-serif-font';
 						font-size: .7rem;
 						color: #7e8c9a;
 						position: absolute;
@@ -655,12 +646,12 @@
 		.no-note.col-md-8.col-sm-12{
 			min-height: 37vh;
 			p.note{
-				font-family: 'ptsans';
+				font-family: 'mattrab-content-sans-serif-font';
 				font-size: 1.2rem;
 				color: #333;
 			}
 			li.suggest{
-				font-family: 'ptsans';
+				font-family: 'mattrab-content-sans-serif-font';
 				font-size: 1rem;
 				color: #333;
 			}
@@ -676,7 +667,7 @@
 // 		border-bottom: 1px solid #e1e4e8;
 // 		.show-head-title{
 // 			h2.show-title{
-// 				font-family: 'medium';
+// 				font-family: 'mattrab-content-sans-serif-font';
 // 				font-size: 1.4rem;
 // 				transition: color 200ms ease-in-out;
 // 				display: -webkit-box;
@@ -690,7 +681,7 @@
 // 				.nav-link{
 // 					color:#969696;
 // 					font-size: .8rem;
-// 					font-family: 'medium';
+// 					font-family: 'mattrab-content-sans-serif-font';
 // 					text-decoration: none;
 // 					padding: .5rem .7rem !important;
 // 					i.fa{
@@ -713,7 +704,7 @@
 // 				width: 100%;
 // 			}
 // 			.body{
-// 				font-family: 'ptsans';
+// 				font-family: 'mattrab-content-sans-serif-font';
 // 				font-size: 20px;
 // 				color: #515151;
 // 			}
@@ -731,7 +722,7 @@
 // 						color: #1a1a1a;
 // 						margin: .5rem 1rem;
 // 						text-decoration: none;
-// 						font-family: 'medium';
+// 						font-family: 'mattrab-content-sans-serif-font';
 // 						font-size: 1.3rem;
 // 					}
 // 				}
@@ -743,7 +734,7 @@
 // 						.followers{
 // 							display: block;
 // 							color: #527cec;
-// 							font-family: 'medium';
+// 							font-family: 'mattrab-content-sans-serif-font';
 // 						}
 // 					}
 // 				}
@@ -774,7 +765,7 @@
 // 						.button{
 // 							float: right;
 // 							font-size: .9rem;
-// 						  font-family: 'medium';
+// 						  font-family: 'mattrab-content-sans-serif-font';
 // 						  border-radius: 4px;
 // 							margin-top: .7rem;
 // 						  padding: .3rem .5rem;
@@ -794,7 +785,7 @@
 // 							font-size: 1rem;
 // 							color: #333233;
 // 							margin: 0 0 .5rem 0;
-// 							font-family: 'medium';
+// 							font-family: 'mattrab-content-sans-serif-font';
 // 							text-decoration: none;
 // 						}
 // 						.at{
@@ -814,7 +805,7 @@
 // 		.col-md-4.random-notes{
 // 			h3.title{
 // 		    font-size: 1.3rem;
-// 		    font-family: 'bold';
+// 		    font-family: 'mattrab-content-bold-font';
 // 		  }
 // 			.random-note {
 //         border: solid #eee;
@@ -832,14 +823,14 @@
 //         .note_content {
 //           padding: .5rem 7%;
 //           p.info{
-//             font-family: 'medium';
+//             font-family: 'mattrab-content-sans-serif-font';
 //             font-size: .8rem;
 //             color: #b2bac2;
 //             margin-top: .4rem;
 //           }
 //           h2.title {
 //             margin: 0;
-//             font-family: 'medium';
+//             font-family: 'mattrab-content-sans-serif-font';
 //             font-size: .9rem;
 //             transition: color 200ms ease-in-out;
 //             // line-height: 1rem;
@@ -856,13 +847,13 @@
 //             }
 //           }
 //           p.body{
-//             font-family: 'medium';
+//             font-family: 'mattrab-content-sans-serif-font';
 //             font-size: .8rem;
 //             color: #576366;
 //             margin: .4rem 0;
 //           }
 //           p.buttons{
-//             font-family: 'medium';
+//             font-family: 'mattrab-content-sans-serif-font';
 //             font-size: .7rem;
 //             color: #576366;
 //             margin: .7rem 0;

@@ -1,54 +1,76 @@
 %header
   .container.clearfix
     .row
-      .col-md-3.d-flex.justify-content-center.justify-content-md-start
+      .col-3.col-sm-3.col-md-3.d-flex.justify-content-start
         %a{:href => root_path, :class => "nav-brand"}
           = image_tag 'mrlogo.png'
-      - unless current_page?(new_user_session_path) or current_page?(new_user_registration_path)
-        .col-md-4.d-flex.justify-content-center.justify-content-md-start
-          - unless current_page?(root_path)
-            %form{:action => "/search"}
-              %i.fa.fa-search
-              %input.ask-ah{"aria-label" => "Search", :placeholder => "Search...", :name => "query", :type => "search"}
-        .col-md-5.d-flex.justify-content-center.justify-content-md-end
-          %ul.nav.justify-content-end
-            - if !user_signed_in?
-              %li.nav-item= link_to "Sign In", new_user_session_path
-              %li.nav-item= link_to "Sign Up", new_user_registration_path
-            - if !user_signed_in?
-              %li.nav-item= link_to "Create Note", new_user_session_path, class: 'btn-action btn-std'
-            - elsif can? :create, Note
-              %li.nav-item= link_to "Create Note", new_note_path, class: 'btn-action btn-std'
+      .col-12.col-sm-12.col-md-4.d-none.d-md-flex.justify-content-start.search-at-nav
+        - unless current_page?(notes_path) or current_page?(root_path)
+          %a.nav-link.d-inline-block.d-sm-none.btn-action.search-toggle{:href => "javascript:void(0)"}
+            %i.fa.fa-arrow-left
+          %form{:action => "/search"}
+            %i.fa.fa-search
+            %input.ask-ah{"aria-label" => "Search", :placeholder => "Search...", :name => "query", :type => "search"}
+      .col-9.col-sm-9.col-md-5.d-flex.justify-content-end
+        %ul.nav.justify-content-end
+          - unless current_page?(notes_path) or current_page?(root_path)
+            %li.nav-item.d-block.d-sm-none
+              %a.nav-link.btn-action.search-toggle{:href => "javascript:void(0)"}
+                %i.fa.fa-search
+          - if !user_signed_in?
+            %li.nav-item
+              = link_to new_user_session_path, class: 'btn-action nav-link' do
+                %i.fa.fa-plus.d-md-inline.d-lg-none
+                %span.d-none.d-lg-inline= 'Create Note'
+          - elsif can? :create, Note
+            %li.nav-item
+              = link_to new_note_path, class: 'btn-action nav-link' do
+                %i.fa.fa-plus.d-md-inline.d-lg-none
+                %span.d-none.d-lg-inline= 'Create Note'
+          - else
+            %li.nav-item
+              = link_to creator_appeal_path, class: 'btn-action nav-link' do
+                %i.fa.fa-plus.d-md-inline.d-lg-none
+                %span.d-none.d-lg-inline= 'Create Note'
+
+          - if !user_signed_in?
+            - if current_page?(new_user_session_path)
+              %li.nav-item
+                = link_to new_user_registration_path, class: 'btn-action nav-link' do
+                  %i.fa.fa-user-plus.d-md-inline.d-lg-none
+                  %span.d-none.d-lg-inline= 'Sign Up'
             - else
-              %li.nav-item= link_to "Create Note", creator_appeal_path, class: 'btn-action btn-std'
+              %li.nav-item
+                = link_to new_user_session_path, class: 'btn-action nav-link' do
+                  %i.fa.fa-user.d-md-inline.d-lg-none
+                  %span.d-none.d-lg-inline= 'Sign In'
+          - else
+            %li.nav-item.btn-group.dropdown.ndropdown{"data-behavior" => "notifications"}
+              %a.nav-link.dropdown-toggle{"data-behavior" => "open-n", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,8" }
+                %i.fa.fa-bell
+                %span.count{"data-behavior" => "unread-count"}
+              .dropdown-menu.dropdown-menu-right
+                %p.this-head.mb-0
+                  = 'Notifications'
+                  = link_to "Mark all as read", current_user, class: 'mark pull-right'
+                .dropdown-divider.mb-1
+                %p.this-type.mb-0= 'NEW'
+                .dropdown-divider.mt-1
+                .new-notifications{"data-behavior" => "new-notification-items"}
 
-            - if user_signed_in?
-              %li.nav-item.btn-group.dropdown.ndropdown{"data-behavior" => "notifications"}
-                %a.nav-link.dropdown-toggle{"data-behavior" => "open-n", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,10" }
-                  %i.fa.fa-bell
-                  %span.count{"data-behavior" => "unread-count"}
-                .dropdown-menu.dropdown-menu-right
-                  %p.this-head.mb-0
-                    = 'Notifications'
-                    = link_to "Mark all as read", current_user, class: 'mark pull-right'
-                  .dropdown-divider.mb-1
-                  %p.this-type.mb-0= 'NEW'
-                  .dropdown-divider.mt-1
-                  .new-notifications{"data-behavior" => "new-notification-items"}
+                .dropdown-divider.mb-1
+                %p.this-type.mb-0= 'EARLIER'
+                .dropdown-divider.mt-1
+                .earlier-notifications{"data-behavior" => "earlier-notification-items"}
 
-                  .dropdown-divider.mb-1
-                  %p.this-type.mb-0= 'EARLIER'
-                  .dropdown-divider.mt-1
-                  .earlier-notifications{"data-behavior" => "earlier-notification-items"}
-
-              %li.nav-item.btn-group.dropdown.udropdown
-                %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,10" }
-                  = image_tag current_user.avatar.url(:small)
-                .dropdown-menu.dropdown-menu-right
-                  %p.nav-user-name.mb-0= current_user.name
-                  %p.nav-user-email.mb-0= current_user.email
-                  .dropdown-divider
-                  = link_to "Your Profile", current_user, class: 'dropdown-item'
-                  = link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item'
-                  .dropdown-divider
-                  = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item'
+            %li.nav-item.btn-group.dropdown.udropdown
+              %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,8" }
+                = image_tag current_user.avatar.url(:small)
+              .dropdown-menu.dropdown-menu-right
+                %p.nav-user-name.mb-0= current_user.name
+                %p.nav-user-email.mb-0= current_user.email
+                .dropdown-divider
+                = link_to "Your Profile", current_user, class: 'dropdown-item'
+                = link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item'
+                .dropdown-divider
+                = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item'
