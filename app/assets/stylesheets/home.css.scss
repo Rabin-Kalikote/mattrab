@@ -315,13 +315,13 @@ header{
           display: block;
           font-size: 1rem;
           height: 3rem;
-          padding: 0 2.5rem 0 4.5rem;
+          padding: 0 2rem 0 4rem;
           width: 100%;
           -webkit-appearance: none;
           line-height: 1.25rem;
         }
         button.search_button{
-          left: 1.5rem;
+          left: 1rem;
           background-color: transparent;
           border: none;
           cursor: pointer;
@@ -573,10 +573,11 @@ header{
         height: 100%;
         background: #ffffff;
         align-items: stretch;
-        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
-        -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+        border: 1px solid #e6e6e6;
         display: -webkit-box; display: flex; flex-wrap: wrap;
+        // -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+        // -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+        // box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
         .note_image{
           padding: 0!important;
           .img-note { img{ height: 100%; width: 100%!important; } }

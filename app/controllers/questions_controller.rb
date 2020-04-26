@@ -2,6 +2,11 @@ class QuestionsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :find_note
+
+  def index
+    @questions = Questions.all
+  end
+  
   def create
     @question = @note.questions.new(question_params)
     @question.user_id = current_user.id
