@@ -25,18 +25,18 @@ class NotesController < ApplicationController
     @query = params[:query]
     @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 7)
     if @notes.present?
-      set_meta_tags title: @notes.first.title, site: 'Mattrab Search', description: ActionController::Base.helpers.sanitize(@notes.first.body).truncate(150), keywords: @notes.first.category+" class "+@notes.first.grade,
-                    og: { title: @notes.first.title, description: ActionController::Base.helpers.sanitize(@notes.first.body).truncate(150), type: 'website', url: note_url(@notes.first), image: @notes.first.image },
-                    twitter: { card: 'note', site: '@askmattrab', title: @notes.first.title, description: ActionController::Base.helpers.sanitize(@notes.first.body).truncate(150), image: @notes.first.image }
+      set_meta_tags title: @query, site: 'Mattrab Search', description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @notes.first.category+" class "+@notes.first.grade,
+                    og: { title: @query, description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@notes.first), image: @notes.first.image },
+                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), image: @notes.first.image }
     else
       set_meta_tags title: 'No results found', site: 'Mattrab Search'
     end
   end
 
   def show
-    set_meta_tags title: @note.title, site: 'Mattrab', description: ActionController::Base.helpers.sanitize(@note.body).truncate(150), keywords: @note.category+" class "+@note.grade,
-                  og: { title: @note.title, description: ActionController::Base.helpers.sanitize(@note.body).truncate(150), type: 'website', url: note_url(@note), image: @note.image },
-                  twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: ActionController::Base.helpers.sanitize(@note.body).truncate(150), image: @note.image }
+    set_meta_tags title: @note.title, site: 'Mattrab', description: @note.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @note.category+" class "+@note.grade,
+                  og: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@note), image: @note.image },
+                  twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
     if user_signed_in?
       @random_note = Note.published.where(category: @note.category, grade: current_user.grade).where.not(id: @note).order("RANDOM()").first
