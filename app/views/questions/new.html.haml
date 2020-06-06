@@ -1,0 +1,17 @@
+#question-new
+  .container
+    .qn-internal
+      .returning-option
+        = link_to questions_path, class: 'returning-option-link' do
+          %i.fas.fa-arrow-left
+          = 'Back to Library'
+      .info.alert.alert-info.mt-4
+        %i.fas.fa-info.mr-2
+        Did you search answers for the question you are asking? Make sure you ask question not asked or answered initially.
+      .thread-article
+        .thread-form
+          .form-card-content
+            .form-card-header
+              %h2.form-title.mb-0= "Ask Your Question Here."
+            .form-card-body
+              = render 'form'

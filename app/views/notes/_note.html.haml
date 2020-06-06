@@ -1,0 +1,23 @@
+.col-md-6.col-sm-12
+  .note
+    .note_image.col-lg-5.col-md-12
+      = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+    .note_content.col-lg-7.col-md-12
+      %p.info.mb-0
+        = note.user.name
+        = '•'
+        = note.category.name.capitalize
+      = link_to note do
+        %h3.title.mb-1= note.title
+        %p.body.mb-4
+          = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170 #truncate(strip_tags(note.body), length: 170) 
+      %p.buttons.align-self-end.mb-2
+        %span
+          %i.fa.fa-comment-alt
+          = pluralize(note.questions.count, "Question")
+        %span
+          %i.fa.fa-thumbs-up
+          = pluralize(note.get_upvotes.size, "Like")
+        %span
+          %i.fa.fa-eye
+          = pluralize(note.view, "View")

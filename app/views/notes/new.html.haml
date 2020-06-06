@@ -1,6 +1,9 @@
 
 #note-edition.pt-5
   .edition-head-nav.container
+    .info.alert.alert-info
+      %i.fas.fa-info.mr-2
+      Did you search the topic you are writing about? Make sure you write on topic not covered initially.
     .d-flex.flex-row-reverse.py-2
       -# - if can? :destroy, @note
       -#   = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "note-action ml-3 delete"

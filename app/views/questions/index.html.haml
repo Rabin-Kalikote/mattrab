@@ -1,1 +1,55 @@
-%h1 Qustion#Index
+#question-index
+  .sticky-subnav
+    .subnav-row
+      .twelve.columns
+        %ul.sticky-subnav-list
+          %li.cat-item.cat-item-1313
+            = link_to  questions_url(:tab => :library) do
+              %i.fa.fa-list-alt
+              = "Library's"
+              %span.d-none.d-md-inline= "Questions"
+          %li.cat-item.cat-item-2054
+            = link_to questions_url(:tab => :note) do
+              %i.fa.fa-sticky-note
+              = "Note's"
+              %span.d-none.d-md-inline= "Questions"
+          %li.cat-item.cat-item-2054
+            = link_to questions_url(:tab => :answered) do
+              %i.fa.fa-check-square
+              = "Answered"
+              %span.d-none.d-md-inline= "Questions"
+          %li.cat-item.cat-item-1311
+            = link_to questions_url(:tab => :unanswered) do
+              %i.fa.fa-question-circle
+              = "Unanswered"
+              %span.d-none.d-md-inline= "Questions"
+
+  .sticky-subnav-space
+
+  -# .qi-navbar
+  -#   .container
+  -#     .navbar-internal
+  -#       .left-links
+  -#         = link_to questions_url(:tab => :library), class: "qi-navbar-link", id: (@tab_title=="Library's Qusestions" ? 'active' : '') do
+  -#           = "Library's"
+  -#           %span.d-none.d-md-inline= "Questions"
+  -#         = link_to questions_url(:tab => :note), class: "qi-navbar-link active", id: (@tab_title=="Note's Qusestions" ? 'active' : '') do
+  -#           = "Note's"
+  -#           %span.d-none.d-md-inline= "Questions"
+  -#         = link_to questions_url(:tab => :answered), class: "qi-navbar-link", id: (@tab_title=="Answered Qusestions" ? 'active' : '') do
+  -#           = "Answered"
+  -#           %span.d-none.d-md-inline= "Questions"
+  -#         = link_to questions_url(:tab => :unanswered), class: "qi-navbar-link", id: (@tab_title=="Unanswered Qusestions" ? 'active' : '') do
+  -#           = "Unanswered"
+  -#           %span.d-none.d-md-inline= "Questions"
+  -#       .right-links.ml-auto
+  -#         = link_to "Ask Question", new_question_path, class: "qi-action-link"
+
+  .qi-body
+    .container
+      %h2.title= @tab_title
+      #questions.row.flex-grid
+        = render @questions
+
+      .row.pagination-nav.is.justify-content-center
+        = will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

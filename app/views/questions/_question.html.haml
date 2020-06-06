@@ -1,15 +1,21 @@
-%hr
-.question.mt-4.mb-2{:id => "question-#{question.id}"}
-  .col-md-12
-    .avatar.d-inline
-      = image_tag question.user.avatar.url(:small)
-    .body.d-inline.ml-1
-      = link_to question.user.name, question.user, class: 'username'
-      %span.at
-        = 'asked'
-        = time_ago_in_words(question.created_at)
-        ago
-    - if can? :destroy, question
-      = link_to 'Delete thread', note_question_path(@note, question), method: :delete, remote: true, class: 'btn-delete pull-right'
-  .col-md-12.q-content
-    %p.content.my-2= question.content
+.col-md-6.col-sm-12
+  .question.p-3
+    = link_to question do
+      %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
+      %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+      %p.buttons.align-self-end.mb-2
+        %span
+          %i.fa.fa-reply
+          = pluralize(question.answers.count, "Answer")
+        %span
+          %i.fa.fa-thumbs-up
+          = "Helpful (#{question.get_upvotes.size})"
+        %span
+          %i.fa.fa-eye
+          = pluralize(question.view, "View")
+        %span
+          %i.fa.fa-check-square
+          = "Class #{question.grade.name.humanize}"
+        %span
+          %i.fa.fa-hashtag
+          = question.category.name.humanize

@@ -1,0 +1,6 @@
+= simple_form_for([@question, @answer], remote: true) do |f|
+  = hidden_field_tag :authenticity_token, form_authenticity_token
+  = f.input :content, as: :summernote, label: false, required: true
+  .modal-actions.btn-group
+    %a.toggle-edit-answer-modal.btn-sm.btn-modal-action= 'Minimize Editor'
+    = f.button :submit, value: "Submit Answer", class: "btn-sm btn-modal-action ml-2"

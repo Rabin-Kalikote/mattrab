@@ -13,6 +13,12 @@ class InfoController < ApplicationController
                   twitter: { title: 'Online Learning Platform' }
   end
 
+  def faqs
+    set_meta_tags title: 'Bridging the gap among education quality in Nepal.', site: 'About Mattrab',
+                  og: { title: 'Bridging the gap among education quality in Nepal.' },
+                  twitter: { title: 'Bridging the gap among education quality in Nepal.' }
+  end
+
   def affiliate_program
     set_meta_tags title: 'Advertise and Grow you Business', site: 'Mattrab', description: 'Join Mattrab affiliate program and healthily advertise/promote your business. Company or organization benefitting the students are always helped by Mattrab.',
                   og: { title: 'Advertise and Grow you Business', description: 'Join Mattrab affiliate program and healthily advertise/promote your business. Company or organization benefitting the students are always helped by Mattrab.' },

@@ -1,0 +1,5 @@
+= simple_form_for([@question, @question.answers.build], remote: true) do |f|
+  = f.input :content, as: :summernote, label: false, required: true
+  .modal-actions.btn-group
+    %a.toggle-answer-modal.btn-sm.btn-modal-action= 'Minimize Editor'
+    = f.button :submit, value: "Submit Answer", class: "btn-sm btn-modal-action ml-2"

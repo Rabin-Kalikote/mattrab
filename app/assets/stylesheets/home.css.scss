@@ -1,6 +1,6 @@
 header{
  	width: 100%;
-  z-index: 999;
+  z-index: 1030;
   position: fixed;
  	padding: .7rem 0 0 0;
  	background-color: #fff;
@@ -22,9 +22,9 @@ header{
   .col-md-4{
     margin-bottom: .7rem;
     form{
-      padding-top: .2rem;
+      padding-top: .25rem;
       width: 100%;
-      i.fa{ position: absolute;color: #ccc;top: .8rem; left: 1.9rem;}
+      i.fa{ position: absolute;color: #ccc;top: .7rem; left: 1.7rem;}
       input.ask-ah{
         width: 100%;
         outline: none;
@@ -33,7 +33,7 @@ header{
         font-family: 'mattrab-content-sans-serif-font';
         background: #f2f2f2;
         border: 2px solid #f2f2f2;
-        padding: .4rem .7rem .4rem 2.4rem;
+        padding: .35rem .7rem .25rem 2rem;
         transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
         &:focus{background: #ebf9ef; border: 2px solid #ebf9ef;}
       }
@@ -68,12 +68,12 @@ header{
     margin-bottom: .7rem;
     ul.nav{
       li.nav-item{
-        padding: .5rem 0 0 1rem!important;
+        padding: .5rem 0 0 1rem;
         a.btn-action{
-          height: 35px;
-          margin-top: -5px;
+          height: 31px;
+          margin-top: -2px;
           font-size: 1.1rem;
-          padding: .1rem .5rem;
+          padding: 0 .4rem;
           color: #fff!important;
           background: #5fcf80!important;
           border-radius: 3rem!important;
@@ -86,12 +86,54 @@ header{
           }
         }
       }
+      @media (max-width: 575.98px) {li.nav-item{padding: .5rem 0 0 .7rem;}}
+      li.cdropdown{
+        a.dropdown-toggle{
+          &::after{
+            display: none;
+          }
+        }
+        .dropdown-menu{
+          border-radius: .1rem !important;
+          box-shadow: 0 8px 20px rgba(55, 125, 255, 0.075);
+          &:before {
+            position: absolute;
+            top: -7px;
+            right: 8px;
+            display: inline-block;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #ccc;
+            border-left: 7px solid transparent;
+            border-bottom-color: rgba(0, 0, 0, 0.2);
+            content: '';
+          }
+          &:after {
+            position: absolute;
+            top: -6px;
+            right: 9px;
+            display: inline-block;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid #ffffff;
+            border-left: 6px solid transparent;
+            content: '';
+          }
+          a.dropdown-item{
+            font-size: .9rem;
+            font-family: 'mattrab-content-sans-serif-font';
+            i.fas{color:#62c883;}
+            &:focus{
+              color: #333;
+              background-color: #f2f2f2!important;
+            }
+          }
+        }
+      }
       li.ndropdown{
         a.dropdown-toggle{
-          height: 35px;
-          margin-top: -5px;
+          height: 31px;
+          margin-top: -2px;
           font-size: 1.1rem;
-          padding: .1rem .5rem!important;
+          padding: 0 .4rem!important;
           color: #fff!important;
           background: #5fcf80!important;
           border-radius: 3rem!important;
@@ -124,7 +166,7 @@ header{
           &:before {
             position: absolute;
             top: -7px;
-            right: 13px;
+            right: 8px;
             display: inline-block;
             border-right: 7px solid transparent;
             border-bottom: 7px solid #ccc;
@@ -135,7 +177,7 @@ header{
           &:after {
             position: absolute;
             top: -6px;
-            right: 14px;
+            right: 9px;
             display: inline-block;
             border-right: 6px solid transparent;
             border-bottom: 6px solid #ffffff;
@@ -218,10 +260,10 @@ header{
       }
       li.udropdown{
         a.dropdown-toggle{
-          margin-top: -5px;
+          margin-top: -2px;
           padding: 0!important;
           img{
-            width: 35px; height: 35px;
+            width: 31px; height: 31px;
             border-radius: 3rem!important;
             border: 2px solid #9de2b1;
             transition: border-color 0.15s ease;
@@ -241,7 +283,7 @@ header{
           &:before {
             position: absolute;
             top: -7px;
-            right: 13px;
+            right: 8px;
             display: inline-block;
             border-right: 7px solid transparent;
             border-bottom: 7px solid #ccc;
@@ -252,7 +294,7 @@ header{
           &:after {
             position: absolute;
             top: -6px;
-            right: 14px;
+            right: 9px;
             display: inline-block;
             border-right: 6px solid transparent;
             border-bottom: 6px solid #ffffff;
@@ -273,6 +315,7 @@ header{
             font-size: .9rem;
             font-family: 'mattrab-content-sans-serif-font';
             &:focus{
+              color: #333;
               background-color: #f2f2f2!important;
             }
           }
@@ -397,7 +440,7 @@ header{
 	transform: translateY(-47px);
 	background-color: #f6f9fa;
 	border-bottom: solid 1px #e9f0f3;
-	padding: 8px 0;
+	padding: 4px 0;
 	position: absolute;
 	z-index: 1;
 	width: 100%;
@@ -409,6 +452,9 @@ header{
 			margin-top: 120px;
 		}
 	}
+  .grade-list{
+    .grade-item{.category-list{display: none;}}
+  }
 }
 .subnav-row {
 	max-width: 1030px;
@@ -416,6 +462,7 @@ header{
 	margin-right: auto;
 	padding: 0 15px;
 }
+@media (min-width: 1200px) {.subnav-row {max-width: 1130px;}}
 .sticky-subnav-list {
 	margin: 0;
 	text-align: center;
@@ -483,7 +530,7 @@ header{
 .scrolled-past-hero {
 	.sticky-subnav, .cat {
 		border-top: none;
-		padding: 7px 0 3px 0;
+		padding: 4px 0 3px 0;
 		position: fixed;
 		width: 100%;
 		z-index: 98;
@@ -549,17 +596,63 @@ header{
   }
 }
 
-
-
 #notes {
   background: #fbfbf9;
+  .notes-title,
+  .questions-title{
+    box-sizing: border-box;
+    display: flex;
+    max-width: 75.125rem;
+    min-height: 3rem;
+    padding: .4rem 0;width: 100%;
+    .left-links{
+      h2.title{
+        font-weight: 400;
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-family: 'mattrab-content-sans-serif-font';
+      }
+    }
+    .right-links{
+      text-align: right;
+      a.ni-action-link{
+        color: #5f6368;
+        background: #ebf9ef;
+        padding: .3rem .5rem;
+        font-size: .9rem;
+        border-radius: 4px;
+        font-family: 'mattrab-content-sans-serif-font'!important;
+        border: 1px solid rgba(48,73,97,0.1);
+        transition: border-color .01s ease, background-color .01s ease, color .01s ease;
+        &:hover{
+          text-decoration: none;
+          border: 1px solid #5fcf80;
+        }
+      }
+    }
+  }
+  @media (max-width: 575.98px) {
+    .notes-title,
+    .questions-title{
+      .left-links{
+        h2.title{ font-size: 16px; }
+      }
+      .right-links{
+        a.ni-action-link{
+          padding: .2rem .4rem;
+          font-size: .7rem;
+        }
+      }
+    }
+  }
   h2.title{
-    font-size: 1.4rem;
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 12px;
     font-family: 'mattrab-content-sans-serif-font';
-    margin-bottom: 1.5rem !important;
   }
   .flex-grid{
-    padding: 0;
+    padding-bottom: 2rem;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -569,6 +662,38 @@ header{
     flex-flow: row wrap;
     .col-md-6.col-sm-12{
       margin-bottom:1.7rem;
+      .question{
+        height: 100%;
+        background: #ffffff;
+        align-items: stretch;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        display: -webkit-box; display: flex; flex-wrap: wrap;
+        a{
+          h3.title{
+            line-height: 1.4;
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+            transition: color .1s ease-in-out;
+          }
+          p.user-info{
+            font-size: 13px;
+            color: #7e8c9a;
+          }
+          p.buttons{
+            font-size: .7rem;
+            color: #7e8c9a;
+            position: absolute;
+            bottom: .2rem; left: 16;
+            span {margin-right:.7rem;}
+          }
+          &:hover{
+            text-decoration: none;
+            h3.title{color: #35b15a;}
+          }
+        }
+      }
       .note {
         height: 100%;
         background: #ffffff;
@@ -593,7 +718,6 @@ header{
           a{
             text-decoration: none;
             h3.title {
-              color: #333;
               font-family: 'mattrab-content-sans-serif-font';
               font-size: 1.1rem;
               font-weight: bold;
@@ -621,20 +745,54 @@ header{
       }
     }
   }
-  .pagination-nav{ padding: 3rem 0; nav{width: 100%; }}
+  .tag-cloud{
+    margin-bottom:5rem;
+    .col-md-12{
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+      a{
+        font-size: 1rem;
+        line-height: 1.1;
+        padding: .4rem .7rem;
+        margin: .4rem;
+        display: inline-flex;
+        color: rgba(0, 0, 0, 0.54);
+        border-radius: 99rem;
+        background-color: rgba(0, 0, 0, 0.05);
+        align-items: center;
+        text-decoration: none;
+        font-family: 'mattrab-content-sans-serif-font';
+        i.fas{margin-right: 6px;}
+      }
+      a.l {
+      	i.fas{color: #b30000;}
+      	&:hover{background-color: #ecdada;}
+      }
+      a.m {
+        i.fas{color:#0086b3;}
+        &:hover{background-color: #dae7ec;}
+      }
+      a.s {
+      	i.fas{color: #35b15a;}
+      	&:hover{background-color: #dcede1;}
+      }
+    }
+  }
   .encourage-row{
     height: auto;
     color: #515457;
     background: #fbfbf9;
     text-align:center;
     font-family: 'mattrab-content-sans-serif-font';
-    padding: 1.4rem 0 3.4rem 0;
+    padding-bottom: 3.4rem;
     .en-title{width: 100%;padding:0 15px;}
     @media screen and (max-width: 767px) {
       .en-message{width:100%;padding:0 15px 30px;font-size: .9rem;}
       .en-title{width: 100%;padding:0 15px;font-size: 1.5rem;}
     }
-    @media screen and (min-width: 768px) {.en-message{width:70%;}}
+    @media (min-width: 768px) and (max-width: 991.98px) {.en-message{width:70%;}}
+    @media screen and (min-width: 992px) {.en-message{width:60%;}}
     .actions{
       width: 100%;
       .action-button{

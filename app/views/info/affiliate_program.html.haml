@@ -1,4 +1,7 @@
 #affiliate_program
+  .info-banner
+    .banner-content
+      %p#mission.mb-0 Bridging the gap among Education Quality in Nepal.
   .ad-appeal
     .view-ad-appeal.mb-4
       %h3.title Advertise and Grow you Business.
@@ -29,8 +32,8 @@
     .col-md-12.mt-5
       .contact
         %h3.c-title.mb-4 Let's Connect.
-        %form{:action => "https://formspree.io/rabinkalikote33@gmail.com", :method => "POST"}
-          %input#name{:name => "company_name", :placeholder => "Company name..", :style => "width:49%; float:left;", :type => "text"}
-          %input#email{:name => "company_email", :placeholder => "Company email..", :style => "width:49%; float:left; margin-left:2%;", :type => "email"}
-          %textarea#messeges{:name => "description", :placeholder => "Description..", :style => "height:92px"}
+        %form{:action => "https://formspree.io/info@askmattrab.com", :method => "POST"}
+          %input#name{:name => "company_name", :placeholder => "Company name..", :style => "width:49%; float:left;", :type => "text", :required => true}
+          %input#email{:name => "company_email", :placeholder => "Company email..", :style => "width:49%; float:left; margin-left:2%;", :type => "email", :required => true}
+          %textarea#messeges{:name => "description", :placeholder => "Description..", :style => "height:92px", :required => true}
           %input{:type => "submit", :value => "Send"}

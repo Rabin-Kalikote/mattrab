@@ -22,16 +22,19 @@
 
 // Variables
 
+
 html, body{
   margin: 0;
   padding: 0;
-  background: #fbfbf9;
+  width:100%;
+  height:100%;
+  background: #fbfbf9!important;
 }
 .centered-text,.c-t{text-align: center;}
 
 .center {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pull-right{float: right;}
@@ -108,6 +111,8 @@ html, body{
   }
 }
 
+.alert{font-size:.9rem;}
+
 .pagination{
   li.page-item{.page-link{color: #2ec66d;}}
   li.page-item.active{.page-link{color: #fff;background-color: #2ec66d;border-color: #2ec66d;}}
@@ -145,8 +150,8 @@ html, body{
 .this-popup {
   position: fixed;
   bottom: 1.2rem;
-  right: 1.2rem;width: 100%;
-  max-width: 370px;padding: 1.5rem;
+  right: 1.2rem;width: 340px;
+  max-width: 94%;padding: 1.5rem;
   border-radius: .1rem;border: solid #eee;
   border-width: 1px 1px 2px 2px;
   background-color: #fff;
@@ -183,6 +188,10 @@ html, body{
     }
   }
 }
+@media (max-width: 575.98px) {.this-popup {width: 94%;bottom:.7rem;right:.7rem;}}
+
+.mr-animate-bitzoom {animation:animatezoom 0.4s}
+@keyframes animatezoom{from{transform:scale(0.8)} to{transform:scale(1)}}
 
 @-webkit-keyframes slide-in-nav {
 	0% {

@@ -8,7 +8,7 @@
             .unit-head-edit
               .headline
                 .col-md-8.heading
-                  = f.input :title, placeholder: "Title"
+                  = f.input :title, placeholder: "Title", required: true
                 .col-md-4.image
                   = image_tag @note.image.url(:small), class: "note-img-preview"
                   %label{:for => "note_image"}
@@ -23,6 +23,8 @@
 
             .editor.unit-body
               = f.input :body, as: :summernote
+          .tags.my-3
+            = f.input :tag_list, :label=>"Tags (seperated by commas)", placeholder: "Eg. class 12, physics, modern physics, radioactivity, radio carbon dating, ...", :input_html=>{:value => @note.tag_list.join(", ")}
 
         .this-controls.col-md-3
           .control-wrap#settings
@@ -35,14 +37,20 @@
                   = f.label status.to_sym
                   %br
             .form-label-group.mb-3
-              %label.label.mb-1{:for => "note_category"} Category
-              = f.select :category, Note.categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
-            .form-label-group.mb-3
               %p.label.mb-1= "Grade"
-              - Note.grades.keys.each do |grade|
-                = f.radio_button :grade, grade
-                = f.label grade.to_sym
-                %br
+              = f.input :grade_id, collection: Grade.order(:name), label_method: :name, value_method: :id, label: false, include_blank: false#, selected: @note.grade
+            .form-label-group.mb-3
+              %p.label.mb-1= "Category"
+              = f.input :category_id, collection: Grade.order(:name), as: :grouped_select, group_method: :categories, label: false, include_blank: false
+
+            -# - Note.grades.keys.each do |grade|
+            -#   = f.radio_button :grade, grade
+            -#   = f.label grade.to_sym
+            -#   %br
+            -# .form-label-group.mb-3
+            -#   %label.label.mb-1{:for => "note_category"} Category
+            -#   = f.select :category, Note.categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
+
             = f.button :submit, class: 'update'
             %p.note-status.mt-2.mb-0
               %i.fa.fa-info-circle

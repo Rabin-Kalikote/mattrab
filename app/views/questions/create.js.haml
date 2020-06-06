@@ -1,4 +1,3 @@
 :plain
-  $('#qa-threads').prepend('#{ j render @question}');
-  $('#question-#{@question.id}').append('Please refresh to answer this thread.');
+  $('.qa-threads').prepend('#{ j render partial: "inlinequestion", locals: {question: @question} }');
   $('#question_content').val('');

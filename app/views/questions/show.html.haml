@@ -1,0 +1,90 @@
+
+#question-show
+  .container
+    .qs-internal
+      .returning-option
+        - if @question.note_id.present?
+          = link_to @question.note, class: 'returning-option-link' do
+            %i.fas.fa-arrow-left
+            = 'Back to Note'
+          = link_to 'Browse Qusestions', questions_path, class: 'returning-option-link pull-right'
+        - else
+          = link_to questions_path, class: 'returning-option-link' do
+            %i.fas.fa-arrow-left
+            = 'Back'
+      .thread-article
+        .thread-question
+          .question-card-content
+            .question-card-header
+              .q-user-avater
+                = link_to (image_tag @question.user.avatar.url(:medium)), @question.user
+              .q-user-info
+                = link_to @question.user do
+                  %span.name= @question.user.name
+                  %span.followers= pluralize(@question.user.followers.count, "Follower")
+              .q-options.dropdown.show
+                %a#options-menu.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  %i.fas.fa-ellipsis-v
+                - if can? :destroy, @question
+                  .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "options-menu"}
+                    = link_to edit_question_path(@question), class: 'action-edit dropdown-item' do
+                      %i.fas.fa-edit
+                      Edit Question
+                    = link_to question_path(@question), method: :delete, data: { confirm: "Are you sure? Deleting your question and its answers is irreversible." }, class: 'action-delete dropdown-item' do
+                      %i.fas.fa-trash
+                      Delete Thread
+            .question-card-body
+              = simple_format(@question.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+
+              -# - if user_signed_in?
+              -#   %button#like.nav-link.first
+              -#     %i.fa.fa-thumbs-up
+              -#     %span.likes-count= pluralize(@question.get_upvotes.size, "Like")
+
+            .question-card-infos
+              %p.buttons.align-self-end.mb-2
+                %span
+                  %i.fa.fa-reply
+                  = pluralize(@question.answers.count, "Answer")
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(@question.view, "View")
+                %span
+                  %i.fa.fa-check-square
+                  = "Class #{@question.grade.name.humanize}"
+                %span
+                  %i.fa.fa-hashtag
+                  = @question.category.name.humanize
+            .question-card-actions.btn-group
+              - if user_signed_in?
+                %a.q-upvote.q-card-action{:id => "#{@question.id}@#!"}= "Helpful (#{@question.get_upvotes.size})"
+                %a.toggle-answer-modal.btn-sm.q-card-action= 'Answer this thread'
+              - else
+                = link_to 'Sign in to Answer this Thread', new_user_session_path, class: 'q-card-action'
+        %h2.answers-flash-title= @question.answers.any? ? "All Answers (#{@question.answers.count})" : "No Answers yet."
+        .thread-answers
+          - @answers.each do |answer|
+            = render 'answers/answer', question: @question, answer: answer
+
+          -# rendering modal form.
+          - if user_signed_in?
+            .submit-answer-modal.overlay.d-none
+              .sa-modal-body.mr-animate-bitzoom
+                .sa-model-content
+                  .sa-model-header
+                    %h3.sa-modal-title.mb-0= "Your answer to '#{truncate sanitize(@question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 50}'"
+                  .answer-form.form{:id => "question-#{@question.id}-answer-form"}
+                    .body
+                      - if can? :create, Answer
+                        = render "answers/cform", :question => @question
+                      - else
+                        %p= 'You cannot create answers.'
+
+            .edit-answer-modal.overlay.d-none
+              .ea-modal-body.mr-animate-bitzoom
+                .ea-model-content
+                  .ea-model-header
+                    %h3.ea-modal-title.mb-0= "Edit your answer to '#{truncate sanitize(@question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 50}'"
+                  .answer-form.form{:id => "question-#{@question.id}-answer-form"}
+                    .edit-form-body
+                      -# edit form will be rendered here.

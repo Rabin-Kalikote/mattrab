@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200421165906) do
+ActiveRecord::Schema.define(version: 20200531143233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,37 @@ ActiveRecord::Schema.define(version: 20200421165906) do
     t.bigint "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.index ["cached_votes_down"], name: "index_answers_on_cached_votes_down"
+    t.index ["cached_votes_score"], name: "index_answers_on_cached_votes_score"
+    t.index ["cached_votes_total"], name: "index_answers_on_cached_votes_total"
+    t.index ["cached_votes_up"], name: "index_answers_on_cached_votes_up"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.integer "name", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grade_categorizations", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "grade_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_grade_categorizations_on_category_id"
+    t.index ["grade_id"], name: "index_grade_categorizations_on_grade_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.integer "name", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "images", force: :cascade do |t|
@@ -45,10 +74,14 @@ ActiveRecord::Schema.define(version: 20200421165906) do
     t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.integer "view", default: 0
-    t.integer "category"
+    t.integer "ecategory"
     t.boolean "is_verified", default: false
     t.integer "status", default: 0
-    t.integer "grade", default: 0
+    t.integer "egrade", default: 0
+    t.bigint "category_id"
+    t.bigint "grade_id"
+    t.index ["category_id"], name: "index_notes_on_category_id"
+    t.index ["grade_id"], name: "index_notes_on_grade_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -68,6 +101,11 @@ ActiveRecord::Schema.define(version: 20200421165906) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "view", default: 0
+    t.bigint "category_id"
+    t.bigint "grade_id"
+    t.index ["category_id"], name: "index_questions_on_category_id"
+    t.index ["grade_id"], name: "index_questions_on_grade_id"
     t.index ["note_id"], name: "index_questions_on_note_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
@@ -80,6 +118,40 @@ ActiveRecord::Schema.define(version: 20200421165906) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "user_categorizations", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_user_categorizations_on_category_id"
+    t.index ["user_id"], name: "index_user_categorizations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,14 +174,16 @@ ActiveRecord::Schema.define(version: 20200421165906) do
     t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer "role", default: 0
-    t.integer "grade", default: 0
+    t.integer "egrade", default: 0
     t.integer "admin_category", default: 0
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.bigint "grade_id", default: 1
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["grade_id"], name: "index_users_on_grade_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -129,6 +203,15 @@ ActiveRecord::Schema.define(version: 20200421165906) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "grade_categorizations", "categories"
+  add_foreign_key "grade_categorizations", "grades"
+  add_foreign_key "notes", "categories"
+  add_foreign_key "notes", "grades"
+  add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "grades"
   add_foreign_key "questions", "notes"
   add_foreign_key "questions", "users"
+  add_foreign_key "user_categorizations", "categories"
+  add_foreign_key "user_categorizations", "users"
+  add_foreign_key "users", "grades"
 end

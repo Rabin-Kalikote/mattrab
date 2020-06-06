@@ -1,15 +1,46 @@
 
-#about{
+//Common CSS
+#about,#faqs,
+#terms,#privacy,
+#affiliate_program{
   width: 100%;
   background: #fbfbf9;
+  font-family: 'mattrab-content-light-font';
+  .info-banner{
+    z-index: 2!important;
+    position: relative;
+    background-image: linear-gradient(rgba(95,207,128,.9),rgba(95,207,128,.9)),image-url('faqsbanner.jpg');
+    min-height: 15rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .banner-content{
+      width: 100%;
+      max-width: 963px;
+      padding: 11rem 15px 1rem;
+      margin: auto;
+      #mission{
+        color: #ffffff;
+        max-width: 94%;
+      	text-align: center;
+      	font-size: 1.9rem;
+        letter-spacing: .03rem;
+        margin-left: auto;margin-right: auto;
+      }
+    }
+  }
+}
+
+// About
+#about{
   .mission{
     background: #ebf9ef;
     display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
     .view-mission{
       width: 100%;
       position: relative;
-      padding-top: 5rem;
-      min-height: 15rem;
+      padding-top: 3rem;
+      min-height: 13rem;
       h3.title{
         color: #35b15a;
         text-align: center;
@@ -250,6 +281,55 @@
   }
 }
 
+//FAQs and Helps
+#faqs{
+  .how-m-w{background: #ebf9ef;}
+  .how-m-w,
+  .award-and-faqs{
+    display: -webkit-box; display: flex; flex-wrap: wrap;width: 100%;
+    .user-type,
+    .awards-faqs{
+      width: 100%;
+      position: relative;
+      padding-top: 3rem;
+      min-height: 15rem;
+      h3.title{
+        color: #35b15a;
+        text-align: center;
+        font-size: 2rem;
+        font-family: 'mattrab-content-sans-serif-font';
+      }
+      h4.sub-title{font-size: 1.5rem;}
+      p.sub-title,
+      h4.sub-title{
+        color: #35b15a;
+        text-align: center;
+        font-size: 1.3rem;
+        font-family: 'mattrab-content-sans-serif-font';
+      }
+      p.text{
+        color: #333;
+        max-width: 720px;
+        text-align: center;
+        font-size: 1rem;
+        font-family: 'mattrab-content-sans-serif-font';
+      }
+      @media (max-width: 767.98px) {padding: 0 1.5rem;}
+    }
+    .regards{
+      width: 100%;
+      position: relative;
+      p.regards-text{
+        color: #a1a2a3;
+        max-width: 720px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-style: italic;
+      }
+    }
+  }
+}
+
 // Affiliate Program
 #affiliate_program{
   width: 100%;
@@ -260,8 +340,8 @@
     .view-ad-appeal{
       width: 100%;
       position: relative;
-      padding-top: 5rem;
-      min-height: 15rem;
+      padding-top: 3rem;
+      min-height: 13rem;
       h3.title{
         color: #35b15a;
         text-align: center;
@@ -360,8 +440,8 @@
     .view-terms-head{
       width: 100%;
       position: relative;
-      padding-top: 5rem;
-      min-height: 15rem;
+      padding-top: 3rem;
+      min-height: 13rem;
       h3.title{
         color: #35b15a;
         text-align: center;
@@ -406,8 +486,8 @@
     .view-privacy-head{
       width: 100%;
       position: relative;
-      padding-top: 5rem;
-      min-height: 15rem;
+      padding-top: 3rem;
+      min-height: 13rem;
       h3.title{
         color: #35b15a;
         text-align: center;

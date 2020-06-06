@@ -1,4 +1,4 @@
 :plain
-  $('#answers-#{@question.id}').prepend('#{ j render @answer}');
-  $('#answer_content').val('');
-  alert("fired");
+  $('.thread-answers').prepend('#{ j render @answer}');
+  $('.note-editable').html('');
+  $('.submit-answer-modal').addClass('d-none');

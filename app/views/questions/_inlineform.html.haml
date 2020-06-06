@@ -1,0 +1,4 @@
+= simple_form_for([@note, @note.questions.build], html: {id: :inline_new_question}) do |f|
+  %i.far.fa-comment
+  = f.input :content, label: false, placeholder: "Write a question...", required: true
+  = f.button :submit, value: "Ask question", class: "btn-submit-question btn-sm"

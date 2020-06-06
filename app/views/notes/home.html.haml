@@ -1,0 +1,189 @@
+
+.banner
+  .banner-content
+    .index-search
+      %form.search_form{:action => "/search"}
+        %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
+        %button.search_button{:type => "submit"}
+          %i.fas.fa-search
+    %p#intro.mb-0
+      What's your question? See how your friends have answered them at mattrab.
+
+.sticky-subnav
+  .subnav-row
+    .twelve.columns
+      %ul.sticky-subnav-list.grade-list
+        - if user_signed_in?
+          - current_user.grade.categories.each do |category|
+            %li.cat-item.category-item
+              = link_to category.name.humanize, notes_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
+        - else
+          - Grade.all.each do |grade|
+            %li.cat-item.grade-item
+              = link_to "#", class: "grade-link", id: grade.name do
+                %i.fas.fa-project-diagram
+                = grade.name.humanize
+              %ul.sticky-subnav-list.category-list{:id=>grade.name}
+                %li.cat-item.back-item
+                  = link_to "#", class: "back-link" do
+                    %i.fas.fa-arrow-left
+                    = "Back to Grades"
+                - grade.categories.each do |category|
+                  %li.cat-item.category-item
+                    = link_to category.name.humanize, notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}")
+
+        -# %li.cat-item.grade-item
+        -#   = link_to  notes_url(:category => :physics) do
+        -#     %i.fa.fa-satellite
+        -#     = "Seven"
+        -#   %ul.sticky-subnav-list.category-list
+        -#     %li.cat-item.category-item
+        -#       = link_to  notes_url(:category => :physics) do
+        -#         %i.fa.fa-satellite
+        -#         = "Physics"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :chemistry) do
+        -#         %i.fa.fa-flask
+        -#         = "Chemistry"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :biology) do
+        -#         %i.fa.fa-microscope
+        -#         = "Biology"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :maths) do
+        -#         %i.fa.fa-subscript
+        -#         = "Mathematics"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :computer) do
+        -#         %i.fa.fa-plug
+        -#         = "Computer"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :nepali) do
+        -#         %i.fa.fa-torah
+        -#         = "Nepali"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :english) do
+        -#         %i.fa.fa-sort-alpha-up-alt
+        -#         = "English"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :pastpapers) do
+        -#         %i.fa.fa-paste
+        -#         = "Past Papers"
+        -#     %li.cat-item
+        -#       = link_to notes_url(:category => :solution) do
+        -#         %i.fa.fa-pencil-ruler
+        -#         = "Solutions"
+
+.sticky-subnav-space
+
+-# .sponsers.pb-4
+-#   .sponsers-row
+-#     .twelve.columns
+-#       %ul.sponser-list
+-#         %li.sponser-item.desktop
+-#           = image_tag 'sponsor1.jpg'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor2.png'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor3.jpg'
+-#         %li.sponser-item.all
+-#           = image_tag 'sponsor4.jpg'
+-#         %li.sponser-item.desktop
+-#           = image_tag 'sponsor5.jpg'
+
+#notes
+  .container
+    .notes-title
+      .left-links
+        %h2.title.mb-0.mt-2= "#{@category_title} Notes"
+      .right-links.ml-auto
+        = link_to "All Notes", notes_path, class: "ni-action-link"
+    .row.notes-row.flex-grid
+      - @notes.each do |note|
+        .col-md-6.col-sm-12
+          .note
+            .note_image.col-lg-5.col-md-12
+              = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+            .note_content.col-lg-7.col-md-12
+              %p.info.mb-0
+                = note.user.name
+                = '•'
+                = note.category.name.capitalize
+              = link_to note do
+                %h3.title.mb-1= note.title
+                %p.body.mb-4
+                  = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
+              %p.buttons.align-self-end.mb-2
+                %span
+                  %i.fa.fa-comment-alt
+                  = pluralize(note.questions.count, "Question")
+                %span
+                  %i.fa.fa-thumbs-up
+                  = pluralize(note.get_upvotes.size, "Thank")
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(note.view, "View")
+    .tag-cloud
+      .col-md-12
+        = link_to notes_url, class: 'l' do
+          %i.fas.fa-hashtag
+          All
+        - tag_cloud @note_tags, %w[s m l] do |tag, css_class|
+          = link_to notes_url(:tag => tag.name), class: css_class do
+            %i.fas.fa-hashtag
+            = tag.name
+
+    .questions-title
+      .left-links
+        %h2.title.mb-0.mt-2= "#{@category_title} Questions"
+      .right-links.ml-auto
+        = link_to "All Questions", questions_path, class: "ni-action-link"
+    .row.questions-row.flex-grid
+      - @questions.each do |question|
+        .col-md-6.col-sm-12
+          .question.p-3
+            = link_to question do
+              %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
+              %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+              %p.buttons.align-self-end.mb-2
+                %span
+                  %i.fa.fa-reply
+                  = pluralize(question.answers.count, "Answer")
+                %span
+                  %i.fa.fa-thumbs-up
+                  = "Helpful (#{question.get_upvotes.size})"
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(question.view, "View")
+                %span
+                  %i.fa.fa-check-square
+                  = "Class #{question.grade.name.humanize}"
+                %span
+                  %i.fa.fa-hashtag
+                  = question.category.name.humanize
+    .tag-cloud
+      .col-md-12
+        = link_to questions_url, class: 'l' do
+          %i.fas.fa-hashtag
+          All
+        - tag_cloud @question_tags, %w[s m l] do |tag, css_class|
+          = link_to questions_url(:tag => tag.name), class: css_class do
+            %i.fas.fa-hashtag
+            = tag.name
+
+    .encourage-row.row
+      - if !user_signed_in?
+        %h2.en-title Join Mattrab Community
+        %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
+        .actions
+          = link_to "Join Community, it's free!", new_user_registration_path, class: 'action-button mx-auto'
+      - elsif can? :create, Note
+        %h2.en-title Showcase your Knowledge
+        %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.
+        .actions
+          = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
+      - else
+        %h2.en-title Add to your Knowledge
+        %p.en-message.mx-auto Not understanding any topic or subjects? Ask your question and get helps form friends around the Community. Answers to your questions can help several later.
+        .actions
+          = link_to "Ask question, it's free!", new_question_path, class: 'action-button mx-auto'

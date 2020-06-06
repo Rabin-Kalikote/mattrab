@@ -7,6 +7,7 @@ class Ability
     # anybody can
     can :read, :all
     can :search, Note
+    can :home, Note #displays global home view.
 
     # nobody can
     cannot :create, Note
@@ -15,15 +16,15 @@ class Ability
 
     return unless user.present?
     can :vote, Note
-    can :create, Question
+    can :vote, Question
+    can :vote, Answer
     can :manage, Question, user_id: user.id
-
-    return unless user.creator? or user.admin?
-    can :manage, Question, note: { user: { id: user.id } }
-    can :create, Answer
-    can :manage, Answer, question: { note: { user: { id: user.id } } }
-    can :manage, Answer, question: { user: { id: user.id } }
     can :manage, Answer, user_id: user.id
+    can :manage, Answer, question: { user: { id: user.id } }
+
+    return unless user.creator? or user.teacher? or user.admin?
+    can :manage, Question, note: { user: { id: user.id } }
+    can :manage, Answer, question: { note: { user: { id: user.id } } }
     can :manage, Note, user_id: user.id
     cannot :verify, Note
 
@@ -31,6 +32,37 @@ class Ability
     can :manage, Note
     can :manage, Question
     can :manage, Answer
+
+    # # anybody can
+    # can :read, :all
+    # can :search, Note
+    # can :home, Note #displays global home view.
+    #
+    # # nobody can
+    # cannot :create, Note
+    # cannot :read, Note, status: 'draft'
+    # cannot :verify, Note
+    #
+    # return unless user.present?
+    # can :vote, Note
+    # can :create, Question
+    # can :manage, Question, user_id: user.id
+    # can :vote, Question
+    # can :vote, Answer
+    #
+    # return unless user.creator? or user.admin?
+    # can :manage, Question, note: { user: { id: user.id } }
+    # can :create, Answer
+    # can :manage, Answer, question: { note: { user: { id: user.id } } }
+    # can :manage, Answer, question: { user: { id: user.id } }
+    # can :manage, Answer, user_id: user.id
+    # can :manage, Note, user_id: user.id
+    # cannot :verify, Note
+    #
+    # return unless user.admin?
+    # can :manage, Note
+    # can :manage, Question
+    # can :manage, Answer
 
     # # anybody can
     # can :read, :all

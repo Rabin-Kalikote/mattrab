@@ -1,0 +1,6 @@
+:plain
+  $('.edit-answer-modal').toggleClass('d-none');
+  $('.edit-form-body').html('');
+  $('.edit-form-body').prepend('#{ j render("eform", locals: {answer: @answer}) }');
+  initSummernote();
+  toggleEam();

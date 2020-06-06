@@ -1,0 +1,182 @@
+// Place all the styles related to the Searches controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Note Search
+#search{
+	background: #fbfbf9;
+	.container{
+		display: -webkit-box; display: flex; flex-wrap: wrap;
+		.ad{img{width: 100%; display: none;}}
+		.header{h3.title{
+			font-family: 'mattrab-content-sans-serif-font';
+			font-size: 1.5rem;
+			color: #333;
+		}}
+    .search-navbar{
+      display: block;
+      max-width: 89.125rem;
+      text-align: left;
+      .navbar-internal{
+        box-sizing: border-box;
+        display: flex;
+        max-width: 75.125rem;
+        min-height: 2rem;width: 100%;
+        border-bottom: .0625rem solid #dadce0;
+        .left-links{
+          a.qi-navbar-link{
+            box-sizing: border-box;
+            color: #7e8c9a;
+            display: inline-block;
+            flex-grow: 1;
+            padding: .5rem;
+            font-size: .875rem;
+            text-align: center;
+            &:hover{
+              text-decoration: none;
+            }
+            &:first-of-type{padding-left:0!important}
+          }
+          a.qi-navbar-link#active{
+            border-bottom: .1rem solid #5fcf80;
+            color: #5fcf80;
+          }
+          @media (min-width: 48.1875rem){
+            a.qi-navbar-link {
+              margin: 0 .5rem 0 0;
+              max-width: none;
+              width: auto;
+            }
+          }
+        }
+      }
+      @media (max-width: 767.98px){
+        .navbar-internal{
+          min-height: 2.5rem;
+          padding-top: 1.5rem;
+          .left-links{
+            a.qi-navbar-link{
+              padding: .2rem;
+              font-size: .7rem;
+              margin: 0 .2rem 0 0;
+            }
+          }
+        }
+      }
+      @media (max-width: 575.98px) {
+        .navbar-internal{
+          .left-links{
+            a.qi-navbar-link{
+              padding: .1rem;
+              font-size: .6rem;
+              margin: 0 .15rem 0 0;
+            }
+          }
+        }
+      }
+    }
+    .search-results{
+      width: 100%;
+      .question-wrap.col-md-8.col-sm-12{
+  			margin-bottom:2rem;
+        .question{
+          height: 100%;
+          border-radius: 3px;
+          background: #ffffff;
+          align-items: stretch;
+          background-color: #fff;
+          border: 1px solid #e6e6e6;
+          display: -webkit-box; display: flex; flex-wrap: wrap;
+          a{
+            h3.title{
+              line-height: 1.4;
+              font-size: 16px;
+              color: #333;
+              font-weight: 500;
+              transition: color .1s ease-in-out;
+            }
+            p.user-info{
+              font-size: 13px;
+              color: #7e8c9a;
+            }
+            p.buttons{
+              font-size: .7rem;
+              color: #7e8c9a;
+              position: absolute;
+              bottom: .2rem; left: 16;
+              span {margin-right:.7rem;}
+            }
+            &:hover{
+              text-decoration: none;
+              h3.title{color: #35b15a;}
+            }
+          }
+        }
+      }
+  		.note-wrap.col-md-8.col-sm-12{
+  			margin-bottom:2rem;
+  			.note {
+  				height: 100%;
+  				background: #ffffff;
+  				align-items: stretch;
+  				border: 1px solid #e6e6e6;
+  				display: -webkit-box; display: flex; flex-wrap: wrap;
+  				.note_image{
+  					padding: 0!important;
+  					.img-note { img{ height: 100%; width: 100%!important; } }
+  				}
+  				.note_content {
+  					padding: .4rem 4%;
+  					p.info{
+  						font-family: 'mattrab-content-sans-serif-font';
+  						font-size: .7rem;
+  						color: #b2bac2;
+  						margin-top: .4rem;
+  					}
+  					a{
+  						text-decoration: none;
+  						h2.title {
+  							color: #333;
+  							font-family: 'mattrab-content-sans-serif-font';
+  							font-size: 1.1rem;
+  							display: -webkit-box;
+  							font-weight: bold;
+  							overflow: hidden;
+  							color: #2e353b;
+  							transition: color 100ms ease-in-out;
+  						}
+  						p.body{
+  							font-family: 'mattrab-content-sans-serif-font';
+  							font-size: .8rem;
+  							color: #576366;
+  						}
+  						&:hover{ h2.title { color: #35b15a;}}
+  					}
+  					p.buttons{
+  						font-family: 'mattrab-content-sans-serif-font';
+  						font-size: .7rem;
+  						color: #7e8c9a;
+  						position: absolute;
+  						bottom: .2rem; left: 6%;
+  						span {margin-right:.7rem;}
+  					}
+  				}
+  			}
+  		}
+    }
+    .pagination-nav{padding: 3rem 0; width: 100%; color: #5fcf80;}
+    .no-note.col-md-8.col-sm-12{
+      min-height: 37vh;
+      p.note{
+        font-family: 'mattrab-content-sans-serif-font';
+        font-size: 1.2rem;
+        color: #333;
+      }
+      li.suggest{
+        font-family: 'mattrab-content-sans-serif-font';
+        font-size: 1rem;
+        color: #333;
+      }
+    }
+	}
+}

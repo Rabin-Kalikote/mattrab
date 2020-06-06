@@ -7,7 +7,7 @@
         Share knowledges and learn together with your friends.
         %br This is cool way of learning, right?
       - if controller_name != 'sessions'
-        %p.if.d-sm-none.d-md-block Already joined Mattrab family?
+        %p.if.d-sm-none.d-md-block Already joined Mattrab Community?
         = link_to "Sign In", new_session_path(resource_name), class: "btn-std btn-else d-sm-none d-md-block"
 
     .form-wrap.signup.col-md-7
@@ -18,7 +18,7 @@
             .form-label-group.mb-3
               = f.input :name, required: true, label: false, placeholder: "Your Name", autofocus: true, input_html: { autocomplete: "name", class: 'form-control' }
             .form-label-group.mb-3
-              = f.input :email, required: true, label: false, placeholder: "you@mail.com", input_html: { autocomplete: "email", class: 'form-control' }
+              = f.input :email, required: true, label: false, placeholder: "you@mail.com", hint: "you have to confirm your email", input_html: { autocomplete: "email", class: 'form-control' }
             .form-label-group.mb-3
               = f.input :password, required: true, label: false, placeholder: "Password", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password", class: 'form-control' }
             .form-label-group.mb-3

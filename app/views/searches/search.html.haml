@@ -1,0 +1,32 @@
+
+#search
+  .container.pb-5
+    .ad.col-md-8.offset-md-2.mt-5
+      = image_tag 'adhere.png'
+    .header.col-md-8.offset-md-2.mt-4
+      %h3.title= "Search Results for '#{@query}'"
+
+    .search-navbar.col-md-8.offset-md-2
+      .navbar-internal
+        .left-links
+          = link_to search_path(:query => @query, :tab => :all), class: "qi-navbar-link", id: ('active' if @tab=="all" or @tab==nil) do
+            %i.fas.fa-search
+            = "All Results"
+          = link_to search_path(:query => @query, :tab => :notes), class: "qi-navbar-link", id: ('active' if @tab=="notes") do
+            %i.fas.fa-sticky-note
+            = "Notes"
+          = link_to search_path(:query => @query, :tab => :questions), class: "qi-navbar-link", id: ('active' if @tab=="questions") do
+            %i.fas.fa-comment-alt
+            = "Question Threads"
+
+    - if @results.present?
+      .search-results
+        = render :partial => "result", :collection => @results
+      .row.pagination-nav.is.justify-content-center
+        = will_paginate @results, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+    - else
+      .no-note.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4.pt-4
+        %p.note Oops! No results were found for your question.
+        %li.suggest Try asking question differently.
+        %li.suggest Make sure that all words are spelled correctly.
+        %li.suggest Try more general keywords.

@@ -1,0 +1,14 @@
+#question-edit
+  .container
+    .qn-internal
+      .returning-option
+        = link_to question_path(@question), class: 'returning-option-link' do
+          %i.fas.fa-arrow-left
+          = 'Back to Question'
+      .thread-article
+        .thread-form
+          .form-card-content
+            .form-card-header
+              %h2.form-title.mb-0= "Update Your Question Here."
+            .form-card-body
+              = render 'form'

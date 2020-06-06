@@ -1,0 +1,3 @@
+:plain
+  $('#answer_#{@answer.id}').replaceWith('#{ j render partial: "answer", locals: {answer: @answer} }');
+  $('.edit-answer-modal').toggleClass('d-none');

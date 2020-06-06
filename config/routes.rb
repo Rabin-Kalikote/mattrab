@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-
-  %w[about affiliate_program terms privacy creator_appeal].each do |page|
+  %w[about faqs affiliate_program terms privacy creator_appeal].each do |page|
     get page, controller: "info", action: page
   end
 
   devise_for :users
   get 'users/show'
   resources :users do
+    resources :categorizations
     member do
       get :following, :followers
     end
@@ -18,17 +18,26 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'search', to: 'notes#search'
+  get 'search', to: 'searches#search'
+  get 'home', to: 'notes#home'
   resources :notes do
     member do
-      put "like", to: "notes#vote"
+      put "thank", to: "notes#vote"
       get "verify", to: "notes#verify"
       get "request_verification",  to: "notes#request_verification"
     end
-    resources :questions, only: [:index, :create, :destroy] do
+    resources :questions, only: [:create, :destroy] do
       resources :answers, only: [:create, :destroy]
     end
   end
+  resources :questions do
+    member do
+      put "vote", to: "questions#vote"
+    end
+    resources :answers, only: [:create, :edit, :update, :destroy] do
+      put "vote", to: "answers#vote"
+    end
+  end
   resources :images, only: [:create, :destroy]
-  root 'notes#index'
+  root 'notes#home'
 end

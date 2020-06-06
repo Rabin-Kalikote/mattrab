@@ -5,7 +5,7 @@
         %a{:href => root_path, :class => "nav-brand"}
           = image_tag 'mrlogo.png'
       .col-12.col-sm-12.col-md-4.d-none.d-md-flex.justify-content-start.search-at-nav
-        - unless current_page?(notes_path) or current_page?(root_path)
+        - unless current_page?(root_path)
           %a.nav-link.d-inline-block.d-sm-none.btn-action.search-toggle{:href => "javascript:void(0)"}
             %i.fa.fa-arrow-left
           %form{:action => "/search"}
@@ -13,25 +13,36 @@
             %input.ask-ah{"aria-label" => "Search", :placeholder => "Search...", :name => "query", :type => "search"}
       .col-9.col-sm-9.col-md-5.d-flex.justify-content-end
         %ul.nav.justify-content-end
-          - unless current_page?(notes_path) or current_page?(root_path)
+          - unless current_page?(root_path)
             %li.nav-item.d-block.d-sm-none
               %a.nav-link.btn-action.search-toggle{:href => "javascript:void(0)"}
                 %i.fa.fa-search
-          - if !user_signed_in?
-            %li.nav-item
-              = link_to new_user_session_path, class: 'btn-action nav-link' do
-                %i.fa.fa-plus.d-md-inline.d-lg-none
-                %span.d-none.d-lg-inline= 'Create Note'
-          - elsif can? :create, Note
-            %li.nav-item
-              = link_to new_note_path, class: 'btn-action nav-link' do
-                %i.fa.fa-plus.d-md-inline.d-lg-none
-                %span.d-none.d-lg-inline= 'Create Note'
-          - else
-            %li.nav-item
-              = link_to creator_appeal_path, class: 'btn-action nav-link' do
-                %i.fa.fa-plus.d-md-inline.d-lg-none
-                %span.d-none.d-lg-inline= 'Create Note'
+          %li.nav-item.btn-group.dropdown.cdropdown
+            %a.nav-link.btn-action.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,8" }
+              %i.fa.fa-plus.d-md-inline.d-lg-none
+              %span.d-none.d-lg-inline= 'Create'
+            .dropdown-menu.dropdown-menu-right
+              - if !user_signed_in?
+                = link_to new_user_session_path, class: 'dropdown-item' do
+                  %i.fas.fa-sticky-note
+                  = 'Note'
+                = link_to new_user_session_path, class: 'dropdown-item' do
+                  %i.fas.fa-comment-alt
+                  = 'Question'
+              - elsif can? :create, Note
+                = link_to new_note_path, class: 'dropdown-item' do
+                  %i.fas.fa-sticky-note
+                  = 'Note'
+                = link_to new_question_path, class: 'dropdown-item' do
+                  %i.fas.fa-comment-alt
+                  = 'Question'
+              - else
+                = link_to creator_appeal_path, class: 'dropdown-item' do
+                  %i.fas.fa-sticky-note
+                  = 'Note'
+                = link_to new_question_path, class: 'dropdown-item' do
+                  %i.fas.fa-comment-alt
+                  = 'Question'
 
           - if !user_signed_in?
             - if current_page?(new_user_session_path)
@@ -70,7 +81,9 @@
                 %p.nav-user-name.mb-0= current_user.name
                 %p.nav-user-email.mb-0= current_user.email
                 .dropdown-divider
-                = link_to "Your Profile", current_user, class: 'dropdown-item'
-                = link_to "Edit Profile", edit_user_registration_path, class: 'dropdown-item'
+                = link_to "Your Library", current_user, class: 'dropdown-item'
+                = link_to "Your Questions", user_path(current_user, :tab => :question), class: 'dropdown-item'
                 .dropdown-divider
+                = link_to "FAQs and Help", faqs_path, class: 'dropdown-item'
+                = link_to "Settings", edit_user_registration_path, class: 'dropdown-item'
                 = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item'

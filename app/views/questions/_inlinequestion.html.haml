@@ -1,0 +1,41 @@
+.qa-thread.mt-3.mb-4{:id => "qa-thread-#{question.id}"}
+  .question.mt-4.mb-2
+    .q-header
+      .avatar.d-inline
+        = image_tag question.user.avatar.url(:small)
+      .body.d-inline.ml-1
+        = link_to question.user.name, question.user, class: 'username'
+        %span.at
+          = 'asked'
+          = time_ago_in_words(question.created_at)
+          ago
+      - if can? :destroy, question
+        = link_to note_question_path(@note, question), method: :delete, data: { confirm: "Are you sure? Deleting question thread is irreversible." }, remote: true, class: 'btn-delete pull-right' do
+          %i.fas.fa-trash
+          %span.sr-only= 'Delete thread'
+    .q-content
+      = simple_format question.content
+
+  - if question.answers.any?
+    .answer.mt-4.mb-2{:id =>"answer_#{question.top_ans.id}"}
+      .a-header
+        .avatar.d-inline
+          = image_tag question.answers.first.user.avatar.url(:small)
+        .body.d-inline.ml-1
+          = link_to question.answers.first.user.name, question.answers.first.user, class: 'username'
+          %span.at
+            = 'answered'
+            = time_ago_in_words(question.answers.first.created_at)
+            ago
+        - if can? :destroy, question.answers.first
+          = link_to note_question_answer_path(@note, question, question.answers.first), method: :delete, data: { confirm: "Are you sure? Deleting your answer is irreversible." }, remote: true, class: 'btn-delete pull-right' do
+            %i.fas.fa-trash
+            %span.sr-only= 'Delete Answer'
+      .a-content
+        = simple_format question.top_ans.content
+  .question-card-actions.btn-group
+    - if user_signed_in?
+      %a.q-upvote.q-card-action{:id => "#{question.id}@#!"}= "Helpful (#{question.get_upvotes.size})"
+      = link_to 'Answer this thread', question_path(question), class: 'q-card-action'
+    - else
+      = link_to 'Sign in to Answer this Thread', new_user_session_path, class: 'q-card-action'

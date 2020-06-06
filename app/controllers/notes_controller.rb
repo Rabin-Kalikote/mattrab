@@ -1,40 +1,60 @@
 class NotesController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :authenticate_user!, except: [:home, :index, :show, :search]
   before_action :find_note, only: [:show, :edit, :update, :destroy, :vote, :verify]
+
+  def home
+    @note_tags = Note.tag_counts.limit(17)
+    @question_tags = Question.tag_counts.limit(17)
+
+    if user_signed_in? #and !current_user.teacher?
+      @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                    published.order("RANDOM()").limit(8)
+      @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).order("RANDOM()").limit(8)
+    else
+      @notes = Note.published.order("RANDOM()").limit(8)
+      @questions = Question.all.order("RANDOM()").limit(8)
+    end
+    @category_title = "Recommended"
+  end
 
   def index
     if params[:category].present?
-      if user_signed_in? and !current_user.teacher?
-        @notes = Note.where(:category => params[:category], :grade => current_user.grade).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+      if user_signed_in? #and !current_user.teacher?
+        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).where(categories: { name: params[:category] }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      elsif params[:grade].present?
+        @notes = Note.joins(:grade).where(grades: { name: params[:grade] }).
+                      joins(:category).where(categories: { name: params[:category] }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       else
-        @notes = Note.where(:category => params[:category]).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+        @notes = Note.joins(:category).where(categories: { name: params[:category] }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       end
-      @category_title = params[:category].humanize + " Notes"
-    else
-      if user_signed_in? and !current_user.teacher?
-        @notes = Note.where(:grade => current_user.grade).published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+    elsif params[:tag].present?
+      if user_signed_in? #and !current_user.teacher?
+        @notes = Note.tagged_with(params[:tag]).joins(:grade).where(grades: { name: current_user.grade.name }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       else
-        @notes = Note.published.paginate(page: params[:page], per_page: 14).order("created_at DESC")
+        @notes = Note.tagged_with(params[:tag]).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       end
-      @category_title = "Latest Notes"
-    end
-  end
-
-  def search
-    @query = params[:query]
-    @notes = Note.search(@query).published.paginate(page: params[:page], per_page: 7)
-    if @notes.present?
-      set_meta_tags title: @query, site: 'Mattrab Search', description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @notes.first.category+" class "+@notes.first.grade,
-                    og: { title: @query, description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@notes.first), image: @notes.first.image },
-                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @notes.first.body.gsub(/<[^>]*>/, '').truncate(150), image: @notes.first.image }
     else
-      set_meta_tags title: 'No results found', site: 'Mattrab Search'
+      if user_signed_in? #and !current_user.teacher?
+        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      # joins(:category).where(categories: { name: current_user['categories'] }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      elsif params[:grade].present?
+        @notes = Note.joins(:grade).where(grades: { name: params[:grade] }).
+                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      else
+        @notes = Note.published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      end
     end
   end
 
   def show
-    set_meta_tags title: @note.title, site: 'Mattrab', description: @note.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @note.category+" class "+@note.grade,
+    set_meta_tags title: @note.title, site: 'Mattrab', description: @note.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @note.category.name+" class "+@note.grade.name,
                   og: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@note), image: @note.image },
                   twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
@@ -111,6 +131,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category, :status, :grade)
+    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :tag_list)
   end
 end

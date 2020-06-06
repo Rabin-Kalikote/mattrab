@@ -1,0 +1,3 @@
+:plain
+  $('.search-results').append('#{ j render :partial => "result", :collection => @results }');
+  $('.pagination-nav').html('#{ j will_paginate @results, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0 }');

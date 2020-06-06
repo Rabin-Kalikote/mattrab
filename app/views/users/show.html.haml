@@ -24,61 +24,152 @@
                     = form_for(current_user.active_relationships.find_by(followed_id: @user.id), html: { method: :delete }) do |f|
                       = f.submit "Unfollow", class: "btn-std btn-sm btn-follow-edit"
                 - else
-                  = link_to "Edit Profile", edit_user_registration_path, class: 'btn-std btn-sm btn-follow-edit'
+                  = link_to "Settings", edit_user_registration_path, class: 'btn-std btn-sm btn-follow-edit'
               - else
                 = link_to "Follow", new_user_session_path, class: "btn-std btn-sm btn-follow-edit"
             %p.has.mt-4.mb-0
               = pluralize(@user.followers.count, "Follower")
               = '•'
-              = pluralize(@user.notes.count, "Note")
-            %p.email.mb-0= @user.email
+              = pluralize(@user.questions.count, "Question")
+            -# %p.email.mb-0= @user.email
       .col-md-9
         .this-property
-          %p.this-text.mb-5
-            %span.intro
-              Hey, I'm
-              = @user.name
-              %br
-            - if @user.about == nil and  @user == current_user
-              = link_to "Write more about yourself here.", edit_user_registration_path
-            - else
-              = @user.about
-          .notes
-            %h3.title.mb-3= 'Latest Notes'
-            - @user_notes.each do |note|
-              .col-lg-9.col-md-10.col-sm-12
-                .note
-                  .note_image.col-md-5.col-sm-12
-                    = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
-                  .note_content.col-md-7.col-sm-12
-                    %p.info.mb-0
-                      = note.user.name
-                      = '•'
-                      = note.category.capitalize
-                    = link_to note do
-                      %h2.title.mb-1= note.title
-                      %p.body.mb-4
-                        = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-                    %p.buttons.align-self-end.mb-2
-                      %span
-                        %i.fa.fa-comment-alt
-                        = pluralize(note.questions.count, "Question")
-                      %span
-                        %i.fa.fa-thumbs-up
-                        = pluralize(note.get_upvotes.size, "Like")
-                      %span
-                        %i.fa.fa-eye
-                        = pluralize(note.view, "View")
-              .col-lg-3.col-md-2.col-sm-12
-                - if note.user == current_user or current_user.admin?
-                  %p.status.mb-3
-                    = note.is_verified ? "Verified" : "Not Verified"
-                    = '•'
-                    = note.status.humanize
-                - if can? :update, note
-                  = link_to "Edit", edit_note_path(note), class: "btn-sm"
-                - if can? :destroy, note
-                  = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
-          .pagination-nav.pt-4
-            = will_paginate @user_notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+          .this-property-nav
+            .navbar-internal
+              .left-links
+                = link_to user_path(@user, :tab => :note), class: "qi-navbar-link", id: (@tab=="note" ? 'active' : '') do
+                  %i.fas.fa-sticky-note
+                  %span.d-none.d-lg-inline= 'Academic/Research'
+                  = 'Notes'
+                = link_to user_path(@user, :tab => :question), class: "qi-navbar-link active", id: (@tab=="question" ? 'active' : '') do
+                  %i.fas.fa-comment-alt
+                  = 'Asked'
+                  %span.d-none.d-lg-inline= 'Questions'
+                = link_to user_path(@user, :tab => :answer), class: "qi-navbar-link", id: (@tab=="answer" ? 'active' : '') do
+                  %i.fas.fa-question-circle
+                  = 'Answered'
+                  %span.d-none.d-lg-inline= 'Questions'
+                = link_to user_path(@user, :tab => :about), class: "qi-navbar-link", id: (@tab=="about" ? 'active' : '') do
+                  %i.fas.fa-info-circle
+                  = 'About'
+
+          - case @tab
+          - when "question"
+            .questions.pt-4
+              - @questions.each do |question|
+                .row
+                  .col-lg-9.col-md-10.col-sm-12
+                    .question.p-3
+                      = link_to question do
+                        %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
+                        %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+                        %p.buttons.align-self-end.mb-2
+                          %span
+                            %i.fa.fa-reply
+                            = pluralize(question.answers.count, "Answer")
+                          %span
+                            %i.fa.fa-thumbs-up
+                            = "Helpful (#{question.get_upvotes.size})"
+                          %span
+                            %i.fa.fa-eye
+                            = pluralize(question.view, "View")
+                          %span
+                            %i.fa.fa-check-square
+                            = "Class #{question.grade.name.humanize}"
+                          %span
+                            %i.fa.fa-hashtag
+                            = question.category.name.humanize
+                  .col-lg-3.col-md-2.col-sm-12
+                    - if can? :update, question
+                      = link_to "Edit", edit_question_path(question), class: "btn-sm"
+                    - if can? :destroy, question
+                      = link_to "Delete", question_path(question), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
+              .pagination-nav.pt-4
+                = will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+
+          - when "answer"
+            .questions.pt-4
+              - @questions.each do |question|
+                .row
+                  .col-lg-9.col-md-10.col-sm-12
+                    .question.p-3
+                      = link_to question do
+                        %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
+                        %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+                        %p.buttons.align-self-end.mb-2
+                          %span
+                            %i.fa.fa-reply
+                            = pluralize(question.answers.count, "Answer")
+                          %span
+                            %i.fa.fa-thumbs-up
+                            = "Helpful (#{question.get_upvotes.size})"
+                          %span
+                            %i.fa.fa-eye
+                            = pluralize(question.view, "View")
+                          %span
+                            %i.fa.fa-check-square
+                            = "Class #{question.grade.name.humanize}"
+                          %span
+                            %i.fa.fa-hashtag
+                            = question.category.name.humanize
+                  .col-lg-3.col-md-2.col-sm-12
+                    - if can? :update, question
+                      = link_to "Edit", edit_question_path(question), class: "btn-sm"
+                    - if can? :destroy, question
+                      = link_to "Delete", question_path(question), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
+              .pagination-nav.pt-4
+                = will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+
+          - when "about"
+            .about
+              %p.title= 'Hi, welcome to my library.'
+              %p.about_text
+                - if @user.about == nil and  @user == current_user
+                  = link_to "Write more about yourself here.", edit_user_registration_path
+                - else
+                  = @user.about
+              %p.joined.mb-1= "Joined Mattrab Community on #{@user.created_at.strftime("%B %d, %Y")}."
+              %p.views= "Total #{@total_views} views."
+
+          - else
+            .notes.pt-4
+              - @notes.each do |note|
+                .row
+                  .col-lg-9.col-md-10.col-sm-12
+                    .note
+                      .note_image.col-md-5.col-sm-12
+                        = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
+                      .note_content.col-md-7.col-sm-12
+                        %p.info.mb-0
+                          = note.user.name
+                          = '•'
+                          = note.category.name.capitalize
+                        = link_to note do
+                          %h2.title.mb-1= note.title
+                          %p.body.mb-4
+                            = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
+                        %p.buttons.align-self-end.mb-2
+                          %span
+                            %i.fa.fa-comment-alt
+                            = pluralize(note.questions.count, "Question")
+                          %span
+                            %i.fa.fa-thumbs-up
+                            = pluralize(note.get_upvotes.size, "Like")
+                          %span
+                            %i.fa.fa-eye
+                            = pluralize(note.view, "View")
+                  .col-lg-3.col-md-2.col-sm-12
+                    - if current_user.present?
+                      - if note.user == current_user or current_user.admin?
+                        %p.status.mb-3
+                          = note.is_verified ? "Verified" : "Not Verified"
+                          = '•'
+                          = note.status.humanize
+                    - if can? :update, note
+                      = link_to "Edit", edit_note_path(note), class: "btn-sm"
+                    - if can? :destroy, note
+                      = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
+              .pagination-nav.pt-4
+                = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+
           .space
