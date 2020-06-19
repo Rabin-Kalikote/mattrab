@@ -14,9 +14,13 @@
     .twelve.columns
       %ul.sticky-subnav-list.grade-list
         - if user_signed_in?
-          - current_user.grade.categories.each do |category|
+          -if current_user.categories.present?
+            - current_user.categories.each do |category|
+              %li.cat-item.category-item
+                = link_to category.name.humanize, notes_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
+          - else
             %li.cat-item.category-item
-              = link_to category.name.humanize, notes_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
+              = link_to "Please select your interested subjects or categories to list here.", edit_user_registration_path
         - else
           - Grade.all.each do |grade|
             %li.cat-item.grade-item

@@ -15,10 +15,11 @@ $ ->
 
     # filtering the options of category in edit view.
     filterOptions = ->
-      $('.grade-category-list').hide()
       grade = $('#user_grade_id :selected').text()
       escaped_grade = grade.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
+      $('.grade-category-list').hide()
       $(".grade-category-list##{escaped_grade}").show()
+      $(".grade-category-list:hidden input[type='checkbox']").prop('checked', false)
 
     if $('#user_grade_id').length
       filterOptions()

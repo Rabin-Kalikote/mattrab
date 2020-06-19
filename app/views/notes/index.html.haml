@@ -25,7 +25,9 @@
   .ni-body
     .container
       #notes.row.flex-grid
-        = render @notes
-
+        - if @notes.present?
+          = render @notes
+        - elsif user_signed_in?
+          = link_to "Please select your interested subjects or categories to browse resources.", edit_user_registration_path, class: "w-100 text-center"
       .row.pagination-nav.is.justify-content-center
         = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

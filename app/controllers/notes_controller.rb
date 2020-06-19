@@ -8,8 +8,14 @@ class NotesController < ApplicationController
     @question_tags = Question.tag_counts.limit(17)
 
     if user_signed_in? #and !current_user.teacher?
-      @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                    published.order("RANDOM()").limit(8)
+      if current_user.categories.present?
+        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).merge(current_user.categories).
+                      published.order("RANDOM()").limit(8)
+      else
+        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      published.order("RANDOM()").limit(8)
+      end
       @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).order("RANDOM()").limit(8)
     else
       @notes = Note.published.order("RANDOM()").limit(8)
@@ -35,14 +41,15 @@ class NotesController < ApplicationController
     elsif params[:tag].present?
       if user_signed_in? #and !current_user.teacher?
         @notes = Note.tagged_with(params[:tag]).joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).merge(current_user.categories).
                       published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       else
-        @notes = Note.tagged_with(params[:tag]).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+        @notes = Note.tagged_with(params[:tag]).joins(:category).merge(current_user.categories).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       end
     else
       if user_signed_in? #and !current_user.teacher?
         @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      # joins(:category).where(categories: { name: current_user['categories'] }).
+                      joins(:category).merge(current_user.categories).
                       published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       elsif params[:grade].present?
         @notes = Note.joins(:grade).where(grades: { name: params[:grade] }).
@@ -59,13 +66,14 @@ class NotesController < ApplicationController
                   twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
     if user_signed_in?
-      @random_note = Note.published.where(category: @note.category, grade: current_user.grade).where.not(id: @note).order("RANDOM()").first
+      @random_note = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
+                          joins(:category).where(categories: { name: @note.category.name }).
+                          published.where.not(id: @note).order("RANDOM()").first
     else
-      @random_note = Note.published.where(category: @note.category).where.not(id: @note).order("RANDOM()").first
+      @random_note = Note.joins(:category).where(categories: { name: @note.category.name }).
+                          published.where.not(id: @note).order("RANDOM()").first
     end
-    if !@random_note.present?
-      @random_note = Note.published.where.not(id: @note).order("RANDOM()").first
-    end
+    @random_note = Note.published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @note.update_attribute "view", @note.view += 1
   end
 
@@ -84,11 +92,8 @@ class NotesController < ApplicationController
   end
 
   def edit
-    if @note.pastpapers? or @note.solution?
-      @admins = User.where(:role => 'admin')
-    else
-      @admins = User.where(:admin_category => @note.category)
-    end
+    @admins = UserCategorization.where(:category_id => @note.category.id).joins(:user).merge(User.admin).map(&:user)
+    @admins = User.admin if !@admins.present?
     set_meta_tags title: 'Edit '+@note.title, site: 'Mattrab'
   end
 
