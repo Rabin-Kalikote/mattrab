@@ -4,6 +4,7 @@
     = csrf_meta_tags
     = display_meta_tags(default_meta_tags)
     = favicon_link_tag 'favicon.ico', rel: 'icon', type: 'image/ico'
+    = stylesheet_link_tag "/manifest.json", rel: 'manifest'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"

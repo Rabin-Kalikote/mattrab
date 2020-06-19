@@ -1,0 +1,20 @@
+<% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
+{
+  "name": "Mattrab",
+  "short_name": "Mattrab",
+  "start_url": "/",
+  "icons": [
+  <% icon_sizes.map { |s| "#{s}x#{s}" }.each.with_index do |dim, i| %>
+    {
+      "src": "<%= image_path("icons/mattrab-#{dim}.png") %>",
+      "sizes": "<%= dim %>",
+      "type": "image/png"
+    }<%= i == (icon_sizes.length - 1) ? '' : ',' %>
+  <% end %>
+  ],
+  "theme_color": "#ebf9ef",
+  "background_color": "#ebf9ef",
+  "display": "standalone",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}
