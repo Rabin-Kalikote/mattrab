@@ -4,13 +4,25 @@
     = csrf_meta_tags
     = display_meta_tags(default_meta_tags)
     = favicon_link_tag 'favicon.ico', rel: 'icon', type: 'image/ico'
+
     = stylesheet_link_tag "/manifest.json", rel: 'manifest'
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
     = stylesheet_link_tag "https://use.fontawesome.com/releases/v5.12.0/css/all.css", crossorigin: "anonymous", integrity: "sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M"
     %meta{:name => "google-site-verification", :content => "hFEpZ1lvpst_QL9-WkObIRbzM7B_hsoOC5Hg2k4gdvw"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
+    %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}
+
+    = favicon_link_tag 'icons/mattrab-57x57.png', rel: 'apple-touch-icon', sizes: '57x57'
+    = favicon_link_tag 'icons/mattrab-60x60.png', rel: 'apple-touch-icon', sizes: '60x60'
+    = favicon_link_tag 'icons/mattrab-72x72.png', rel: 'apple-touch-icon', sizes: '72x72'
+    = favicon_link_tag 'icons/mattrab-76x76.png', rel: 'apple-touch-icon', sizes: '76x76'
+    = favicon_link_tag 'icons/mattrab-114x114.png', rel: 'apple-touch-icon', sizes: '114x114'
+    = favicon_link_tag 'icons/mattrab-120x120.png', rel: 'apple-touch-icon', sizes: '120x120'
+    = favicon_link_tag 'icons/mattrab-114x114.png', rel: 'apple-touch-icon', sizes: '114x114'
+    = favicon_link_tag 'icons/mattrab-152x152.png', rel: 'apple-touch-icon', sizes: '152x152'
+    = favicon_link_tag 'icons/mattrab-180x180.png', rel: 'apple-touch-icon', sizes: '180x180'
 
   %body
 
