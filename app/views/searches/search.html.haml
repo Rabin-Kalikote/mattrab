@@ -18,6 +18,9 @@
           = link_to search_path(:query => @query, :tab => :questions), class: "qi-navbar-link", id: ('active' if @tab=="questions") do
             %i.fas.fa-comment-alt
             = "Question Threads"
+          = link_to search_path(:query => @query, :tab => :users), class: "qi-navbar-link", id: ('active' if @tab=="users") do
+            %i.fas.fa-user
+            = "Mattrabians"
 
     - if @results.present?
       .search-results

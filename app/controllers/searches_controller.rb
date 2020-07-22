@@ -13,6 +13,8 @@ class SearchesController < ApplicationController
       questions_from_search = Question.search(@query).to_a
       questions_from_tag = Question.tagged_with(tags, :any => true).to_a
       @results = questions_from_search.concat(questions_from_tag).paginate(page: params[:page], per_page: 7)
+    when "users"
+      @results = User.search(@query).paginate(page: params[:page], per_page: 7)
     else
       notes_from_search = Note.search(@query).to_a
       notes_from_tag = Note.tagged_with(tags, :any => true).to_a
@@ -33,6 +35,10 @@ class SearchesController < ApplicationController
       set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150), keywords: @results.first.category.name+" class "+@results.first.grade.name,
                     og: { title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: question_url(@results.first) },
                     twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150) }
+    elsif @results.present? and @results.first.is_a? User
+      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), keywords: "Mattrab user at class "+@results.first.grade.name,
+                    og: { title: @query, description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: user_url(@results.first), image: @results.first.avatar },
+                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), image: @results.first.avatar }
     else
       set_meta_tags title: 'No results found', site: 'Mattrab Search'
     end

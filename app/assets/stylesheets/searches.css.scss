@@ -113,19 +113,23 @@
           }
         }
       }
-  		.note-wrap.col-md-8.col-sm-12{
+  		.note-wrap.col-md-8.col-sm-12,
+			.user-wrap.col-md-8.col-sm-12{
   			margin-bottom:2rem;
-  			.note {
+  			.note,
+				.user {
   				height: 100%;
   				background: #ffffff;
   				align-items: stretch;
   				border: 1px solid #e6e6e6;
   				display: -webkit-box; display: flex; flex-wrap: wrap;
-  				.note_image{
+  				.note_image,
+					.user_avatar{
   					padding: 0!important;
-  					.img-note { img{ height: 100%; width: 100%!important; } }
+  					.img-note,.avatar-user { img{ height: 100%; width: 100%!important; } }
   				}
-  				.note_content {
+  				.note_content,
+					.user_about {
   					padding: .4rem 4%;
   					p.info{
   						font-family: 'mattrab-content-sans-serif-font';

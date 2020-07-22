@@ -25,6 +25,11 @@ class User < ApplicationRecord
   enum admin_category: [:physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum egrade: [:twelve, :eleven, :ten]
 
+  include PgSearch
+  pg_search_scope :search, against: [:name, :about],
+    using: {tsearch: {dictionary: 'english'}},
+    associated_against: {notes: :title, questions: :content}
+
   def to_param
     "#{id} #{name}".parameterize
   end
