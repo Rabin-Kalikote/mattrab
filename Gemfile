@@ -31,6 +31,7 @@ gem 'will_paginate-bootstrap4'
 gem 'rails_refactor'
 gem 'meta-tags'
 gem 'serviceworker-rails'
+gem 'fog-aws'
 gem 'sitemap_generator'
 
 group :development, :test do

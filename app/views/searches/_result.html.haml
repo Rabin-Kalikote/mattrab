@@ -52,7 +52,7 @@
         = link_to (image_tag result.avatar.url(:pro)), result, class: 'avatar-user'
       .user_about.col-md-8.col-sm-12
         %p.info.mb-0
-          = "#{result.name} is a #{result.role} at Mattrab."
+          = "#{result.name} is #{result.role} at Mattrab."
         = link_to result do
           %h2.title.mb-1= result.name
           %p.body.mb-4
