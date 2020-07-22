@@ -5,7 +5,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 gem 'rails', '~> 5.1.3'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
@@ -31,7 +30,8 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem 'rails_refactor'
 gem 'meta-tags'
-gem "serviceworker-rails"
+gem 'serviceworker-rails'
+gem 'sitemap_generator'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
