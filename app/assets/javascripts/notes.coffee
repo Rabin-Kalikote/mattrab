@@ -30,6 +30,28 @@ $ ->
   ready = ->
     #header assignments.
     $('.header-space').height($('header').height())
+    #updating if the window has mobile-view.
+    $(window).resize (e) ->
+      if $(window).width() <= 767.98
+        $('body').addClass 'mobile'
+      else
+        $('body').removeClass 'mobile'
+        $('.sm-nav-fixed-bottom').removeClass('scrolled-down')
+      return
+    $(window).resize()
+
+    #bottom-nav scroll-behavior.
+    if $('.mobile').length
+      last_scroll_top = 0
+      $(window).on 'scroll', ->
+        scroll_top = $(this).scrollTop()
+        if scroll_top < last_scroll_top
+          $('.mobile .sm-nav-fixed-bottom').removeClass('scrolled-down').addClass 'scrolled-up'
+        else
+          $('.mobile .sm-nav-fixed-bottom').removeClass('scrolled-up').addClass 'scrolled-down'
+        last_scroll_top = scroll_top
+        return
+
     #summernote assignments.
     $('[data-provider="summernote"]').each ->
       $(this).summernote
@@ -50,11 +72,81 @@ $ ->
               deleteFile image_id
             target.remove()
 
-    #toggle search bar in mobile view.
-    $('a.search-toggle').on 'click', (e) ->
+    #handle nav-search-icon click.
+    $('a.ask').on 'click', (e) ->
       e.preventDefault()
-      $('.search-at-nav').toggleClass 'd-none'
+      if $('input.search_input').length
+        $('input.search_input').focus()
+      else
+        $('.search-modal').toggleClass 'd-none'
       return
+
+    #scrolling the home grade-class nav.
+
+    # duration of scroll animation
+    scrollDuration = 300
+    # paddles
+    leftPaddle = document.getElementsByClassName('left-paddle')
+    rightPaddle = document.getElementsByClassName('right-paddle')
+    # get items dimensions
+    itemsLength = $('.item').length
+    itemSize = $('.item').outerWidth(true)
+    # get some relevant size for the paddle triggering point
+    paddleMargin = 50
+    # get wrapper width
+
+    getMenuWrapperSize = ->
+      $('.menu-wrapper').outerWidth()
+
+    menuWrapperSize = getMenuWrapperSize()
+    # the wrapper is responsive
+    $(window).on 'resize', ->
+      menuWrapperSize = getMenuWrapperSize()
+      return
+    # size of the visible part of the menu is equal as the wrapper size
+    menuVisibleSize = menuWrapperSize
+    # get total width of all menu items
+
+    getMenuSize = ->
+      itemsLength * itemSize
+
+    menuSize = getMenuSize()
+    # get how much of menu is invisible
+    menuInvisibleSize = menuSize - menuWrapperSize
+    # get how much have we scrolled to the left
+
+    getMenuPosition = ->
+      $('.menu').scrollLeft()
+
+    # finally, what happens when we are actually scrolling the menu
+    $('.menu').on 'scroll', ->
+      # get how much of menu is invisible
+      menuInvisibleSize = menuSize - menuWrapperSize
+      # get how much have we scrolled so far
+      menuPosition = getMenuPosition()
+      menuEndOffset = menuInvisibleSize - paddleMargin
+      # show & hide the paddles
+      # depending on scroll position
+      if menuPosition <= paddleMargin
+        $(leftPaddle).addClass 'hidden'
+        $(rightPaddle).removeClass 'hidden'
+      else if menuPosition < menuEndOffset
+        # show both paddles in the middle
+        $(leftPaddle).removeClass 'hidden'
+        $(rightPaddle).removeClass 'hidden'
+      else if menuPosition >= menuEndOffset
+        $(leftPaddle).removeClass 'hidden'
+        $(rightPaddle).addClass 'hidden'
+      return
+    # scroll to left
+    $(rightPaddle).click ->
+      $('.menu').animate { scrollLeft: '+=' + menuVisibleSize }, scrollDuration
+      return
+    # scroll to right
+    $(leftPaddle).click ->
+      $('.menu').animate { scrollLeft: '-=' + menuVisibleSize }, scrollDuration
+      return
+
     #prealoading the note image.
     $('#note_image').change (e) ->
       url = URL.createObjectURL(e.target.files[0])

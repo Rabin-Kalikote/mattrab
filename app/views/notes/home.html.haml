@@ -1,99 +1,88 @@
 
 .banner
-  .banner-content
-    .index-search
-      %form.search_form{:action => "/search"}
-        %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
-        %button.search_button{:type => "submit"}
-          %i.fas.fa-search
-    %p#intro.mb-0
-      What's your question? See how your friends have answered them at mattrab.
+  .banner-bg
+    .banner-content
+      .index-search
+        %form.search_form{:action => "/search"}
+          %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
+          %button.search_button{:type => "submit"}
+            %i.fas.fa-search
+      %p#intro.mb-0.mt-1
+        What's your question? See how your friends have answered them at mattrab.
 
-.sticky-subnav
-  .subnav-row
-    .twelve.columns
-      %ul.sticky-subnav-list.grade-list
-        - if user_signed_in?
-          -if current_user.categories.present?
-            - current_user.categories.each do |category|
-              %li.cat-item.category-item
-                = link_to category.name.humanize, notes_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
-          - else
-            %li.cat-item.category-item
-              = link_to "Please select your interested subjects or categories to list here.", edit_user_registration_path
-        - else
-          - Grade.all.each do |grade|
-            %li.cat-item.grade-item
-              = link_to "#", class: "grade-link", id: grade.name do
-                %i.fas.fa-project-diagram
-                = grade.name.humanize
-              %ul.sticky-subnav-list.category-list{:id=>grade.name}
-                %li.cat-item.back-item
-                  = link_to "#", class: "back-link" do
-                    %i.fas.fa-arrow-left
-                    = "Back to Grades"
-                - grade.categories.each do |category|
-                  %li.cat-item.category-item
-                    = link_to category.name.humanize, notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}")
+.container
+  .menu-wrapper
+    %ul.menu.mb-0.pl-0
+      - tag_cloud @question_tags, %w[s m l] do |tag, css_class|
+        %li.item
+          = link_to questions_url(:tag => tag.name), class: css_class do
+            %i.fas.fa-hashtag
+            = tag.name
+    .paddles
+      %button.left-paddle.paddle.hidden
+        %i.fas.fa-angle-left
+      %button.right-paddle.paddle
+        %i.fas.fa-angle-right
 
-        -# %li.cat-item.grade-item
-        -#   = link_to  notes_url(:category => :physics) do
-        -#     %i.fa.fa-satellite
-        -#     = "Seven"
-        -#   %ul.sticky-subnav-list.category-list
-        -#     %li.cat-item.category-item
-        -#       = link_to  notes_url(:category => :physics) do
-        -#         %i.fa.fa-satellite
-        -#         = "Physics"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :chemistry) do
-        -#         %i.fa.fa-flask
-        -#         = "Chemistry"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :biology) do
-        -#         %i.fa.fa-microscope
-        -#         = "Biology"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :maths) do
-        -#         %i.fa.fa-subscript
-        -#         = "Mathematics"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :computer) do
-        -#         %i.fa.fa-plug
-        -#         = "Computer"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :nepali) do
-        -#         %i.fa.fa-torah
-        -#         = "Nepali"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :english) do
-        -#         %i.fa.fa-sort-alpha-up-alt
-        -#         = "English"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :pastpapers) do
-        -#         %i.fa.fa-paste
-        -#         = "Past Papers"
-        -#     %li.cat-item
-        -#       = link_to notes_url(:category => :solution) do
-        -#         %i.fa.fa-pencil-ruler
-        -#         = "Solutions"
+#timeline-assets
+  .container
+    .row.ta-row
+      .col-12.col-sm-12.col-md-7.timeline-col
+        .timeline
+          - 5.times do
+            .feed-item
+              .fi-wrap
+                .fi-actor
+                  .avatar.d-inline
+                    = image_tag @question.user.avatar.url(:small)
+                  .body.d-inline.ml-1
+                    = link_to @question.user.name, @question.user, class: 'username'
+                    %span.at
+                      = 'asked'
+                      = time_ago_in_words(@question.created_at)
+                      ago
+                  - if can? :destroy, @question
+                    = link_to note_question_path(@question.note, @question), method: :delete, data: { confirm: "Are you sure? Deleting question thread is irreversible." }, remote: true, class: 'btn-delete pull-right' do
+                      %i.fas.fa-trash
+                      %span.sr-only= 'Delete thread'
+                .fi-content
+                  .fi-content-pri.question
+                    = link_to @question do
+                      %h3.title.mb-3= truncate sanitize(@question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+                  .fi-content-sec
+                    .note
+                      .note_image.col-lg-5.col-md-12
+                        = link_to (image_tag @question.note.image.url(:small)), @question.note, class: 'img-note'
+                      .note_content.col-lg-7.col-md-12
+                        %p.info.mb-0
+                          = @question.note.user.name
+                          = '•'
+                          = @question.note.category.name.capitalize
+                        = link_to @question.note do
+                          %h3.title.mb-1= @question.note.title
+                          %p.body.mb-4
+                            = truncate sanitize(@question.note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
+                        %p.buttons.align-self-end.mb-2
+                          %span
+                            %i.fa.fa-comment-alt
+                            = pluralize(@question.note.questions.count, "Question")
+                          %span
+                            %i.fa.fa-thumbs-up
+                            = pluralize(@question.note.get_upvotes.size, "Thank")
+                          %span
+                            %i.fa.fa-eye
+                            = pluralize(@question.note.view, "View")
+      .col-12.col-sm-12.col-md-5.assets-col
+        .assets
+          - 5.times do
+            .asset-item
+              .video
+                %iframe{:allow => "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", :allowfullscreen => "", :frameborder => "0", :src => "https://www.youtube.com/embed/bVckO9Psd1E?controls=0"}
 
-.sticky-subnav-space
 
--# .sponsers.pb-4
--#   .sponsers-row
--#     .twelve.columns
--#       %ul.sponser-list
--#         %li.sponser-item.desktop
--#           = image_tag 'sponsor1.jpg'
--#         %li.sponser-item.all
--#           = image_tag 'sponsor2.png'
--#         %li.sponser-item.all
--#           = image_tag 'sponsor3.jpg'
--#         %li.sponser-item.all
--#           = image_tag 'sponsor4.jpg'
--#         %li.sponser-item.desktop
--#           = image_tag 'sponsor5.jpg'
+%br
+%br
+%br
 
 #notes
   .container

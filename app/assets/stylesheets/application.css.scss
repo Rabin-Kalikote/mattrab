@@ -37,6 +37,36 @@ html, body{
   margin-right: auto;
 }
 
+.am-container{
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 576px){
+  .am-container {
+      max-width: 540px;
+  }
+}
+@media (min-width: 768px){
+  .am-container {
+      max-width: 720px;
+  }
+}
+@media (min-width: 992px){
+  .am-container {
+      max-width: 960px;
+  }
+}
+@media (min-width: 1200px){
+  .am-container {
+      max-width: 1140px;
+  }
+}
+
+.scrolled-down{transform:translateY(100%); transition: all 0.3s ease-in-out;}
+.scrolled-up{transform:translateY(0); transition: all 0.3s ease-in-out;}
+
 .pull-right{float: right;}
 .border-0{border:0 !important;}
 .shadow-0{box-shadow:none !important;}

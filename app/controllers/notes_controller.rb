@@ -4,8 +4,24 @@ class NotesController < ApplicationController
   before_action :find_note, only: [:show, :edit, :update, :destroy, :vote, :verify]
 
   def home
-    @note_tags = Note.tag_counts.limit(17)
-    @question_tags = Question.tag_counts.limit(17)
+    @question_tags = Question.tag_counts.limit(25)
+    @question = Question.find_by_id(10)
+
+    if user_signed_in?
+      # created_notes = Note.where('updated_at > ?', 24.hours.ago).where()
+      # if followed users have created any notes
+      notes = Note.where(user_id: User.find(1).following).where('updated_at > ?', 24.hours.ago)
+      created_notes = notes.where('updated_at = created_at')
+      updated_notes = notes.where.not('updated_at = created_at')
+      #
+      # asked_qns_lib =
+      # asked_qns_note =
+      # answers_to_note =
+    else
+
+    end
+
+    @note_tags = Note.tag_counts.limit(25)
 
     if user_signed_in? #and !current_user.teacher?
       if current_user.categories.present?
