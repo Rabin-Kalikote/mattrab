@@ -7,34 +7,38 @@ class QuestionsController < ApplicationController
   respond_to :js
 
   def index
-    if user_signed_in?
-      all_questions = Question.joins(:grade).where(grades: { name: current_user.grade.name })
-    else
-      all_questions = Question.all
-    end
 
-    if params[:tag].present?
-      @questions = all_questions.tagged_with(params[:tag]).paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      @tab_title = "Qusestions tagged with '#{params[:tag]}'"
-    else
-      case params[:tab]
-      when "library"
-        @questions = all_questions.where(:note_id => nil).paginate(page: params[:page], per_page: 14).order("RANDOM()")
-        @tab_title = "Library's Qusestions"
-      when "note"
-        @questions = all_questions.where.not(:note_id => nil).paginate(page: params[:page], per_page: 14).order("RANDOM()")
-        @tab_title = "Note's Qusestions"
-      when "answered"
-        @questions = all_questions.select('questions.*').joins(:answers).
-                              group('questions.id').having('count(answers.id) > 0').paginate(page: params[:page], per_page: 14).order("RANDOM()")
-        @tab_title = "Answered Qusestions"
-      when "unanswered"
-        @questions = all_questions.select('questions.*').left_outer_joins(:answers).
-                              group('questions.id').having('count(answers.id) = 0').paginate(page: params[:page], per_page: 14).order("RANDOM()")
-        @tab_title = "Unanswered Qusestions"
+    if params[:category].present?
+      if user_signed_in? #and !current_user.teacher?
+        @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).where(categories: { name: params[:category] }).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      elsif params[:grade].present?
+        @questions = Question.joins(:grade).where(grades: { name: params[:grade] }).
+                      joins(:category).where(categories: { name: params[:category] }).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
       else
-        @questions = all_questions.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-        @tab_title = "Recommended Qusestions"
+        @questions = Question.joins(:category).where(categories: { name: params[:category] }).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      end
+    elsif params[:tag].present?
+      if user_signed_in? #and !current_user.teacher?
+        @questions = Question.tagged_with(params[:tag]).joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).merge(current_user.categories).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      else
+        @questions = Question.tagged_with(params[:tag]).joins(:category).merge(current_user.categories).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      end
+    else
+      if user_signed_in? #and !current_user.teacher?
+        @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).
+                      joins(:category).merge(current_user.categories).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      elsif params[:grade].present?
+        @questions = Question.joins(:grade).where(grades: { name: params[:grade] }).
+                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
+      else
+        @questions = Question.paginate(page: params[:page], per_page: 14).order("RANDOM()")
       end
     end
   end

@@ -1,182 +1,130 @@
 
 .banner
-  .banner-bg
-    .banner-content
-      .index-search
-        %form.search_form{:action => "/search"}
-          %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
-          %button.search_button{:type => "submit"}
-            %i.fas.fa-search
-      %p#intro.mb-0.mt-1
-        What's your question? See how your friends have answered them at mattrab.
+  .banner-content
+    .index-search
+      %form.search_form{:action => "/search"}
+        %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
+        %button.search_button{:type => "submit"}
+          %i.fas.fa-search
+    %p#intro.mb-0
+      What's your question? See how your friends have answered them at mattrab.
 
-.container
+.top-answered
   .menu-wrapper
     %ul.menu.mb-0.pl-0
       - tag_cloud @question_tags, %w[s m l] do |tag, css_class|
         %li.item
           = link_to questions_url(:tag => tag.name), class: css_class do
-            %i.fas.fa-hashtag
-            = tag.name
+            = tag.name.humanize
     .paddles
       %button.left-paddle.paddle.hidden
         %i.fas.fa-angle-left
       %button.right-paddle.paddle
         %i.fas.fa-angle-right
 
-#timeline-assets
+#feed-assets
   .container
-    .row.ta-row
-      .col-12.col-sm-12.col-md-7.timeline-col
-        .timeline
-          - 5.times do
-            .feed-item
-              .fi-wrap
-                .fi-actor
-                  .avatar.d-inline
-                    = image_tag @question.user.avatar.url(:small)
-                  .body.d-inline.ml-1
-                    = link_to @question.user.name, @question.user, class: 'username'
-                    %span.at
-                      = 'asked'
-                      = time_ago_in_words(@question.created_at)
-                      ago
-                  - if can? :destroy, @question
-                    = link_to note_question_path(@question.note, @question), method: :delete, data: { confirm: "Are you sure? Deleting question thread is irreversible." }, remote: true, class: 'btn-delete pull-right' do
-                      %i.fas.fa-trash
-                      %span.sr-only= 'Delete thread'
-                .fi-content
-                  .fi-content-pri.question
-                    = link_to @question do
-                      %h3.title.mb-3= truncate sanitize(@question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-                  .fi-content-sec
-                    .note
-                      .note_image.col-lg-5.col-md-12
-                        = link_to (image_tag @question.note.image.url(:small)), @question.note, class: 'img-note'
-                      .note_content.col-lg-7.col-md-12
-                        %p.info.mb-0
-                          = @question.note.user.name
-                          = '•'
-                          = @question.note.category.name.capitalize
-                        = link_to @question.note do
-                          %h3.title.mb-1= @question.note.title
-                          %p.body.mb-4
-                            = truncate sanitize(@question.note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-                        %p.buttons.align-self-end.mb-2
-                          %span
-                            %i.fa.fa-comment-alt
-                            = pluralize(@question.note.questions.count, "Question")
-                          %span
-                            %i.fa.fa-thumbs-up
-                            = pluralize(@question.note.get_upvotes.size, "Thank")
-                          %span
-                            %i.fa.fa-eye
-                            = pluralize(@question.note.view, "View")
-      .col-12.col-sm-12.col-md-5.assets-col
-        .assets
-          - 5.times do
-            .asset-item
-              .video
-                %iframe{:allow => "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", :allowfullscreen => "", :frameborder => "0", :src => "https://www.youtube.com/embed/bVckO9Psd1E?controls=0"}
+    .row.fa-row
+      .col-12.col-sm-12.col-md-8.col-lg-7.offset-lg-1.feed-col
+        .mattrab-feed
+          = render :partial => "feed", :collection => @feeds if @feeds.present?
+        .pagination-nav.is.justify-content-center
+          = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
 
-
-%br
-%br
-%br
-
-#notes
-  .container
-    .notes-title
-      .left-links
-        %h2.title.mb-0.mt-2= "#{@category_title} Notes"
-      .right-links.ml-auto
-        = link_to "All Notes", notes_path, class: "ni-action-link"
-    .row.notes-row.flex-grid
-      - @notes.each do |note|
-        .col-md-6.col-sm-12
-          .note
-            .note_image.col-lg-5.col-md-12
-              = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
-            .note_content.col-lg-7.col-md-12
-              %p.info.mb-0
-                = note.user.name
-                = '•'
-                = note.category.name.capitalize
-              = link_to note do
-                %h3.title.mb-1= note.title
-                %p.body.mb-4
-                  = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-              %p.buttons.align-self-end.mb-2
-                %span
-                  %i.fa.fa-comment-alt
-                  = pluralize(note.questions.count, "Question")
-                %span
-                  %i.fa.fa-thumbs-up
-                  = pluralize(note.get_upvotes.size, "Thank")
-                %span
-                  %i.fa.fa-eye
-                  = pluralize(note.view, "View")
-    .tag-cloud
-      .col-md-12
-        = link_to notes_url, class: 'l' do
-          %i.fas.fa-hashtag
-          All
-        - tag_cloud @note_tags, %w[s m l] do |tag, css_class|
-          = link_to notes_url(:tag => tag.name), class: css_class do
-            %i.fas.fa-hashtag
-            = tag.name
-
-    .questions-title
-      .left-links
-        %h2.title.mb-0.mt-2= "#{@category_title} Questions"
-      .right-links.ml-auto
-        = link_to "All Questions", questions_path, class: "ni-action-link"
-    .row.questions-row.flex-grid
-      - @questions.each do |question|
-        .col-md-6.col-sm-12
-          .question.p-3
-            = link_to question do
-              %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
-              %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-              %p.buttons.align-self-end.mb-2
-                %span
-                  %i.fa.fa-reply
-                  = pluralize(question.answers.count, "Answer")
-                %span
-                  %i.fa.fa-thumbs-up
-                  = "Helpful (#{question.get_upvotes.size})"
-                %span
-                  %i.fa.fa-eye
-                  = pluralize(question.view, "View")
-                %span
-                  %i.fa.fa-check-square
-                  = "Class #{question.grade.name.humanize}"
-                %span
-                  %i.fa.fa-hashtag
-                  = question.category.name.humanize
-    .tag-cloud
-      .col-md-12
-        = link_to questions_url, class: 'l' do
-          %i.fas.fa-hashtag
-          All
-        - tag_cloud @question_tags, %w[s m l] do |tag, css_class|
-          = link_to questions_url(:tag => tag.name), class: css_class do
-            %i.fas.fa-hashtag
-            = tag.name
-
-    .encourage-row.row
-      - if !user_signed_in?
-        %h2.en-title Join Mattrab Community
-        %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
-        .actions
-          = link_to "Join Community, it's free!", new_user_registration_path, class: 'action-button mx-auto'
-      - elsif can? :create, Note
-        %h2.en-title Showcase your Knowledge
-        %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.
-        .actions
-          = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
-      - else
-        %h2.en-title Add to your Knowledge
-        %p.en-message.mx-auto Not understanding any topic or subjects? Ask your question and get helps form friends around the Community. Answers to your questions can help several later.
-        .actions
-          = link_to "Ask question, it's free!", new_question_path, class: 'action-button mx-auto'
+      .col-12.col-sm-12.col-md-4.col-lg-3.assets-col
+        .home-sidebar.sticky-in-desktop
+          - if user_signed_in?
+            .current-user-info
+              .c-user-avater
+                = link_to (image_tag current_user.avatar.url(:medium)), current_user
+              .c-user-info
+                = link_to current_user do
+                  %span.name= current_user.name
+                %span.info
+                  = current_user.role.humanize
+                  = '•'
+                  = link_to 'Settings', edit_user_registration_path
+          .users-around
+            %h3= 'Mattrabians around you'
+            - @top_creators.each do |top_creator|
+              .mattrabian-info
+                .user-avater
+                  = link_to (image_tag top_creator.avatar.url(:medium)), top_creator
+                .user-info
+                  = link_to top_creator do
+                    %span.name= top_creator.name
+                  %span.info= 'Top Creator'
+                .options
+                  - if user_signed_in?
+                    - if current_user != top_creator
+                      - if !current_user.following?(top_creator)
+                        = form_for(current_user.active_relationships.build) do |f|
+                          = hidden_field_tag :followed_id, top_creator.id
+                          = f.submit "Follow", class: "follow"
+                      - else
+                        = form_for(current_user.active_relationships.find_by(followed_id: top_creator.id), html: { method: :delete }) do |f|
+                          = f.submit "Unfollow", class: "follow"
+                    - else
+                      = link_to "Settings", edit_user_registration_path, class: 'follow'
+                  - else
+                    = link_to "Follow", new_user_session_path, class: "follow"
+            - @top_learners.each do |top_learner|
+              .mattrabian-info
+                .user-avater
+                  = link_to (image_tag top_learner.avatar.url(:medium)), top_learner
+                .user-info
+                  = link_to top_learner do
+                    %span.name= top_learner.name
+                  %span.info= 'Top Learner'
+                .options
+                  - if user_signed_in?
+                    - if current_user != top_learner
+                      - if !current_user.following?(top_learner)
+                        = form_for(current_user.active_relationships.build) do |f|
+                          = hidden_field_tag :followed_id, top_learner.id
+                          = f.submit "Follow", class: "follow"
+                      - else
+                        = form_for(current_user.active_relationships.find_by(followed_id: top_learner.id), html: { method: :delete }) do |f|
+                          = f.submit "Unfollow", class: "follow"
+                    - else
+                      = link_to "Settings", edit_user_registration_path, class: 'follow'
+                  - else
+                    = link_to "Follow", new_user_session_path, class: "follow"
+            - @recent_users.each do |recent_user|
+              .mattrabian-info
+                .user-avater
+                  = link_to (image_tag recent_user.avatar.url(:medium)), recent_user
+                .user-info
+                  = link_to recent_user do
+                    %span.name= recent_user.name
+                  %span.info= 'Recently joined'
+                .options
+                  - if user_signed_in?
+                    - if current_user != recent_user
+                      - if !current_user.following?(recent_user)
+                        = form_for(current_user.active_relationships.build) do |f|
+                          = hidden_field_tag :followed_id, recent_user.id
+                          = f.submit "Follow", class: "follow"
+                      - else
+                        = form_for(current_user.active_relationships.find_by(followed_id: recent_user.id), html: { method: :delete }) do |f|
+                          = f.submit "Unfollow", class: "follow"
+                    - else
+                      = link_to "Settings", edit_user_registration_path, class: 'follow'
+                  - else
+                    = link_to "Follow", new_user_session_path, class: "follow"
+          .encourage
+            - if !user_signed_in?
+              %h2.en-title Mattrab Community
+              %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
+              .actions
+                = link_to "Join Community, it's free!", new_user_registration_path, class: 'action-button mx-auto'
+            - elsif can? :create, Note
+              %h2.en-title Showcase your Knowledge
+              %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.
+              .actions
+                = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
+            - else
+              %h2.en-title Add to your Knowledge
+              %p.en-message.mx-auto Not understanding any topic or subjects? Ask your question and get helps form friends around the Community. Answers to your questions can help several later.
+              .actions
+                = link_to "Ask question, it's free!", new_question_path, class: 'action-button mx-auto'

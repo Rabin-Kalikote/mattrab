@@ -34,12 +34,12 @@
               %nav.nav.justify-content-center
                 - if user_signed_in?
                   %button.n-upvote.nav-link.first{:id => "#{@note.id}@#!"}
-                    %i.fa.fa-thumbs-up
+                    %i.fa.fa-heart
                     %span.thanks-count= pluralize(@note.get_upvotes.size, "Thank")
                 - else
                   = link_to new_user_session_path, class: "nav-link first mb-0" do
-                    %i.fa.fa-thumbs-up
-                    %span.likes-count= pluralize(@note.get_upvotes.size, "Like")
+                    %i.fa.fa-heart
+                    %span.thanks-count= pluralize(@note.get_upvotes.size, "Thank")
                 %p.nav-link.mb-0
                   %i.fa.fa-comments
                   = pluralize(@note.questions.count, "Question")

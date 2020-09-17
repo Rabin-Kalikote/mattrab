@@ -33,9 +33,9 @@ $ ->
     #updating if the window has mobile-view.
     $(window).resize (e) ->
       if $(window).width() <= 767.98
-        $('body').addClass 'mobile'
+        $('body').addClass('mobile').removeClass 'desktop'
       else
-        $('body').removeClass 'mobile'
+        $('body').addClass('desktop').removeClass 'mobile'
         $('.sm-nav-fixed-bottom').removeClass('scrolled-down')
       return
     $(window).resize()
@@ -51,6 +51,75 @@ $ ->
           $('.mobile .sm-nav-fixed-bottom').removeClass('scrolled-up').addClass 'scrolled-down'
         last_scroll_top = scroll_top
         return
+
+    # sticky home sidebar indesktop
+    ((a, b) ->
+      a.extend stickysidebarscroll: (c, e) ->
+        `var c`
+        if e and e.offset
+          e.offset.bottom = parseInt(e.offset.bottom, 10)
+          e.offset.top = parseInt(e.offset.top, 10)
+        else
+          e.offset =
+            bottom: 100
+            top: 0
+        c = a(c)
+        if c and c.offset()
+          j = c.offset().top
+          q = c.offset().left
+          o = c.outerHeight(true)
+          k = c.outerWidth()
+          h = c.css('position')
+          g = c.css('top')
+          f = parseInt(c.css('marginTop'), 10)
+          n = a(document).height()
+          l = a(document).height() - (e.offset.bottom)
+          m = 0
+          d = false
+          i = false
+          p = false
+          if e.forcemargin == true or navigator.userAgent.match(/\bMSIE (4|5|6)\./) or navigator.userAgent.match(/\bOS (3|4|5|6)_/) or navigator.userAgent.match(/\bAndroid (1|2|3|4)\./i)
+            p = true
+          a(window).bind 'scroll resize orientationchange load', c, (t) ->
+            if n != a(document).height()
+              l = a(document).height() - (e.offset.bottom)
+              n = a(document).height()
+            if i == false
+              j = c.offset().top
+            s = c.outerHeight()
+            r = a(window).scrollTop()
+            if p and document.activeElement and document.activeElement.nodeName == 'INPUT'
+              return
+            i = true
+            if r >= j - (if f then f else 0) - (e.offset.top)
+              if l < r + s + f + e.offset.top
+                m = r + s + f + e.offset.top - l
+              else
+                m = 0
+              if p
+                c.css marginTop: parseInt((if f then f else 0) + r - j - m + 2 * e.offset.top, 10) + 'px'
+              else
+                c.css
+                  position: 'fixed'
+                  top: e.offset.top - m + 'px'
+                  width: k + 'px'
+            else
+              i = false
+              q = c.offset().left
+              c.css
+                position: h
+                top: g
+                left: q
+                width: k + 'px'
+                marginTop: (if f then f else 0) + 'px'
+            return
+        return
+      return
+    ) jQuery
+
+    $.stickysidebarscroll '.desktop .sticky-in-desktop', offset:
+      top: 90
+      bottom: 50
 
     #summernote assignments.
     $('[data-provider="summernote"]').each ->

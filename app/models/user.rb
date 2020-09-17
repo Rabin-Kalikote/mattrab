@@ -34,6 +34,14 @@ class User < ApplicationRecord
     "#{id} #{name}".parameterize
   end
 
+  def feeds
+    notes = Note.published.where(user_id: self.following).where('updated_at > ?', 24.hours.ago).to_a
+    fquestions = Question.where(user_id: self.followers).where('updated_at > ?', 24.hours.ago).to_a
+    nquestions = Question.where(note_id: self.notes).where('updated_at > ?', 24.hours.ago).to_a
+    aquestions = Answer.where(question_id: self.questions).where('updated_at > ?', 24.hours.ago).to_a
+    return [notes, fquestions, nquestions, aquestions].reduce([], :concat).uniq.shuffle
+  end
+
   ## helper methods
   # follow another user
   def follow(other)

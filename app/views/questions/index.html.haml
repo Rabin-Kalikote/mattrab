@@ -2,27 +2,24 @@
   .sticky-subnav
     .subnav-row
       .twelve.columns
-        %ul.sticky-subnav-list
-          %li.cat-item.cat-item-1313
-            = link_to  questions_url(:tab => :library) do
-              %i.fa.fa-list-alt
-              = "Library's"
-              %span.d-none.d-md-inline= "Questions"
-          %li.cat-item.cat-item-2054
-            = link_to questions_url(:tab => :note) do
-              %i.fa.fa-sticky-note
-              = "Note's"
-              %span.d-none.d-md-inline= "Questions"
-          %li.cat-item.cat-item-2054
-            = link_to questions_url(:tab => :answered) do
-              %i.fa.fa-check-square
-              = "Answered"
-              %span.d-none.d-md-inline= "Questions"
-          %li.cat-item.cat-item-1311
-            = link_to questions_url(:tab => :unanswered) do
-              %i.fa.fa-question-circle
-              = "Unanswered"
-              %span.d-none.d-md-inline= "Questions"
+        %ul.sticky-subnav-list.grade-list
+          - if user_signed_in?
+            - current_user.grade.categories.each do |category|
+              %li.cat-item.category-item
+                = link_to category.name.humanize, questions_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
+          - else
+            - Grade.all.each do |grade|
+              %li.cat-item.grade-item
+                = link_to grade.name.humanize, "#", class: "grade-link", id: grade.name
+                %ul.sticky-subnav-list.category-list{:id=>grade.name}
+                  %li.cat-item.back-item
+                    = link_to "#", class: "back-link" do
+                      %i.fas.fa-arrow-left
+                      = "Back to Grades"
+                  - grade.categories.each do |category|
+                    %li.cat-item.category-item
+                      = link_to category.name.humanize, questions_url(:grade=>"#{grade.name}", :category=>"#{category.name}")
+
 
   .sticky-subnav-space
 

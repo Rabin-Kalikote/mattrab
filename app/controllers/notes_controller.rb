@@ -5,39 +5,21 @@ class NotesController < ApplicationController
 
   def home
     @question_tags = Question.tag_counts.limit(25)
-    @question = Question.find_by_id(10)
-
+    # global feeds
     if user_signed_in?
-      # created_notes = Note.where('updated_at > ?', 24.hours.ago).where()
-      # if followed users have created any notes
-      notes = Note.where(user_id: User.find(1).following).where('updated_at > ?', 24.hours.ago)
-      created_notes = notes.where('updated_at = created_at')
-      updated_notes = notes.where.not('updated_at = created_at')
-      #
-      # asked_qns_lib =
-      # asked_qns_note =
-      # answers_to_note =
+      notes = Note.published.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
+      questions = Question.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
+      general_feeds = notes.concat(questions).uniq.shuffle
+      @feeds = general_feeds.concat(current_user.feeds).uniq.paginate(page: params[:page], per_page: 7)
     else
-
+      notes = Note.published.order("created_at DESC, view DESC").limit(18).to_a
+      questions = Question.all.order("created_at DESC, view DESC").limit(18).to_a
+      general_feeds = notes.concat(questions).uniq.shuffle
+      @feeds = general_feeds.paginate(page: params[:page], per_page: 7)
     end
-
-    @note_tags = Note.tag_counts.limit(25)
-
-    if user_signed_in? #and !current_user.teacher?
-      if current_user.categories.present?
-        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).merge(current_user.categories).
-                      published.order("RANDOM()").limit(8)
-      else
-        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      published.order("RANDOM()").limit(8)
-      end
-      @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).order("RANDOM()").limit(8)
-    else
-      @notes = Note.published.order("RANDOM()").limit(8)
-      @questions = Question.all.order("RANDOM()").limit(8)
-    end
-    @category_title = "Recommended"
+    @top_creators = User.where(:role => 'creator').joins(:notes).group("users.id").order("count(users.id) DESC").limit(2)
+    @top_learners = User.where(:role => 'learner').joins(:questions).group("users.id").order("count(users.id) DESC").limit(2)
+    @recent_users = User.all.order("created_at DESC").limit(2)
   end
 
   def index
