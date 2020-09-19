@@ -100,8 +100,8 @@
                 %p.nav-user-name.mb-0= current_user.name
                 %p.nav-user-email.mb-0= current_user.email
                 .dropdown-divider
-                = link_to "Your Library", current_user, class: 'dropdown-item'
-                = link_to "Your Questions", user_path(current_user, :tab => :question), class: 'dropdown-item'
+                = link_to "My Library", current_user, class: 'dropdown-item'
+                = link_to "My Questions", user_path(current_user, :tab => :question), class: 'dropdown-item'
                 .dropdown-divider
                 = link_to "FAQs and Help", faqs_path, class: 'dropdown-item'
                 = link_to "Settings", edit_user_registration_path, class: 'dropdown-item'

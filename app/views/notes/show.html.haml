@@ -57,7 +57,7 @@
                   ago
 
           .unit-body
-            = simple_format(@note.body.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+            = simple_format(@note.body.gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe '), {}, :sanitize => false)
             .ad
               = image_tag 'adhere.png'
             .tags

@@ -119,7 +119,7 @@ $ ->
 
     $.stickysidebarscroll '.desktop .sticky-in-desktop', offset:
       top: 90
-      bottom: 50
+      bottom: 200
 
     #summernote assignments.
     $('[data-provider="summernote"]').each ->
