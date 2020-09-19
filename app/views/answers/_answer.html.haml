@@ -20,7 +20,7 @@
               %i.fas.fa-trash
               Delete Answer
     .answer-card-body
-      = simple_format(answer.content.gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe '), {}, :sanitize => false)
+      = simple_format(answer.content, {}, :sanitize => false)
     .answer-card-infos
       %p.buttons.align-self-end.mb-2
         %span

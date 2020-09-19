@@ -34,7 +34,7 @@
                       %i.fas.fa-trash
                       Delete Thread
             .question-card-body
-              = simple_format(@question.content.gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, 'iframe '), {}, :sanitize => false)
+              = simple_format(@question.content, {}, :sanitize => false)
 
               -# - if user_signed_in?
               -#   %button#like.nav-link.first

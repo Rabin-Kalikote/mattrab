@@ -80,6 +80,7 @@ class NotesController < ApplicationController
   end
 
   def create
+    note_params[:content] = note_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
     @note = current_user.notes.build(note_params)
 
     if @note.save
@@ -96,6 +97,7 @@ class NotesController < ApplicationController
   end
 
   def update
+    note_params[:content] = note_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
     if @note.update(note_params)
       redirect_to @note
     else
