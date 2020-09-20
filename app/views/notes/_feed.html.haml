@@ -8,7 +8,13 @@
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
-            %span.asked= "asked #{(feed.note.present? and feed.note.user == current_user) ? 'in your note.' : 'in the library.'}"
+            %span.asked
+              - if feed.note.present? and feed.note.user == current_user
+                = "asked in your note—#{truncate feed.note.title, length: 21}"
+              - elsif feed.note.present?
+                = "asked in a note—#{truncate feed.note.title, length: 21}"
+              - else
+                = "asked in the library."
           %span.at= "#{ time_ago_in_words(feed.created_at)} ago"
       .feed-item-body
         = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)

@@ -55,7 +55,8 @@ class QuestionsController < ApplicationController
 
   def create
     if params[:note_id].present?
-      question_params[:content] = question_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+      params[:question][:content] = params[:question][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
+                                  .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
       @question = @note.questions.new(question_params)
       @question.user_id = current_user.id
       @question.grade_id = @note.grade.id
@@ -81,7 +82,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question_params[:content] = question_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+    params[:question][:content] = params[:question][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
+                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
     if @question.update(question_params)
       redirect_to @question, notice: 'Question updated successfully.'
     else

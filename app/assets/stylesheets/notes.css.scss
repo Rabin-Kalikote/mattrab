@@ -227,16 +227,19 @@ $content-font-size: 17px;
           line-height: 29px;
           font-size: $content-font-size;
           font-family: 'mattrab-content-sans-serif-font';
+          *{position: static!important;right: auto!important;top: auto!important;}
+          div{position: static!important;right: auto!important;top: auto!important;}
           p{
             font-family: 'mattrab-content-sans-serif-font'!important;
             font-size: $content-font-size!important;
             color: #333333 !important;
             font-weight:normal;
-            // max-width: 100%;
+            max-width: 100%;
             line-height: 29px;
             img{max-width: 100%;}
             img.note-float-right{float: right;}
             iframe.note-video-clip{max-width: 100%;}
+            *{position: static!important;right: auto!important;top: auto!important;}
           }
           .ad{padding-top: 1rem;display: none;img{max-width: 100%;}}
           .tags{
@@ -325,6 +328,7 @@ $content-font-size: 17px;
                 padding-left: 0!important;
                 .avatar img{
                   margin-top: -0.3rem;
+                  object-fit: cover;
                   height:25px;width:25px;
                   border-radius: 50%!important;
                   border: 1px solid #89dca2;
@@ -359,6 +363,8 @@ $content-font-size: 17px;
                 max-width:100%;
                 color: #333333;
                 font-weight:normal;
+                *{position: static!important;right: auto!important;top: auto!important;}
+                div{position: static!important;right: auto!important;top: auto!important;}
                 p{
                   line-height: 29px;
                   img{max-width: 100%;}

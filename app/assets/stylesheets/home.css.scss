@@ -379,6 +379,7 @@ header{
           margin-top: -2px;
           padding: 0!important;
           img{
+            object-fit: cover;
             width: 31px; height: 31px;
             border-radius: 3rem!important;
             border: 2px solid #9de2b1;
@@ -792,6 +793,7 @@ header{
               margin-bottom: 1rem;
               .f-user-avater{img{
     						padding: 2px;
+                object-fit: cover;
                 border-radius: 50%;
     						height:47px;width:47px;
     						border: 1px solid #89dca2;
@@ -811,9 +813,9 @@ header{
                     font-size: 1.2rem;
                     white-space: nowrap;
                   }
-                  span.asked{font-size: 1rem;color: #3c4043;}
+                  span.asked{font-size: .9rem;color: #3c4043;}
                   &:hover{text-decoration: none;}
-                  @media (max-width: 575.98px) {span.name{font-size: 1.1rem;}span.asked{font-size: .9rem;color: #3c4043;}}
+                  @media (max-width: 575.98px) {span.name{font-size: 1.1rem;}span.asked{font-size: .8rem;color: #3c4043;}}
                 }
                 span.at{font-size: .8rem;color: #9a989a;}
               }
@@ -972,6 +974,7 @@ header{
         margin: 0 0 1rem;
         .c-user-avater{img{
           padding: 2px;
+          object-fit: cover;
           border-radius: 50%;
           height:50px;width:50px;
           border: 1px solid #89dca2;
@@ -1011,6 +1014,7 @@ header{
           margin: 0 0 .5rem;
           .user-avater{img{
             padding: 1px;
+            object-fit: cover;
             border-radius: 50%;
             height:35px;width:35px;
             border: 1px solid #89dca2;

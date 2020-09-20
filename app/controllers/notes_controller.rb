@@ -80,7 +80,8 @@ class NotesController < ApplicationController
   end
 
   def create
-    note_params[:content] = note_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+    params[:note][:body] = params[:note][:body].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
+                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
     @note = current_user.notes.build(note_params)
 
     if @note.save
@@ -97,7 +98,8 @@ class NotesController < ApplicationController
   end
 
   def update
-    note_params[:content] = note_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+    params[:note][:body] = params[:note][:body].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
+                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
     if @note.update(note_params)
       redirect_to @note
     else

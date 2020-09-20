@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
   respond_to :js
 
   def create
-    answer_params[:content] = answer_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+    params[:answer][:content] = params[:answer][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
     @answer = @question.answers.new(answer_params)
     @answer.user_id = current_user.id
     @answer.save
@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    answer_params[:content] = answer_params[:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:youtube|vimeo|vine|instagram|dailymotion|youku))\S+/, '&lt;iframe ')
+    params[:answer][:content] = params[:answer][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '').gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
     @answer = @question.answers.find(params[:id])
     @answer.update(answer_params)
     respond_with(@answer)

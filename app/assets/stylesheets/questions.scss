@@ -266,12 +266,21 @@
             }
             .question-card-body{
               margin-bottom: 1rem;
+              *{position: static!important;right: auto!important;top: auto!important;}
               p{
                 color: #3c4043;
                 font-size: 1.1rem;
                 font-weight: normal;
                 line-height: 1.4;
+                max-width: 100%;
+                overflow-x: hidden;
+                line-height: 29px;
+                img{max-width: 100%;}
+                img.note-float-right{float: right;}
+                iframe.note-video-clip{max-width: 100%;}
+                *{position: static!important;right: auto!important;top: auto!important;}
               }
+              div{position: static!important;right: auto!important;top: auto!important;}
             }
             .question-card-infos{
               margin-bottom: 1rem;
@@ -392,12 +401,20 @@
               }
               .answer-card-body{
                 margin-bottom: 1rem;
+                overflow-x: hidden;
+                *{position: static!important;right: auto!important;top: auto!important;}
                 p{
                   color: #3c4043;
                   font-size: 1rem;
                   font-weight: normal;
                   line-height: 1.4;
+                  line-height: 29px;
+                  img{max-width: 100%;}
+                  img.note-float-right{float: right;}
+                  iframe.note-video-clip{max-width: 100%;}
+                  *{position: static!important;right: auto!important;top: auto!important;}
                 }
+                div{position: static!important;right: auto!important;top: auto!important;}
               }
               .answer-card-infos{
                 margin-bottom: 1rem;
