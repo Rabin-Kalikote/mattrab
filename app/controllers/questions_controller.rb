@@ -55,8 +55,7 @@ class QuestionsController < ApplicationController
 
   def create
     if params[:note_id].present?
-      params[:question][:content] = params[:question][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
-                                  .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
+      params[:question][:content] = params[:question][:content].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '').html_safe
       @question = @note.questions.new(question_params)
       @question.user_id = current_user.id
       @question.grade_id = @note.grade.id
@@ -82,8 +81,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    params[:question][:content] = params[:question][:content].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
-                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
+    params[:question][:content] = params[:question][:content].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '').html_safe
     if @question.update(question_params)
       redirect_to @question, notice: 'Question updated successfully.'
     else

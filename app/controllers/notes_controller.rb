@@ -80,8 +80,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    params[:note][:body] = params[:note][:body].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
-                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
+    params[:note][:body] = params[:note][:body].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '').html_safe
     @note = current_user.notes.build(note_params)
 
     if @note.save
@@ -98,8 +97,7 @@ class NotesController < ApplicationController
   end
 
   def update
-    params[:note][:body] = params[:note][:body].gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub("method='delete'", '')
-                                .gsub(/\biframe \S+ src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').gsub(/\biframe src="https?:\/\/(?!\S+(?:src="\/\/www.youtube.com\/embed\/|src="\/\/player.vimeo.com\/video\/))\S+/, '&lt;iframe ').html_safe
+    params[:note][:body] = params[:note][:body].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '').html_safe
     if @note.update(note_params)
       redirect_to @note
     else
