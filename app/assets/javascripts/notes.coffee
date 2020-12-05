@@ -304,21 +304,23 @@ $ ->
     $('#admin').change ->
       $('.req_veri').html 'Request Verification'
       return
+    # infinite scrolling
+    if $('.is .pagination').length
+      $(window).scroll ->
+        url = $(".pagination .page-link[rel=next]").attr("href")
+        if url && $(window).scrollTop() > $(document).height()-$(window).height()-80
+          $('.pagination-nav').html("<div class='spinner-grow' role='status'>
+                                      <span class='sr-only'>Fetching more notes ...</span>
+                                    </div>")
+          $.getScript(url)
+      $(window).scroll()
     return
 
   # $(document).ready(ready)
   $(document).on('turbolinks:load', ready)
+  $(document).on('ready', ready)
 
-  # infinite scrolling
-  if $('.is .pagination').length
-    $(window).scroll ->
-      url = $(".pagination .page-link[rel=next]").attr("href")
-      if url && $(window).scrollTop() > $(document).height()-$(window).height()-80
-        $('.pagination-nav').html("<div class='spinner-grow' role='status'>
-                                    <span class='sr-only'>Fetching more notes ...</span>
-                                  </div>")
-        $.getScript(url)
-    $(window).scroll()
+  $('html').find('iframe').not('.note-video-clip').not('.raLsWLhsVZ').remove()
 
   #sticky cta
   if $('.sticky-subnav').length

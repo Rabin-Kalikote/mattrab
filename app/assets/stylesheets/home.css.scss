@@ -13,11 +13,12 @@ header{
     padding-bottom: .7rem;
    	.nav-brand{
    		float: left;
+      font-size: 2rem;
+      color: #3c4043;
+      line-height: 1.3;
   		text-decoration: none;
-   		img{
-        width: 125px;
-   			height: 40px;
-   		}
+      font-family: 'mattrab-brand-font';
+   		span{color:#5fcf80!important;}
    	}
   }
   .col-md-6{

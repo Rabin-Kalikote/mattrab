@@ -3,7 +3,7 @@ class Question < ApplicationRecord
   belongs_to :user
   belongs_to :grade
   belongs_to :category
-  has_many :answers, dependent: :destroy
+  has_many :answers, dependent: :delete_all
 
   validates :content, presence: true
 

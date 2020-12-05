@@ -51,19 +51,18 @@ $ ->
       filterOptions()
       $('#question_grade_id').change ->
         filterOptions()
-
+        
+    # infinite scrolling
+    if $('.is .pagination').length
+      $(window).scroll ->
+        url = $(".pagination .page-link[rel=next]").attr("href")
+        if url && $(window).scrollTop() > $(document).height()-$(window).height()-80
+          $('.pagination-nav').html("<div class='spinner-grow' role='status'>
+                                      <span class='sr-only'>Fetching more notes ...</span>
+                                    </div>")
+          $.getScript(url)
+      $(window).scroll()
     return
 
   # $(document).ready(ready)
   $(document).on('turbolinks:load', ready)
-
-  # infinite scrolling
-  if $('.is .pagination').length
-    $(window).scroll ->
-      url = $(".pagination .page-link[rel=next]").attr("href")
-      if url && $(window).scrollTop() > $(document).height()-$(window).height()-80
-        $('.pagination-nav').html("<div class='spinner-grow' role='status'>
-                                    <span class='sr-only'>Fetching more notes ...</span>
-                                  </div>")
-        $.getScript(url)
-    $(window).scroll()

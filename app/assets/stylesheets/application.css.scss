@@ -15,6 +15,7 @@
  */
 
 // Font Faces
+@font-face {font-family: 'mattrab-brand-font'; src: url('brand.ttf') format('truetype');}
 @font-face {font-family: 'mattrab-content-sans-serif-font'; src: url('sansserif.ttf') format('truetype');}
 @font-face {font-family: 'mattrab-content-light-font'; src: url('light.ttf') format('truetype');}
 @font-face {font-family: 'mattrab-content-bold-font'; src: url('bold.ttf') format('truetype');}
@@ -30,6 +31,8 @@ html, body{
   height:100%;
   background: #fbfbf9!important;
 }
+iframe,
+iframe.d-block{display: none!important;}
 .centered-text,.c-t{text-align: center;}
 
 .center {

@@ -2,8 +2,9 @@
   .container.clearfix
     .row
       .col-3.col-sm-3.col-md-3.d-flex.justify-content-start
-        %a{:href => root_path, :class => "nav-brand"}
-          = image_tag 'mrlogo.png'
+        %a.nav-brand{:href => root_path}
+          %span.d-none.d-md-inline= 'ask'
+          mattrab
       .col-12.col-sm-12.col-md-6.sm-nav-fixed-bottom.d-md-flex.justify-content-start.search-at-nav
         .nav-icons
           %a{:href => root_path, :title => "Home", :class => "#{(current_page?(root_path) or current_page?(home_path)) ? 'active' : ' '}"}

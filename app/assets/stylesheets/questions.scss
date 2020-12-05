@@ -267,6 +267,7 @@
             .question-card-body{
               margin-bottom: 1rem;
               *{position: static!important;right: auto!important;top: auto!important;}
+              iframe.note-video-clip{max-width: 100%;display:block!important;}
               p{
                 color: #3c4043;
                 font-size: 1.1rem;
@@ -277,7 +278,7 @@
                 line-height: 29px;
                 img{max-width: 100%;}
                 img.note-float-right{float: right;}
-                iframe.note-video-clip{max-width: 100%;}
+                iframe.note-video-clip{max-width: 100%;display:block!important;}
                 *{position: static!important;right: auto!important;top: auto!important;}
               }
               div{position: static!important;right: auto!important;top: auto!important;}
@@ -403,6 +404,7 @@
                 margin-bottom: 1rem;
                 overflow-x: hidden;
                 *{position: static!important;right: auto!important;top: auto!important;}
+                iframe.note-video-clip{max-width: 100%;display:block!important;}
                 p{
                   color: #3c4043;
                   font-size: 1rem;
@@ -411,7 +413,7 @@
                   line-height: 29px;
                   img{max-width: 100%;}
                   img.note-float-right{float: right;}
-                  iframe.note-video-clip{max-width: 100%;}
+                  iframe.note-video-clip{max-width: 100%;display:block!important;}
                   *{position: static!important;right: auto!important;top: auto!important;}
                 }
                 div{position: static!important;right: auto!important;top: auto!important;}
@@ -503,7 +505,10 @@
                         border: none!important;
                         text-align: center;
                       }
-                      .note-editing-area{padding: 0 22px;}
+                      .note-editing-area{
+                        padding: 0 22px;
+                        iframe.note-video-clip{max-width: 100%;display:block!important;}
+                      }
                       .note-statusbar{
                         border-radius: none!important;
                         .note-icon-bar {border-top: none;}
@@ -632,7 +637,10 @@
                   }
                   .note-editing-area{
                     text-align: left;padding:0;
-                    .note-editable{padding:10px 0;}
+                    .note-editable{
+                      padding:10px 0;
+                      iframe.note-video-clip{max-width: 100%;display:block!important;}
+                    }
                   }
                   .note-statusbar{
                     border-top: none;

@@ -229,6 +229,7 @@ $content-font-size: 17px;
           font-family: 'mattrab-content-sans-serif-font';
           *{position: static!important;right: auto!important;top: auto!important;}
           div{position: static!important;right: auto!important;top: auto!important;}
+          iframe.note-video-clip{max-width: 100%;display:block!important;}
           p{
             font-family: 'mattrab-content-sans-serif-font'!important;
             font-size: $content-font-size!important;
@@ -238,7 +239,7 @@ $content-font-size: 17px;
             line-height: 29px;
             img{max-width: 100%;}
             img.note-float-right{float: right;}
-            iframe.note-video-clip{max-width: 100%;}
+            iframe.note-video-clip{max-width: 100%;display:block!important;}
             *{position: static!important;right: auto!important;top: auto!important;}
           }
           .ad{padding-top: 1rem;display: none;img{max-width: 100%;}}
@@ -365,11 +366,12 @@ $content-font-size: 17px;
                 font-weight:normal;
                 *{position: static!important;right: auto!important;top: auto!important;}
                 div{position: static!important;right: auto!important;top: auto!important;}
+                iframe.note-video-clip{max-width: 100%;display:block!important;}
                 p{
                   line-height: 29px;
                   img{max-width: 100%;}
                   img.note-float-right{float: right;}
-                  iframe.note-video-clip{max-width: 100%;}
+                  iframe.note-video-clip{max-width: 100%;display:block!important;}
                 }
               }
             }
@@ -710,6 +712,7 @@ $content-font-size: 17px;
 								.note-editable{
 									padding: 2rem 3.2rem;
 									min-height: 140vh;
+                  iframe.note-video-clip{max-width: 100%;display:block!important;}
 								}
 								@media (max-width: 767.98px) {.note-placeholder,.note-editable{padding: 1.5rem 2rem !important;}}
 							}
