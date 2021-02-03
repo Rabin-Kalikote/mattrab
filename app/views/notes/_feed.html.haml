@@ -4,139 +4,69 @@
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = link_to (image_tag feed.user.avatar.url(:medium)), feed.user
+          = image_tag feed.user.avatar.url(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
-            %span.asked
-              - if feed.note.present? and feed.note.user == current_user
-                = "asked in your note—#{truncate feed.note.title, length: 21}"
-              - elsif feed.note.present?
-                = "asked in a note—#{truncate feed.note.title, length: 21}"
-              - else
-                = "asked in the library."
-          %span.at= "#{ time_ago_in_words(feed.created_at)} ago"
+          %span.asked
+            - if feed.note.present? and feed.note.user == current_user
+              = "asked in your note— #{truncate feed.note.title, length: 33}"
+            - elsif feed.note.present?
+              = "asked in a note— #{truncate feed.note.title, length: 33}"
+            - else
+              = "asked a question."
       .feed-item-body
         = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
-      - if feed.note.present? and feed.note.user == current_user and feed.note.published?
-        .feed.item-sec
-          .note.mb-3
-            .note_image.col-lg-5.col-md-12
-              = link_to (image_tag feed.note.image.url(:small)), feed.note, class: 'img-note'
-            .note_content.col-lg-7.col-md-12
-              %p.info.mb-0
-                = feed.note.user.name
-                = '•'
-                = feed.note.category.name.capitalize
-              = link_to feed.note do
-                %h3.title.mb-1= feed.note.title
-                %p.body.mb-4
-                  = truncate sanitize(feed.note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-              %p.buttons.align-self-end.mb-2
-                %span
-                  %i.fa.fa-comment-alt
-                  = pluralize(feed.note.questions.count, "Question")
-                %span
-                  %i.fa.fa-thumbs-up
-                  = pluralize(feed.note.get_upvotes.size, "Thank")
-                %span
-                  %i.fa.fa-eye
-                  = pluralize(feed.note.view, "View")
       .feed-item-actions.btn-group
-        - if user_signed_in?
-          %a.q-upvote.f-card-action{:id => "#{feed.id}@#!"}= "Helpful (#{feed.get_upvotes.size})"
-          = link_to question_path(feed), class: 'f-card-action' do
-            %i.far.fa-edit
-            = 'Answer'
-        - else
-          = link_to "Helpful (#{feed.get_upvotes.size})", new_user_session_path, class: 'f-card-action'
-          = link_to new_user_session_path, class: 'f-card-action' do
-            %i.far.fa-edit
-            = 'Answer'
+        = link_to question_path(feed), class: 'f-card-action' do
+          %i.far.fa-eye
+          Read this Thread
+        %p.feed-item-info
+          = "Has #{feed.answers.count} Answers"
 
 - elsif feed.is_a? Note
   .feed-item
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = link_to (image_tag feed.user.avatar.url(:medium)), feed.user
+          = image_tag feed.user.avatar.url(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
-            %span.asked= "#{feed.created_at == feed.updated_at ? 'created' : 'updated'} a note."
-          %span.at= "#{ time_ago_in_words(feed.updated_at)} ago"
-      .feed.item-sec
+          %span.asked= "#{feed.created_at == feed.updated_at ? 'created' : 'had added'} a #{feed.category.name.humanize} note."
+      .feed-item-body
         .note.mb-3
           .note_image.col-lg-5.col-md-12
-            = link_to (image_tag feed.image.url(:small)), feed, class: 'img-note'
+            = image_tag feed.image.url(:small), class: 'img-note'
           .note_content.col-lg-7.col-md-12
-            %p.info.mb-0
-              = feed.user.name
-              = '•'
-              = feed.category.name.capitalize
-            = link_to feed do
-              %h3.title.mb-1= feed.title
-              %p.body.mb-4
-                = truncate sanitize(feed.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-            %p.buttons.align-self-end.mb-2
-              %span
-                %i.fa.fa-comment-alt
-                = pluralize(feed.questions.count, "Question")
-              %span
-                %i.fa.fa-thumbs-up
-                = pluralize(feed.get_upvotes.size, "Thank")
-              %span
-                %i.fa.fa-eye
-                = pluralize(feed.view, "View")
+            %h3.title.mb-1= truncate feed.title, length: 31
+            %p.body.mb-4
+              = truncate sanitize(feed.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
       .feed-item-actions.btn-group
-        - if user_signed_in?
-          %a.n-upvote.f-card-action{:id => "#{feed.id}@#!"}
-            %i.far.fa-heart
-            %span.thanks-count= pluralize(feed.get_upvotes.size, "Thank")
-        - else
-          = link_to new_user_session_path, class: "f-card-action" do
-            %i.far.fa-heart
-            %span.thanks-count= pluralize(feed.get_upvotes.size, "Thank")
         = link_to note_path(feed), class: 'f-card-action' do
-          %i.fas.fa-book-open
-          = 'Read Note'
+          %i.far.fa-eye
+          Read this Note
+        %p.feed-item-info
+          = "Read #{feed.view} times"
 
 - else
   .feed-item
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = link_to (image_tag feed.user.avatar.url(:medium)), feed.user
+          = image_tag feed.user.avatar.url(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
-            %span.asked= "answered to your question."
-          %span.at= "#{ time_ago_in_words(feed.created_at)} ago"
+          %span.asked= "answered to your question."
       .feed-item-body
-        = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
-      .feed.item-sec
-        .question.p-3.mb-3
-          = link_to feed.question do
-            %p.user-info.mb-2= "'#{feed.question.user.name}' asked in '#{feed.question.note.present? ? feed.question.note.title : 'Library'}'"
-            %h3.title.mb-4= truncate sanitize(feed.question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-            %p.buttons.align-self-end.mb-2
-              %span
-                %i.fa.fa-reply
-                = pluralize(feed.question.answers.count, "Answer")
-              %span
-                %i.fa.fa-eye
-                = pluralize(feed.question.view, "View")
-              %span
-                %i.fa.fa-check-square
-                = "Class #{feed.question.grade.name.humanize}"
-              %span
-                %i.fa.fa-hashtag
-                = feed.question.category.name.humanize
+        .question
+          = simple_format(feed.question.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+        .answer
+          = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
       .feed-item-actions.btn-group
-        -# - if user_signed_in?
-        -#   %a.a-upvote.f-card-action{:id => "#{feed.question.id}@#!#{feed.id}"}= "Vote as Helpful Answer (#{feed.get_upvotes.size})"
-        -# - else
-        -#   = link_to "Vote as Helpful Answer (#{feed.get_upvotes.size})", new_user_session_path, class: 'f-card-action'
         = link_to question_path(feed.question), class: 'f-card-action' do
-          %i.fas.fa-book-open
-          = 'Read Answer'
+          %i.far.fa-eye
+          = 'Read this Thread'
+        %p.feed-item-info
+          = "Has #{feed.question.answers.count} Answers"

@@ -1,5 +1,26 @@
-<p>Welcome <%= @email %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+
+<h1 style="font-size:2.5rem;margin:0;"><span style="color:#5fcf80;">ask</span>mattrab</h1>
+<h2>Welcome <%= @resource.name %>!</h2>
+<p>
+Congratulations for the initiation of your learning journey.<br><br>
+Currently, your account is a 'learner' account.<br>
+You can ask and answer questions around Mattrab Community and learn form the resources available.<br>
+If you want to create resources, help your friends, build your library, and showcase your work around internet,<br>
+you can appeal to upgrade your account to 'creator' account.<br><br>
+How? Read this documentation to <%= link_to 'be a creator.', creator_appeal_url %><br>
+How askmattrab helps your journey? Watch https://youtu.be/bVckO9Psd1E
+</p>
+
+<p style="color:#5fcf80;">
+You have signed up to askmattrab with <%= @email %>.<br>
+You can confirm your account email through the link below:
+</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>
+Best regards,<br>
+Rabin K. Kalikote<br>
+<i>Founder and President, Mattrab Community.<i>
+</p>

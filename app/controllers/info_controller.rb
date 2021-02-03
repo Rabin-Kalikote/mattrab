@@ -42,4 +42,7 @@ class InfoController < ApplicationController
                   og: { title: 'Be a Mattrab Creator', description: 'Join the proud Mattrab Creator Community today and make the difference. If you are confident of delivering the good quality academic resoucres, kindly follow the steps.' },
                   twitter: { title: 'Be a Mattrab Creator', description: 'Join the proud Mattrab Creator Community today and make the difference. If you are confident of delivering the good quality academic resoucres, kindly follow the steps.' }
   end
+
+  def admin_action
+  end
 end

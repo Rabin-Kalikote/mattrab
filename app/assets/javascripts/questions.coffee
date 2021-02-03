@@ -34,24 +34,46 @@ $ ->
       return
 
     # filtering the options of category in new/edit view.
-    filterOptions = ->
-      grade = $('#question_grade_id :selected').text()
+    filterCategories = ->
+      grade = $('#question_grade_id :selected').val()
       escaped_grade = grade.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
-      options = $(categories).filter("optgroup[label='#{escaped_grade}']").html()
-      if options
-        $('#question_category_id').html(options)
+      category_options = $(categories).filter("optgroup[label='#{escaped_grade}']").html()
+      if category_options
+        $('#question_category_id').html(category_options)
         $('#question_category_id').parent().show()
       else
         $('#question_category_id').empty()
         $('#question_category_id').parent().hide()
+      return
+    filterChapters = ->
+      category = $('#question_category_id :selected').val()
+      escaped_category = category.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
+      chapter_options = $(chapters).filter("optgroup[label='#{escaped_category}']").html()
+      if chapter_options
+        $('#question_chapter_id').html(chapter_options)
+        $('#question_chapter_id').parent().show()
+      else
+        $('#question_chapter_id').empty()
+        $('#question_chapter_id').parent().hide()
+      return
 
     if $('#question_grade_id').length
       $('#question_category_id').parent().hide()
+      $('#question_chapter_id').parent().hide()
       categories = $('#question_category_id').html()
-      filterOptions()
+      chapters = $('#question_chapter_id').html()
+      filterCategories()
+      filterChapters()
       $('#question_grade_id').change ->
-        filterOptions()
-        
+        filterCategories()
+        filterChapters()
+      $('#question_category_id').change ->
+        filterChapters()
+
+    # select2 for chapters
+    $('#question_chapter_id').select2
+      allowClear: false, theme: 'classic'
+
     # infinite scrolling
     if $('.is .pagination').length
       $(window).scroll ->

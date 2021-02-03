@@ -7,40 +7,22 @@ class QuestionsController < ApplicationController
   respond_to :js
 
   def index
+    params[:grade].present? ? @grade = params[:grade] : @grade = 'twelve'
+    params[:category].present? ? @category = params[:category] : @category = 'physics'
+    params[:chapter].present? ? @chapter = params[:chapter] : @chapter = 1
 
-    if params[:category].present?
-      if user_signed_in? #and !current_user.teacher?
-        @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).where(categories: { name: params[:category] }).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      elsif params[:grade].present?
-        @questions = Question.joins(:grade).where(grades: { name: params[:grade] }).
-                      joins(:category).where(categories: { name: params[:category] }).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @questions = Question.joins(:category).where(categories: { name: params[:category] }).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
-    elsif params[:tag].present?
-      if user_signed_in? #and !current_user.teacher?
-        @questions = Question.tagged_with(params[:tag]).joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).merge(current_user.categories).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @questions = Question.tagged_with(params[:tag]).joins(:category).merge(current_user.categories).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
-    else
-      if user_signed_in? #and !current_user.teacher?
-        @questions = Question.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).merge(current_user.categories).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      elsif params[:grade].present?
-        @questions = Question.joins(:grade).where(grades: { name: params[:grade] }).
-                      paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @questions = Question.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
-    end
+    @notes = Note.joins(:grade).where(grades: { name: @grade }).
+                  joins(:category).where(categories: { name: @category }).
+                  joins(:chapter).where(chapters: { id: @chapter }).
+                  published.order("created_at ASC")
+    @questions = Question.joins(:grade).where(grades: { name: @grade }).
+                  joins(:category).where(categories: { name: @category }).
+                  joins(:chapter).where(chapters: { id: @chapter }).
+                  order("created_at ASC")
+
+    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Class #{@grade.humanize} #{@category.humanize} notes", keywords: "Class #{@grade.humanize} #{@category.humanize} notes",
+                  og: { title: "Class #{@grade.humanize} #{@category.humanize}", description: "Class #{@grade.humanize} #{@category.humanize} notes", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}")},
+                  twitter: { card: 'note', site: '@askmattrab', title: "Class #{@grade.humanize} #{@category.humanize}", description: "Class #{@grade.humanize} #{@category.humanize} notes" }
   end
 
   def show
@@ -61,6 +43,7 @@ class QuestionsController < ApplicationController
       @question.user_id = current_user.id
       @question.grade_id = @note.grade.id
       @question.category_id = @note.category.id
+      @question.chapter_id = @note.chapter.id
       @question.tag_list = @note.tag_list
       @question.save
     else
@@ -113,7 +96,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:content, :note_id, :grade_id, :category_id, :tag_list)
+    params.require(:question).permit(:content, :note_id, :grade_id, :category_id, :chapter_id, :tag_list)
   end
 
   def find_parent

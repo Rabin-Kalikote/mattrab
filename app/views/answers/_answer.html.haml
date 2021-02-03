@@ -21,14 +21,14 @@
               Delete Answer
     .answer-card-body
       = simple_format(answer.content, {}, :sanitize => false)
-    .answer-card-infos
-      %p.buttons.align-self-end.mb-2
-        %span
-          %i.fa.fa-check-square
-          = "Class #{@question.grade.name.humanize}"
-        %span
-          %i.fa.fa-hashtag
-          = @question.category.name.humanize
+    -# .answer-card-infos
+    -#   %p.buttons.align-self-end.mb-2
+    -#     %span
+    -#       %i.fa.fa-check-square
+    -#       = "Class #{@question.grade.name.humanize}"
+    -#     %span
+    -#       %i.fa.fa-hashtag
+    -#       = @question.category.name.humanize
     .answer-card-actions.btn-group
       - if user_signed_in?
         %a{:class => "a-card-action a-upvote", :id => "#{@question.id}@#!#{answer.id}"}= "Vote as Helpful Answer (#{answer.get_upvotes.size})"

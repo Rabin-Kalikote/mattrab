@@ -1,51 +1,46 @@
 
 .banner
   .banner-content
-    .index-search
-      %form.search_form{:action => "/search"}
-        %input.search_input{"aria-label" => "Search", :placeholder => "Search any topic or ask mattrab your questions...", :name => "query", :type => "search"}
-        %button.search_button{:type => "submit"}
-          %i.fas.fa-search
-    %p#intro.mb-0
-      What's your question? See how your friends have answered them at mattrab.
+    %nav.grade-nav
+      %ul.grade-list
+        - if user_signed_in?
+          - Grade.all.each do |grade|
+            %li.grade-item{class: "#{grade == current_user.grade ? 'active' : ' '}"}
+              = link_to grade.name.humanize, "#", class: "grade-link", id: grade.name
+        - else
+          - Grade.all.each do |grade|
+            %li.grade-item{class: "#{grade == Grade.all.first ? 'active' : ' '}"}
+              = link_to grade.name.humanize, "#", class: "grade-link", id: grade.name
 
-.top-answered
-  .menu-wrapper
-    %ul.menu.mb-0.pl-0
-      - tag_cloud @question_tags, %w[s m l] do |tag, css_class|
-        %li.item
-          = link_to questions_url(:tag => tag.name), class: css_class do
-            = tag.name.humanize
-    .paddles
-      %button.left-paddle.paddle.hidden
-        %i.fas.fa-angle-left
-      %button.right-paddle.paddle
-        %i.fas.fa-angle-right
-
+.sticky-subnav
+  .subnav-row
+    .twelve.columns
+      - if user_signed_in?
+        - Grade.all.each do |grade|
+          %ul.sticky-subnav-list.category-list.category-list{:id=>grade.name, class: "#{grade == current_user.grade ? 'active' : ' '}"}
+            - grade.categories.each do |category|
+              %li.cat-item.category-item
+                = link_to notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}", :chapter=>"#{category.chapters.first.try(:id)}") do
+                  %i.fa{class: "fa-#{@icons[category.name]}"}
+                  = category.name.humanize
+      - else
+        - Grade.all.each do |grade|
+          %ul.sticky-subnav-list.category-list.category-list{:id=>grade.name, class: "#{grade == Grade.all.first ? 'active' : ' '}"}
+            - grade.categories.each do |category|
+              %li.cat-item.category-item
+                = link_to notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}", :chapter=>"#{category.chapters.first.try(:id)}") do
+                  %i.fa{class: "fa-#{@icons[category.name]}"}
+                  = category.name.humanize
+                  
 #feed-assets
   .container
     .row.fa-row
-      .col-12.col-sm-12.col-md-8.col-lg-7.offset-lg-1.feed-col
-        .mattrab-feed
-          = render :partial => "feed", :collection => @feeds if @feeds.present?
-        .pagination-nav.is.justify-content-center
-          = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
-
-      .col-12.col-sm-12.col-md-4.col-lg-3.assets-col
-        .home-sidebar.sticky-in-desktop
-          - if user_signed_in?
-            .current-user-info
-              .c-user-avater
-                = link_to (image_tag current_user.avatar.url(:medium)), current_user
-              .c-user-info
-                = link_to current_user do
-                  %span.name= current_user.name
-                %span.info
-                  = current_user.role.humanize
-                  = '•'
-                  = link_to 'Settings', edit_user_registration_path
+      .col-12.col-sm-12.col-md-3.col-lg-3.d-none.d-lg-block.menu-col
+        .mattrabians.sticky-in-desktop
           .users-around
-            %h3= 'Mattrabians around you'
+            -# %h3.mb-3
+            -#   %i.fas.fa-users
+            -#   Mattrabians around you
             - @top_creators.each do |top_creator|
               .mattrabian-info
                 .user-avater
@@ -112,6 +107,37 @@
                       = link_to "Settings", edit_user_registration_path, class: 'follow'
                   - else
                     = link_to "Follow", new_user_session_path, class: "follow"
+
+      .col-12.col-sm-12.col-md-8.col-lg-6.feed-col
+        .mattrab-feed
+          .intro-item
+            .intro-item-content
+              .intro-item-header
+                .i-user-avater
+                  = image_tag 'mricon.png'
+                .i-user-info
+                  %span.name Mattrab Community
+                  %span.about Largest students' community in Nepal.
+              .intro-item-body
+                .welcome
+                  Namaste! Look aroud what your friends are doing at Mattrab.
+          = render :partial => "feed", :collection => @feeds if @feeds.present?
+        .pagination-nav.is.justify-content-center
+          = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+
+      .col-12.col-sm-12.col-md-4.col-lg-3.assets-col
+        .home-sidebar.sticky-in-desktop
+          - if user_signed_in?
+            .current-user-info
+              .c-user-avater
+                = link_to (image_tag current_user.avatar.url(:medium)), current_user
+              .c-user-info
+                = link_to current_user do
+                  %span.name= current_user.name
+                %span.info
+                  = current_user.role.humanize
+                  = '•'
+                  = link_to 'Settings', edit_user_registration_path
           .encourage
             - if !user_signed_in?
               %h2.en-title Mattrab Community
@@ -122,9 +148,19 @@
               %h2.en-title Showcase your Knowledge
               %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.
               .actions
-                = link_to "Create note, it's free!", new_note_path, class: 'action-button mx-auto'
+                = link_to new_question_path, class: 'action-button mx-auto mb-2' do
+                  %i.far.fa-comment-alt
+                  Ask new Question
+                = link_to new_note_path, class: 'action-button mx-auto' do
+                  %i.far.fa-edit
+                  Create Note
             - else
               %h2.en-title Add to your Knowledge
               %p.en-message.mx-auto Not understanding any topic or subjects? Ask your question and get helps form friends around the Community. Answers to your questions can help several later.
               .actions
-                = link_to "Ask question, it's free!", new_question_path, class: 'action-button mx-auto'
+                = link_to new_question_path, class: 'action-button mx-auto mb-3' do
+                  %i.far.fa-comment-alt
+                  Ask new Question
+                = link_to creator_appeal_path, class: 'action-button mx-auto' do
+                  %i.far.fa-edit
+                  Be a Creator

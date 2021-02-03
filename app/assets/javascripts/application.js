@@ -20,3 +20,4 @@
 //= require initglobal
 //= require_tree .
 //= require serviceworker-companion
+//= require select2

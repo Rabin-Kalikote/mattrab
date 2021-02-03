@@ -1,52 +1,35 @@
-#question-index
-  .sticky-subnav
-    .subnav-row
-      .twelve.columns
-        %ul.sticky-subnav-list.grade-list
-          - if user_signed_in?
-            - current_user.grade.categories.each do |category|
-              %li.cat-item.category-item
-                = link_to category.name.humanize, questions_url(:grade=>"#{current_user.grade.name}", :category=>"#{category.name}")
-          - else
-            - Grade.all.each do |grade|
-              %li.cat-item.grade-item
-                = link_to grade.name.humanize, "#", class: "grade-link", id: grade.name
-                %ul.sticky-subnav-list.category-list{:id=>grade.name}
-                  %li.cat-item.back-item
-                    = link_to "#", class: "back-link" do
-                      %i.fas.fa-arrow-left
-                      = "Back to Grades"
-                  - grade.categories.each do |category|
-                    %li.cat-item.category-item
-                      = link_to category.name.humanize, questions_url(:grade=>"#{grade.name}", :category=>"#{category.name}")
-
-
-  .sticky-subnav-space
-
-  -# .qi-navbar
-  -#   .container
-  -#     .navbar-internal
-  -#       .left-links
-  -#         = link_to questions_url(:tab => :library), class: "qi-navbar-link", id: (@tab_title=="Library's Qusestions" ? 'active' : '') do
-  -#           = "Library's"
-  -#           %span.d-none.d-md-inline= "Questions"
-  -#         = link_to questions_url(:tab => :note), class: "qi-navbar-link active", id: (@tab_title=="Note's Qusestions" ? 'active' : '') do
-  -#           = "Note's"
-  -#           %span.d-none.d-md-inline= "Questions"
-  -#         = link_to questions_url(:tab => :answered), class: "qi-navbar-link", id: (@tab_title=="Answered Qusestions" ? 'active' : '') do
-  -#           = "Answered"
-  -#           %span.d-none.d-md-inline= "Questions"
-  -#         = link_to questions_url(:tab => :unanswered), class: "qi-navbar-link", id: (@tab_title=="Unanswered Qusestions" ? 'active' : '') do
-  -#           = "Unanswered"
-  -#           %span.d-none.d-md-inline= "Questions"
-  -#       .right-links.ml-auto
-  -#         = link_to "Ask Question", new_question_path, class: "qi-action-link"
-
-  .qi-body
+-# #question-index
+#note-index
+  .ni-body
     .container
-      %h2.title= @tab_title
-      #questions.row.flex-grid
-        = render @questions
+      .row
+        .menu-col.col-md-4.col-lg-3.offset-lg-1
+          .menu.chapters-menu
+            %input.search-chapters{:placeholder => "Search chapters..", :type => "text"}
+            .chapters-wrap
+              %ul.chapters
+                - Category.joins(:grade).where(grades: { name: @grade }, name: @category).first.chapters.each do |chapter|
+                  %li= link_to chapter.name, notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>"#{chapter.id}")
 
-      .row.pagination-nav.is.justify-content-center
-        = will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
+        .motes-questions-col.col-md-8.col-lg-7
+          .ni-note-info
+            %nav{"aria-label" => "breadcrumb"}
+              %ol.breadcrumb
+                %li.breadcrumb-item.active{"aria-current" => "page"}= "Class #{@grade.humanize}"
+                %li.breadcrumb-item.active{"aria-current" => "page"}= @category.humanize
+                %li.breadcrumb-item.active{"aria-current" => "page"}= Chapter.find(@chapter).name
+          #notes.row.flex-grid
+            - if @notes.present? or @questions.present?
+              = render @notes
+              = render @questions
+            - else
+              %p.mt-5.no-notes-message
+                %i.fas.fa-info-circle
+                There are no notes or questions in Mattrab Library for this chapter yet.
+                %br
+                - if can? :create, Note
+                  = link_to 'Create Note', creator_appeal_path, class: "btn btn-sm btn-std px-5 mt-4"
+                - else
+                  = link_to 'Be a creator', creator_appeal_path, class: "btn btn-sm btn-std px-5 mt-4"
+          -# .row.pagination-nav.is.justify-content-center
+            = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

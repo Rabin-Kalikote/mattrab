@@ -10,7 +10,7 @@
             .this-face
               .face
                 = image_tag @user.avatar.url(:pro), class: "img-circle center img-edit-preview"
-                %label{:for => "user_avatar"}
+                %label{:for => "user_avatar", :title => "Update Photo"}
                   %i.fa.fa-camera
                 = f.input :avatar, label: false
               %h2.name.mt-3.mb-2
@@ -18,25 +18,22 @@
                 - if @user.notes.count >= 15 or @user.creator? or @user.admin?
                   %span
                     %i.fa.fa-check-circle
+              %ul.has.mt-0
+                %li.has-info
+                  %i.fa.fa-link
+                  = "Has #{pluralize(@user.followers.count, "Follower")}"
+                - if @user.creator? or @user.admin?
+                  %li.has-info
+                    %i.fa.fa-edit
+                    = "Created #{pluralize(@user.notes.count, "Note")}"
+                %li.has-info
+                  %i.far.fa-question-circle
+                  = "Asked #{pluralize(@user.questions.count, "Question")}"
+                %li.has-info
+                  %i.fa.fa-reply
+                  = "Answered #{pluralize(@user.answered_questions.count, "Question")}"
               .follow.edit
-                - if user_signed_in?
-                  - if current_user != @user
-                    - if !current_user.following?(@user)
-                      = form_for(current_user.active_relationships.build) do |f|
-                        = hidden_field_tag :followed_id, @user.id
-                        = f.submit "Follow", class: "btn-std btn-sm btn-follow-edit"
-                    - else
-                      = form_for(current_user.active_relationships.find_by(followed_id: @user.id), html: { method: :delete }) do |f|
-                        = f.submit "Unfollow", class: "btn-std btn-sm btn-follow-edit"
-                  - else
-                    = f.button :submit, "Update", class: 'btn-std btn-sm btn-follow-edit'
-                - else
-                  = link_to "Follow", new_user_session_path, class: "btn-std btn-sm btn-follow-edit"
-              %p.has.mt-4.mb-0
-                = pluralize(@user.followers.count, "Follower")
-                = '•'
-                = pluralize(@user.questions.count, "Question")
-              -# %p.email.mb-0= @user.email
+                = f.button :submit, "Update", class: 'btn-std btn-sm btn-follow-edit'
         .col-md-9
           .this-property
             .settings
@@ -79,132 +76,3 @@
                   = link_to "Cancel Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn-sm btn-delete'
 
             .space
-
--#
--# #profile-edition-layout
--#   .this-wrap
--#     = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'edit-user-form' }) do |f|
--#       .container
--#         .col-md-3
--#           .this-face-wrap.mb-4
--#             %span.badge-base
--#               %span.badge.center= @user.role
--#             .this-face
--#               .face
--#                 = image_tag @user.avatar.url(:pro), class: "img-circle center img-edit-preview"
--#                 %label{:for => "user_avatar"}
--#                   %i.fa.fa-camera
--#                 = f.input :avatar, label: false
--#               = f.input :name, label: false, required: true
--#               = f.input :email, label: false, required: true
--#               - if devise_mapping.confirmable? && resource.pending_reconfirmation?
--#                 %p
--#                   Currently waiting confirmation for: #{resource.unconfirmed_email}
--#
--#               .form-label-group.mb-3
--#                 %p.label.mb-1= "Grade"
--#                 = f.input :grade_id, collection: Grade.order(:name), label_method: :name, value_method: :id, label: false, include_blank: false#, selected: @note.grade
--#               -# .form-label-group.mb-3
--#               -#   %p.label.mb-1= "Stream"
--#               -#   = f.input :stream_id, collection: Grade.order(:name), as: :grouped_select, group_method: :streams, label: false, include_blank: false
--#
--#               = f.collection_check_boxes :category_ids, @user.grade.categories.all, :id, :name
--#
--#               - User.egrades.keys.each do |egrade|
--#                 = f.radio_button :egrade, egrade
--#                 = f.label egrade.to_sym
--#               - if @user.admin?
--#                 %br
--#                 %label.label.mb-1{:for => "user_admin_category"} Admin
--#                 = f.select :admin_category, User.admin_categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
--#               = f.input :password, label: false, placeholder: "New Password", hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password"}
--#               = f.input :password_confirmation, label: false, placeholder: "Confirm New Password", required: false, input_html: { autocomplete: "new-password"}
--#               = f.input :current_password, label: false, placeholder: "Current Password", hint: "we need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password"}
--#               .form-actions.pt-4.pb-3
--#                 = f.button :submit, "Update", class: 'btn-std btn-sm btn-follow-edit btn-update'
--#                 = link_to "Cancel Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn-std btn-sm btn-delete'
--#         .col-md-9
--#           .this-property
--#             %p.this-text.mb-4
--#               %span.intro
--#                 Hey, I'm
--#                 = @user.name
--#                 %br
--#               = f.input :about, label: false, required: false, placeholder: "Type about yourself here..."
--#             = f.error_notification
--#             .notes
--#               %h3.title.mb-3= 'Latest Notes'
--#               - @user.notes.each do |note|
--#                 .col-lg-9.col-md-10.col-sm-12
--#                   .note
--#                     .note_image.col-md-5.col-sm-12
--#                       = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
--#                     .note_content.col-md-7.col-sm-12
--#                       %p.info.mb-0
--#                         = note.user.name
--#                         = '•'
--#                         = note.category.name.capitalize
--#                       = link_to note do
--#                         %h2.title.mb-1= note.title
--#                         %p.body.mb-4
--#                           = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
--#                       %p.buttons.align-self-end.mb-2
--#                         %span
--#                           %i.fa.fa-comment-alt
--#                           = pluralize(note.questions.count, "Question")
--#                         %span
--#                           %i.fa.fa-thumbs-up
--#                           = pluralize(note.get_upvotes.size, "Like")
--#                         %span
--#                           %i.fa.fa-eye
--#                           = pluralize(note.view, "View")
--#                 .col-lg-3.col-md-2.col-sm-12
--#                   %p.status.mb-3
--#                     = note.is_verified ? "Verified" : "Not Verified"
--#                     = '•'
--#                     = note.status.humanize
--#                   - if can? :update, note
--#                     = link_to "Edit", edit_note_path(note), class: "btn-sm"
--#                   - if can? :destroy, note
--#                     = link_to "Delete", note_path(note), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-sm delete"
--#             .space
-
-
--# <h2>Edit <%= resource_name.to_s.humanize %></h2>
--#
--# <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
--#   <%= f.error_notification %>
--#
--#   <div class="form-inputs">
--#     <%= f.input :avatar, required: true, autofocus: true %>
--#     <%= f.input :name, required: true %>
--#     <%= f.input :email, required: true %>
--#     <%= f.input :about, required: false %>
--#
--#     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
--#       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
--#     <% end %>
--#
--#     <%= f.input :password,
--#                 hint: "leave it blank if you don't want to change it",
--#                 required: false,
--#                 input_html: { autocomplete: "new-password" } %>
--#     <%= f.input :password_confirmation,
--#                 required: false,
--#                 input_html: { autocomplete: "new-password" } %>
--#     <%= f.input :current_password,
--#                 hint: "we need your current password to confirm your changes",
--#                 required: true,
--#                 input_html: { autocomplete: "current-password" } %>
--#   </div>
--#
--#   <div class="form-actions">
--#     <%= f.button :submit, "Update" %>
--#   </div>
--# <% end %>
--#
--# <h3>Cancel my account</h3>
--#
--# <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
--#
--# <%= link_to "Back", :back %>

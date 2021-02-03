@@ -17,45 +17,35 @@ class NotesController < ApplicationController
       general_feeds = notes.concat(questions).uniq.shuffle
       @feeds = general_feeds.paginate(page: params[:page], per_page: 7)
     end
-    @top_creators = User.where(:role => 'creator').joins(:notes).group("users.id").order("count(users.id) DESC").limit(2)
-    @top_learners = User.where(:role => 'learner').joins(:questions).group("users.id").order("count(users.id) DESC").limit(2)
+    @top_creators = User.where(:role => 'creator').joins(:notes).where("notes.status = ?", 1).group("users.id").order("count(users.id) DESC").limit(3)
+    @top_learners = User.where(:role => 'learner').joins(:questions).group("users.id").order("count(users.id) DESC").limit(3)
     @recent_users = User.all.order("created_at DESC").limit(2)
+    @icons = {'physics'=>'satellite', 'chemistry'=>'flask', 'biology'=>'microscope', 'maths'=>'subscript', 'computer'=>'plug', 'english'=>'sort-alpha-up-alt', 'nepali'=>'torah', 'economics'=>'chart-line', 'account'=>'funnel-dollar', 'science'=>'magnet', 'social'=>'globe-asia', 'health'=>'walking', 'moral'=>'balance-scale', 'obt'=>'chart-bar', 'opt_math'=>'square-root-alt', 'pastpapers'=>'paste', 'solution'=>'pencil-ruler', 'trivia'=>'bullhorn', 'philosopy'=>'hourglass-start'}
   end
 
   def index
+    params[:grade].present? ? @grade = params[:grade] : @grade = 'twelve'
     if params[:category].present?
-      if user_signed_in? #and !current_user.teacher?
-        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).where(categories: { name: params[:category] }).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      elsif params[:grade].present?
-        @notes = Note.joins(:grade).where(grades: { name: params[:grade] }).
-                      joins(:category).where(categories: { name: params[:category] }).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @notes = Note.joins(:category).where(categories: { name: params[:category] }).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
-    elsif params[:tag].present?
-      if user_signed_in? #and !current_user.teacher?
-        @notes = Note.tagged_with(params[:tag]).joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).merge(current_user.categories).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @notes = Note.tagged_with(params[:tag]).joins(:category).merge(current_user.categories).published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
+      @category = params[:category]
+      category_id = Category.joins(:grade).where(grades: { name: @grade }, name: params[:category]).first.id
     else
-      if user_signed_in? #and !current_user.teacher?
-        @notes = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                      joins(:category).merge(current_user.categories).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      elsif params[:grade].present?
-        @notes = Note.joins(:grade).where(grades: { name: params[:grade] }).
-                      published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      else
-        @notes = Note.published.paginate(page: params[:page], per_page: 14).order("RANDOM()")
-      end
+      @category = Category.joins(:grade).where(grades: { name: @grade }).first.name
+      category_id = Category.joins(:grade).where(grades: { name: @grade }).first.id
     end
+    params[:chapter].present? ? @chapter = params[:chapter] : @chapter = Chapter.joins(:category).where(categories: {id: category_id}).first.id
+
+    @notes = Note.joins(:grade).where(grades: { name: @grade }).
+                  joins(:category).where(categories: { id: category_id }).
+                  joins(:chapter).where(chapters: { id: @chapter }).
+                  published.order("created_at ASC")
+    @questions = Question.joins(:grade).where(grades: { name: @grade }).
+                  joins(:category).where(categories: { id: category_id }).
+                  joins(:chapter).where(chapters: { id: @chapter }).
+                  order("created_at ASC")
+
+    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Class #{@grade.humanize} #{@category.humanize} notes for #{Chapter.find(@chapter).name} chapter", keywords: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes",
+                  og: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>@chapter)},
+                  twitter: { card: 'note', site: '@askmattrab', title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes" }
   end
 
   def show
@@ -63,14 +53,10 @@ class NotesController < ApplicationController
                   og: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@note), image: @note.image },
                   twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
-    if user_signed_in?
-      @random_note = Note.joins(:grade).where(grades: { name: current_user.grade.name }).
-                          joins(:category).where(categories: { name: @note.category.name }).
+    @random_note = Note.joins(:chapter).where(chapters: { id: @note.chapter.id }).
                           published.where.not(id: @note).order("RANDOM()").first
-    else
-      @random_note = Note.joins(:category).where(categories: { name: @note.category.name }).
-                          published.where.not(id: @note).order("RANDOM()").first
-    end
+    @random_note = Note.joins(:category).where(categories: { id: @note.category.id }).
+                          published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @note.update_attribute "view", @note.view += 1
   end
@@ -131,6 +117,11 @@ class NotesController < ApplicationController
     redirect_back fallback_location: @note
   end
 
+  def import
+    Chapter.import(params[:file])
+    redirect_to root_url, notice: "Categories Imported."
+  end
+
   private
 
   def find_note
@@ -138,6 +129,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :tag_list)
+    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :chapter_id, :tag_list)
   end
 end

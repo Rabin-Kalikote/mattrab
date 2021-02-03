@@ -15,6 +15,7 @@ class Note < ApplicationRecord
   belongs_to :user
   belongs_to :grade
   belongs_to :category
+  belongs_to :chapter
   has_many :questions, dependent: :delete_all
 
   has_attached_file :image, styles: { medium: "700x500#", small: "350x250>" }, default_url: "/images/small/missing.png"

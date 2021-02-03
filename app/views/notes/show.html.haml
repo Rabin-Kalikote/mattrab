@@ -6,16 +6,18 @@
         .page
           .unit-head
             .info-action.row
-              %ol.breadcrumb
-                %li.breadcrumb-item
-                  = link_to "Class #{@note.grade.name.humanize}", notes_url(:grade => @note.grade.name)
-                %li.breadcrumb-item
-                  = link_to @note.category.name.humanize, notes_url(:category => @note.category.name)
               .actions
                 %nav.nav
                   - if can? :update, @note
                     = link_to "Edit", edit_note_path(@note), class: "nav-link note-edit-action"
                     = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure? Deleting your note is irreversible." }, class: "nav-link note-delete-action"
+              %ol.breadcrumb
+                %li.breadcrumb-item
+                  = link_to "Class #{@note.grade.name.humanize}", notes_url(:grade => @note.grade.name)
+                %li.breadcrumb-item
+                  = link_to @note.category.name.humanize, notes_url(:grade => @note.grade.name, :category => @note.category.name)
+                %li.breadcrumb-item
+                  = link_to @note.chapter.name, notes_url(:grade => @note.grade.name, :category => @note.category.name, :chapter => @note.chapter.id)
             .headline
               .col-md-8.heading
                 %h1.unit-name.mb-0.mt-1= @note.title
@@ -46,9 +48,9 @@
                 %p.nav-link.mb-0
                   %i.fa.fa-eye
                   = pluralize(@note.view, "View")
-                %p.nav-link.mb-0
-                  %i.fa.fa-hashtag
-                  = @note.category.name
+                %button.print-note.nav-link
+                  %i.fa.fa-print
+                  Print Note
                 %p.nav-link.mb-0
                   %i.fa.fa-share-alt
                   by
@@ -62,9 +64,11 @@
               = image_tag 'adhere.png'
             .tags
               - @note.tag_list.each do |tag|
-                = link_to notes_url(:tag => tag), class: "tag" do
+                = link_to search_url(:tag => tag), class: "tag" do
                   %i.fa.fa-hashtag
                   = tag
+
+            %p.paper-message Visit www.askmattrab.com for more academic resources.
 
         .page-discussions.mb-5
           %h2.title.mb-3 Discussions
@@ -85,260 +89,37 @@
               = render 'questions/inlinequestion', question: question
 
       .random-notes.col-md-3
-        -# %h3.title.mb-3 Related Notes
-        .random-note
-          = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
-          .note_content
-            %p.info.mb-2
-              = @random_note.user.name
-              = '•'
-              = @random_note.category.name.capitalize
-            %h2.title= link_to @random_note.title, @random_note
-            %p.body
-              = truncate sanitize(@random_note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 150
-            %p.buttons
-              %span
-                %i.fa.fa-comments-o
-                = pluralize(@random_note.questions.count, "Question")
-              %span
-                %i.fa.fa-thumbs-o-up
-                = pluralize(@random_note.get_upvotes.size, "Like")
-              %span
-                %i.fa.fa-eye
-                = pluralize(@random_note.view, "View")
+        .rn-wrap
+          -# %h3.title.mb-3 Related Notes
+          .random-note
+            = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
+            .note_content
+              %p.info.mb-2
+                = @random_note.user.name
+                = '•'
+                = @random_note.category.name.capitalize
+              %h2.title= link_to @random_note.title, @random_note
+              %p.body
+                = truncate sanitize(@random_note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 150
+              %p.buttons
+                %span
+                  %i.fa.fa-comments-o
+                  = pluralize(@random_note.questions.count, "Question")
+                %span
+                  %i.fa.fa-thumbs-o-up
+                  = pluralize(@random_note.get_upvotes.size, "Like")
+                %span
+                  %i.fa.fa-eye
+                  = pluralize(@random_note.view, "View")
 
-        %h3.title.mt-4 Note author's details.
-        .author.justify-content-center
-          .avatar
-            = link_to @note.user, class: 'author-avatar' do
-              = image_tag @note.user.avatar.url(:pro)
-              %span.badge= @note.user.role.humanize
-          .info
-            = link_to @note.user.name, @note.user, class: 'author-name'
-            .follow.edit
-              - if user_signed_in?
-                - if current_user != @note.user
-                  - if !current_user.following?(@note.user)
-                    = form_for(current_user.active_relationships.build) do |f|
-                      = hidden_field_tag :followed_id, @note.user.id
-                      = f.submit "Follow", class: "btn-sm btn-follow-edit"
-                  - else
-                    = form_for(current_user.active_relationships.find_by(followed_id: @note.user.id), html: { method: :delete }) do |f|
-                      = f.submit "Unfollow", class: "btn-sm btn-follow-edit"
-                - else
-                  = link_to "Settings", edit_user_registration_path, class: 'btn-sm btn-follow-edit'
-              - else
-                = link_to "Follow", new_user_session_path, class: "btn-sm btn-follow-edit"
-            %span.followers= pluralize(@note.user.followers.count, "Follower")
-
-
-
--#
--# #note-show
--#   .unit-head
--#     .container
--#       .headline.row
--#         .this-heading.col-md-8.col-lg-9
--#           %ol.breadcrumb
--#             %li.breadcrumb-item
--#               = link_to "Class #{@note.grade.name.humanize}", notes_url(:grade => @note.grade.name)
--#             %li.breadcrumb-item
--#               = link_to @note.category.name.humanize, notes_url(:category => @note.category.name)
--#           %h1.unit-name.mb-0.mt-1= @note.title
--#           .info-nav
--#             %nav.nav.justify-content-start
--#               - if user_signed_in?
--#                 %button.n-upvote.nav-link.first{:id => "#{@note.id}@#!"}
--#                   %i.fa.fa-thumbs-up
--#                   %span.thanks-count= pluralize(@note.get_upvotes.size, "Thank")
--#               - else
--#                 = link_to new_user_session_path, class: "nav-link first mb-0" do
--#                   %i.fa.fa-thumbs-up
--#                   %span.likes-count= pluralize(@note.get_upvotes.size, "Like")
--#               %p.nav-link.mb-0
--#                 %i.fa.fa-comments
--#                 = pluralize(@note.questions.count, "Question")
--#               %p.nav-link.mb-0
--#                 %i.fa.fa-eye
--#                 = pluralize(@note.view, "View")
--#               %p.nav-link.mb-0
--#                 %i.fa.fa-hashtag
--#                 = @note.category.name
--#               %p.nav-link.mb-0
--#                 %i.fa.fa-share-alt
--#                 by
--#                 = link_to @note.user.name, @note.user
--#                 = time_ago_in_words(@note.created_at)
--#                 ago
--#         .this-image.col-md-4.col-lg-3
--#           .image
--#             = image_tag @note.image.url(:small)
--#             - if can? :update, @note
--#               .setting-nav
--#                 %nav.nav.justify-content-center
--#                   = link_to edit_note_path(@note), class: "nav-link note-edit-action" do
--#                     %i.fas.fa-edit
--#                     Edit
--#                   = link_to note_path(@note), method: :delete, data: { confirm: "Are you sure? Deleting your note is irreversible." }, class: "nav-link note-delete-action" do
--#                     %i.fas.fa-trash
--#                     Delete
--#
--#   .unit-body
--#     .container
--#       .main.row
--#         .this-page.col-md-8.col-lg-9
--#           .page-wrap.pr-sm-none.pr-md-2.pr-lg-5
--#             = simple_format(@note.body.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
--#             .ad
--#               = image_tag 'adhere.png'
--#           .tags
--#             - @note.tag_list.each do |tag|
--#               = link_to notes_url(:tag => tag), class: "tag" do
--#                 %i.fa.fa-hashtag
--#                 = tag
--#           .page-discussions.pr-sm-none.pr-md-3.pr-lg-5
--#             %h2.title.mb-3 Discussions
--#             .ask
--#               .question-form.form
--#                 - if user_signed_in?
--#                   - if can? :create, Question
--#                     = render "questions/inlineform"
--#                   - else
--#                     %p= 'You cannot create questions.'
--#                 - else
--#                   %p.login-msg
--#                     = 'Please '
--#                     = link_to "Sign In", new_user_session_path
--#                     = 'to ask your question.'
--#             .qa-threads
--#               - @questions.each do |question|
--#                 = render 'questions/inlinequestion', question: question
--#
--#         .this-author-and-rn.col-md-4.col-lg-3
--#           .author.justify-content-center
--#             .avatar
--#               = link_to @note.user, class: 'author-avatar' do
--#                 = image_tag @note.user.avatar.url(:pro)
--#                 %span.badge= @note.user.role.humanize
--#             .info
--#               = link_to @note.user.name, @note.user, class: 'author-name'
--#               %span.followers= pluralize(@note.user.followers.count, "Follower")
--#           .random-notes
--#             .random-note
--#               = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
--#               .note_content
--#                 %p.info.mb-2
--#                   = @random_note.user.name
--#                   = '•'
--#                   = @random_note.category.name.capitalize
--#                 %h2.title= link_to @random_note.title, @random_note
--#                 %p.body
--#                   = truncate sanitize(@random_note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 150
--#                 %p.buttons
--#                   %span
--#                     %i.fa.fa-comments-o
--#                     = pluralize(@random_note.questions.count, "Question")
--#                   %span
--#                     %i.fa.fa-thumbs-o-up
--#                     = pluralize(@random_note.get_upvotes.size, "Like")
--#                   %span
--#                     %i.fa.fa-eye
--#                     = pluralize(@random_note.view, "View")
-
-
-
--# #note-show
--#   #header
--#     .container
--#       .show-head-title.pt-5
--#         %h2.show-title.mb-2= @note.title
--#       .show-head-nav.row
--#         .col-md-12
--#           %nav.nav
--#             - if user_signed_in?
--#               = link_to like_note_path(@note), method: :get, remote: true, class: "nav-link first" do
--#                 %i.fa.fa-thumbs-o-up
--#                 = pluralize(@note.get_upvotes.size, "Like")
--#               = link_to dislike_note_path(@note), method: :get, remote: true, class: "nav-link" do
--#                 %i.fa.fa-thumbs-o-down
--#                 = pluralize(@note.get_downvotes.size, "Dislike")
--#             - else
--#               %p.nav-link.first.mb-0
--#                 = link_to "Sign In", new_user_session_path
--#                 = 'to like or dislike.'
--#             %p.nav-link.mb-0
--#               %i.fa.fa-comments
--#               = pluralize(@note.comments.count, "Comment")
--#             %p.nav-link.mb-0
--#               %i.fa.fa-eye
--#               = pluralize(@note.view, "View")
--#             %p.nav-link.mb-0
--#               %i.fa.fa-hashtag
--#               = @note.category
--#             %p.nav-link.mb-0
--#               %i.fa.fa-share-alt
--#               by
--#               = link_to @note.user.name, @note.user
--#               = time_ago_in_words(@note.created_at)
--#               ago
--#             - if can? :update, @note
--#               = link_to "Edit", edit_note_path(@note), class: "nav-link note-action"
--#             - if can? :destroy, @note
--#               = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "nav-link note-action"
--#
--#   #page
--#     .container
--#       .row.py-5
--#         .col-md-8.this-note
--#           %p
--#             = @note.status
--#             = @note.is_verified
--#           .body= simple_format(@note.body)
--#           = image_tag @note.image.url(:medium), class:'banner-img mb-3'
--#           .author.my-5
--#             .row.author-info
--#               = link_to (image_tag @note.user.avatar.url(:medium)), @note.user, class: 'author-avatar'
--#               = link_to @note.user.name, @note.user, class: 'author-name'
--#             .row.author-description
--#               %p.about
--#                 = truncate(@note.user.about, :length => 250)
--#                 %span.followers.mt-2= pluralize(@note.user.followers.count, "Follower")
--#           .comments.pt-3
--#             .form-pane
--#               .form.row
--#                 - if user_signed_in?
--#                   .col-md-1.avatar
--#                     = image_tag current_user.avatar.url(:small)
--#                   .col-md-11.body
--#                     = render "comments/form"
--#                 - else
--#                   %p.login-msg
--#                     = 'Please '
--#                     = link_to "Sign In", new_user_session_path
--#                     = 'to write your comment.'
--#             #comments-pane
--#               - @comments.each do |comment|
--#                 = render 'comments/comment', comment: comment
--#
--#         .col-md-4.random-notes
--#           %h3.title.mb-3 Related Notes
--#           .random-note
--#             = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
--#             .note_content
--#               %p.info.mb-2
--#                 = @random_note.user.name
--#                 = '•'
--#                 = @random_note.category.capitalize
--#               %h2.title= link_to @random_note.title, @random_note
--#               %p.body
--#                 = truncate(simple_format(@random_note.body), :length => 150)
--#               %p.buttons
--#                 %span
--#                   %i.fa.fa-comments-o
--#                   = pluralize(@random_note.comments.count, "Comment")
--#                 %span
--#                   %i.fa.fa-thumbs-o-up
--#                   = pluralize(@random_note.get_upvotes.size, "Like")
--#                 %span
--#                   %i.fa.fa-eye
--#                   = pluralize(@random_note.view, "View")
+          .author.justify-content-center
+            .user-main
+              .user-avater
+                = link_to (image_tag @note.user.avatar.url(:medium)), @note.user
+              .user-name
+                = link_to @note.user.name, @note.user, class: 'name'
+            .user-info
+              %p.about.mb-2= truncate @note.user.about, length: 150
+              %p.has
+                %i.fa.fa-link
+                = "Has #{pluralize(@note.user.followers.count, 'Follower')}"

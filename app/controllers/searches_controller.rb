@@ -1,13 +1,17 @@
 class SearchesController < ApplicationController
   def search
     @tab = params[:tab]
-    @query = params[:query]
+    if params[:query].present?
+      @query = params[:query]
+    elsif params[:tag].present?
+      @query = params[:tag]
+    end
     tags = @query.split.each_slice(1).map{|t|t.join ' '}
 
     case @tab
     when "notes"
-      notes_from_search = Note.search(@query).to_a
-      notes_from_tag = Note.tagged_with(tags, :any => true).to_a
+      notes_from_search = Note.search(@query).published.to_a
+      notes_from_tag = Note.tagged_with(tags, :any => true).published.to_a
       @results = notes_from_search.concat(notes_from_tag).paginate(page: params[:page], per_page: 7)
     when "questions"
       questions_from_search = Question.search(@query).to_a
@@ -16,8 +20,8 @@ class SearchesController < ApplicationController
     when "users"
       @results = User.search(@query).paginate(page: params[:page], per_page: 7)
     else
-      notes_from_search = Note.search(@query).to_a
-      notes_from_tag = Note.tagged_with(tags, :any => true).to_a
+      notes_from_search = Note.search(@query).published.to_a
+      notes_from_tag = Note.tagged_with(tags, :any => true).published.to_a
       notes = notes_from_search.concat(notes_from_tag)
 
       questions_from_search = Question.search(@query).to_a
@@ -36,11 +40,11 @@ class SearchesController < ApplicationController
                     og: { title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: question_url(@results.first) },
                     twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150) }
     elsif @results.present? and @results.first.is_a? User
-      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), keywords: "Mattrab user at class "+@results.first.grade.name,
-                    og: { title: @query, description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: user_url(@results.first), image: @results.first.avatar },
-                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.about.gsub(/<[^>]*>/, '').truncate(150), image: @results.first.avatar }
+      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.about, keywords: "Mattrab user at class "+@results.first.grade.name,
+                    og: { title: @query, description: @results.first.about, type: 'website', url: user_url(@results.first), image: @results.first.avatar },
+                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.about, image: @results.first.avatar }
     else
-      set_meta_tags title: 'No results found', site: 'Mattrab Search'
+      set_meta_tags title: "No results found for #{@query}", site: 'Mattrab Search'
     end
   end
 end

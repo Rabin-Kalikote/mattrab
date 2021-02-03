@@ -36,6 +36,4 @@
   .question-card-actions.btn-group
     - if user_signed_in?
       %a.q-upvote.q-card-action{:id => "#{question.id}@#!"}= "Helpful (#{question.get_upvotes.size})"
-      = link_to 'Answer this thread', question_path(question), class: 'q-card-action'
-    - else
-      = link_to 'Sign in to Answer this Thread', new_user_session_path, class: 'q-card-action'
+    = link_to 'Read this thread', question_path(question), class: 'q-card-action'

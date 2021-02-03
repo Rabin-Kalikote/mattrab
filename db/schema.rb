@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200531143233) do
+ActiveRecord::Schema.define(version: 20210118193136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,15 +37,16 @@ ActiveRecord::Schema.define(version: 20200531143233) do
     t.integer "name", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "grade_id"
+    t.index ["grade_id"], name: "index_categories_on_grade_id"
   end
 
-  create_table "grade_categorizations", force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "grade_id"
+  create_table "chapters", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_grade_categorizations_on_category_id"
-    t.index ["grade_id"], name: "index_grade_categorizations_on_grade_id"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_chapters_on_category_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -80,7 +81,9 @@ ActiveRecord::Schema.define(version: 20200531143233) do
     t.integer "egrade", default: 0
     t.bigint "category_id"
     t.bigint "grade_id"
+    t.bigint "chapter_id"
     t.index ["category_id"], name: "index_notes_on_category_id"
+    t.index ["chapter_id"], name: "index_notes_on_chapter_id"
     t.index ["grade_id"], name: "index_notes_on_grade_id"
   end
 
@@ -104,7 +107,9 @@ ActiveRecord::Schema.define(version: 20200531143233) do
     t.integer "view", default: 0
     t.bigint "category_id"
     t.bigint "grade_id"
+    t.bigint "chapter_id"
     t.index ["category_id"], name: "index_questions_on_category_id"
+    t.index ["chapter_id"], name: "index_questions_on_chapter_id"
     t.index ["grade_id"], name: "index_questions_on_grade_id"
     t.index ["note_id"], name: "index_questions_on_note_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
@@ -203,11 +208,13 @@ ActiveRecord::Schema.define(version: 20200531143233) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
-  add_foreign_key "grade_categorizations", "categories"
-  add_foreign_key "grade_categorizations", "grades"
+  add_foreign_key "categories", "grades"
+  add_foreign_key "chapters", "categories"
   add_foreign_key "notes", "categories"
+  add_foreign_key "notes", "chapters"
   add_foreign_key "notes", "grades"
   add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "chapters"
   add_foreign_key "questions", "grades"
   add_foreign_key "questions", "notes"
   add_foreign_key "questions", "users"

@@ -1,6 +1,7 @@
 = simple_form_for @question, html: { multipart: true } do |f|
   = f.input :content, as: :summernote, label: false, placeholder: "Your Question...", required: true
   = f.input :grade_id, collection: Grade.order(:name), label_method: :name, value_method: :id, include_blank: false
-  = f.input :category_id, collection: Grade.order(:name), as: :grouped_select, group_method: :categories, include_blank: false
+  = f.input :category_id, collection: Grade.order(:name), as: :grouped_select, group_method: :categories, group_label_method: :id, include_blank: false
+  = f.input :chapter_id, collection: Category.order(:name), as: :grouped_select, group_method: :chapters, group_label_method: :id, include_blank: false
   = f.input :tag_list, :label=>"Tags (seperated by commas)", placeholder: "Eg. class 12, physics, modern physics, radioactivity, what is radio carbon dating, ...", :input_html=>{:value => @question.tag_list.join(", ")}
   = f.button :submit, class: "btn-sm btn-action"

@@ -1,0 +1,13 @@
+
+.container
+  - if user_signed_in?
+    %h2.mt-5.mb-4= "Hi, #{current_user.name.humanize}"
+    - if current_user.admin?
+      = form_tag import_notes_path, multipart: true do
+        = file_field_tag :file
+        = submit_tag 'Import'
+    - else
+      %p You are not admin yet.
+  - else
+    %h2.mt-5 Please sign in.
+    = link_to "Sign in", new_user_session_path, class: "btn btn-md btn-std px-5 mt-4"

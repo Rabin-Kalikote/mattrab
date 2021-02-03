@@ -3,7 +3,13 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   def show
     @user = User.find(params[:id])
-    @tab = params[:tab]
+    if params[:tab].present?
+      @tab = params[:tab]
+    elsif @user.creator? or @user.admin?
+      @tab = "note"
+    else
+      @tab = "question"
+    end
 
     case @tab
     when "question"
@@ -13,8 +19,11 @@ class UsersController < ApplicationController
     when "about"
       @total_views = @user.notes.sum(:view) #+ @user.questions.sum(:view)
     else
-      @notes = @user.notes.all.paginate(page: params[:page], per_page: 7).order("created_at DESC")
-      @tab = "note"
+      if @user == current_user or (user_signed_in? and current_user.admin?)
+        @notes = @user.notes.all.paginate(page: params[:page], per_page: 7).order("created_at DESC")
+      else
+        @notes = @user.notes.published.paginate(page: params[:page], per_page: 7).order("created_at DESC")
+      end
     end
 
     if @user.about.present? and @user.avatar.present?

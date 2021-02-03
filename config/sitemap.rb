@@ -39,38 +39,39 @@ SitemapGenerator::Sitemap.create do
   #     add article_path(article), :lastmod => article.updated_at
   #   end
 
-  # Add '/home'
-  add '/home', :changefreq => 'daily', :priority => 0.9
 
-  # Add '/notes'
-  add notes_path, :priority => 0.7, :changefreq => 'daily'
+  # Add all grades and subjects
+  Grade.find_each do |grade|
+    add notes_path(:grade => grade.name, :category => grade.categories.first.name), :priority => 0.9
+  end
+  add '/about', :priority => 0.9
+  add '/users/sign_in', :priority => 0.9
+
+  # Add all subjects
+  Grade.find_each do |grade|
+    grade.categories.find_each do |category|
+      add notes_path(:grade => grade.name, :category => category.name)
+    end
+  end
   # Add all notes:
-  Note.find_each do |note|
+  Note.published.find_each do |note|
     add note_path(note), :lastmod => note.updated_at
   end
-
-  # Add '/questions'
-  add questions_path, :priority => 0.7, :changefreq => 'daily'
   # Add all questions:
   Question.find_each do |question|
     add question_path(question), :lastmod => question.updated_at
   end
-
-  # Add '/users'
-  add users_path, :priority => 0.7, :changefreq => 'daily'
   # Add all users:
   User.find_each do |user|
     add user_path(user), :lastmod => user.updated_at
   end
 
   # Add '/others'
-  add '/search', :changefreq => 'daily', :priority => 0.7
-  add '/about'
+  add '/search'
   add '/faqs'
   add '/affiliate_program'
   add '/terms'
   add '/privacy'
   add '/creator_appeal'
   add '/users/sign_up'
-  add '/users/sign_in'
 end

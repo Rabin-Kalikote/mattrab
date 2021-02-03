@@ -33,6 +33,7 @@ gem 'meta-tags'
 gem 'serviceworker-rails'
 gem 'fog-aws'
 gem 'sitemap_generator'
+gem 'select2-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

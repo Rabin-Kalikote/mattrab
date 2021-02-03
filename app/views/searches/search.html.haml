@@ -13,13 +13,13 @@
             %i.fas.fa-search
             = "All Results"
           = link_to search_path(:query => @query, :tab => :notes), class: "qi-navbar-link", id: ('active' if @tab=="notes") do
-            %i.fas.fa-sticky-note
+            %i.fas.fa-edit
             = "Notes"
           = link_to search_path(:query => @query, :tab => :questions), class: "qi-navbar-link", id: ('active' if @tab=="questions") do
-            %i.fas.fa-comment-alt
+            %i.far.fa-comment-alt
             = "Question Threads"
           = link_to search_path(:query => @query, :tab => :users), class: "qi-navbar-link", id: ('active' if @tab=="users") do
-            %i.fas.fa-user
+            %i.far.fa-user
             = "Mattrabians"
 
     - if @results.present?
@@ -33,3 +33,7 @@
         %li.suggest Try asking question differently.
         %li.suggest Make sure that all words are spelled correctly.
         %li.suggest Try more general keywords.
+        %p.suggest.mt-4 No answers yet?
+        = link_to new_question_path, class: 'action-button' do
+          %i.far.fa-comment-alt
+          Post Your Question

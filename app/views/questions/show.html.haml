@@ -2,16 +2,6 @@
 #question-show
   .container
     .qs-internal
-      .returning-option
-        - if @question.note_id.present?
-          = link_to @question.note, class: 'returning-option-link' do
-            %i.fas.fa-arrow-left
-            = 'Back to Note'
-          = link_to 'Browse Qusestions', questions_path, class: 'returning-option-link pull-right'
-        - else
-          = link_to questions_path, class: 'returning-option-link' do
-            %i.fas.fa-arrow-left
-            = 'Back'
       .thread-article
         .thread-question
           .question-card-content
@@ -35,12 +25,6 @@
                       Delete Thread
             .question-card-body
               = simple_format(@question.content, {}, :sanitize => false)
-
-              -# - if user_signed_in?
-              -#   %button#like.nav-link.first
-              -#     %i.fa.fa-thumbs-up
-              -#     %span.likes-count= pluralize(@question.get_upvotes.size, "Like")
-
             .question-card-infos
               %p.buttons.align-self-end.mb-2
                 %span
@@ -51,10 +35,11 @@
                   = pluralize(@question.view, "View")
                 %span
                   %i.fa.fa-check-square
-                  = "Class #{@question.grade.name.humanize}"
-                %span
-                  %i.fa.fa-hashtag
-                  = @question.category.name.humanize
+                  = link_to "Class #{@question.grade.name.humanize}", questions_url(:grade => @question.grade.name)
+                  %i.fa.fa-angle-right
+                  = link_to @question.category.name.humanize, questions_url(:grade => @question.grade.name, :category => @question.category.name)
+                  %i.fa.fa-angle-right
+                  = link_to @question.chapter.name, questions_url(:grade => @question.grade.name, :category => @question.category.name, :chapter => @question.chapter.id)
             .question-card-actions.btn-group
               - if user_signed_in?
                 %a.q-upvote.q-card-action{:id => "#{@question.id}@#!"}= "Helpful (#{@question.get_upvotes.size})"

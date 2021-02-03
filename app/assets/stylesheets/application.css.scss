@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require select2
  *= require_self
  */
 
@@ -22,8 +23,6 @@
 @font-face {font-family: 'mattrab-content-serif-font'; src: url('serif.ttf') format('truetype');}
 
 // Variables
-
-
 html, body{
   margin: 0;
   padding: 0;
@@ -35,9 +34,21 @@ iframe,
 iframe.d-block{display: none!important;}
 .centered-text,.c-t{text-align: center;}
 
+.turbolinks-progress-bar{
+  background-color: #5fcf80;
+}
+
 .center {
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .sticky-in-desktop{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 100px;
+  }
 }
 
 .am-container{
@@ -124,10 +135,11 @@ iframe.d-block{display: none!important;}
    color: #fff!important;
    background: #5fcf80!important;
    border-radius: 3rem!important;
-   border: 2px solid #9de2b1!important;
+   border: 2px solid #5fcf80!important;
    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
    &:hover{
-     border: 2px solid #5fcf80!important;
+     background: #2ec66d!important;
+     border: 2px solid #2ec66d!important;
    }
  }
 

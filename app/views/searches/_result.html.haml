@@ -5,10 +5,7 @@
       .note_image.col-md-4.col-sm-12
         = link_to (image_tag result.image.url(:small)), result, class: 'img-note'
       .note_content.col-md-8.col-sm-12
-        %p.info.mb-0
-          = result.user.name
-          = '•'
-          = result.category.name.capitalize
+        %p.info.mb-0= "#{result.grade.name.capitalize} › #{result.category.name.capitalize} › #{result.chapter.name.capitalize}"
         = link_to result do
           %h2.title.mb-1= result.title
           %p.body.mb-4
@@ -18,7 +15,7 @@
             %i.fa.fa-comment-alt
             = pluralize(result.questions.count, "Question")
           %span
-            %i.fa.fa-thumbs-up
+            %i.fa.fa-heart
             = pluralize(result.get_upvotes.size, "Thank")
           %span
             %i.fa.fa-eye
@@ -41,28 +38,24 @@
             = pluralize(result.view, "View")
           %span
             %i.fa.fa-check-square
-            = "Class #{result.user.grade.name.humanize}"
-          %span
-            %i.fa.fa-hashtag
-            = result.category.name.humanize
+            = "#{result.grade.name.capitalize} › #{result.category.name.capitalize} › #{result.chapter.name.capitalize}"
+
 - else
   .user-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
     .user
       .user_avatar.col-md-4.col-sm-12
         = link_to (image_tag result.avatar.url(:pro)), result, class: 'avatar-user'
       .user_about.col-md-8.col-sm-12
-        %p.info.mb-0
-          = "#{result.name} is #{result.role} at Mattrab."
         = link_to result do
           %h2.title.mb-1= result.name
-          %p.body.mb-4
+          %p.body.mb-2
             = truncate sanitize(result.about, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 250
         %p.buttons.align-self-end.mb-2
           %span
-            %i.fa.fa-sticky-note
-            = pluralize(result.notes.count, "Note")
+            %i.fa.fa-link
+            = pluralize(result.followers.count, "Follower")
           %span
-            %i.fa.fa-comment-alt
+            %i.far.fa-comment-alt
             = pluralize(result.questions.count, "Question")
           %span
             %i.fa.fa-eye

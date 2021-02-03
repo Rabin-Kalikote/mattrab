@@ -2,168 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#question-index{
-  background: #fbfbf9;
-  font-family: 'mattrab-content-sans-serif-font';
-  .qi-navbar{
-    display: block;
-    font-weight: 500;
-    max-width: 89.125rem;
-    padding: 0; text-align: left;
-    .navbar-internal{
-      box-sizing: border-box;
-      display: flex;
-      max-width: 75.125rem;
-      min-height: 3rem;
-      padding-top: 2rem;width: 100%;
-      border-bottom: .0625rem solid #dadce0;
-      .left-links{
-        a.qi-navbar-link{
-          box-sizing: border-box;
-          color: #5f6368;
-          display: inline-block;
-          flex-grow: 1;
-          padding: .5rem;
-          font-size: .875rem;
-          text-align: center;
-          &:hover{
-            text-decoration: none;
-          }
-          &:first-of-type{padding-left:0!important}
-        }
-        a.qi-navbar-link#active{
-          border-bottom: .1rem solid #5fcf80;
-          color: #5fcf80;
-        }
-        @media (min-width: 48.1875rem){
-          a.qi-navbar-link {
-            margin: 0 .5rem 0 0;
-            max-width: none;
-            width: auto;
-          }
-        }
-      }
-      .right-links{
-        text-align: right;
-        padding-top: .1rem;
-        a.qi-action-link{
-          color: #5f6368;
-          background: #ebf9ef;
-          padding: .3rem .5rem;
-          font-size: .9rem;
-          border-radius: 4px;
-          font-family: 'mattrab-content-bold-font'!important;
-          border: 1px solid rgba(48,73,97,0.1);
-          transition: border-color .01s ease, background-color .01s ease, color .01s ease;
-          &:hover{
-            text-decoration: none;
-            border: 1px solid #5fcf80;
-          }
-        }
-      }
-    }
-    @media (max-width: 767.98px){
-      .navbar-internal{
-        min-height: 2.5rem;
-        padding-top: 1.5rem;
-        .left-links{
-          a.qi-navbar-link{
-            padding: .2rem;
-            font-size: .7rem;
-            margin: 0 .2rem 0 0;
-          }
-        }
-        .right-links{
-          padding-top: 0;
-          a.qi-action-link{
-            padding: .15rem .3rem;
-            font-size: .7rem;
-            border-radius: 2px;
-          }
-        }
-      }
-    }
-    @media (max-width: 575.98px) {
-      .navbar-internal{
-        .left-links{
-          a.qi-navbar-link{
-            padding: .1rem;
-            font-size: .6rem;
-            margin: 0 .15rem 0 0;
-          }
-        }
-        .right-links{
-          a.qi-action-link{
-            padding: .13rem .2rem;
-            font-size: .6rem;
-          }
-        }
-      }
-    }
-  }
-  .qi-body{
-    font-weight: 500;
-    max-width: 89.125rem;
-    padding: 0; text-align: left;
-    h2.title{
-      font-weight: 400;
-      font-size: 16px;
-      margin-bottom: 8px;
-      display: none;
-    }
-    .flex-grid{
-      padding: 0;
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-flex-flow: row wrap;
-      flex-flow: row wrap;
-      .col-md-6.col-sm-12{
-        margin-bottom:1.7rem;
-        .question{
-          height: 100%;
-          border-radius: 3px;
-          background: #ffffff;
-          align-items: stretch;
-          background-color: #fff;
-          border: 1px solid #e6e6e6;
-          display: -webkit-box; display: flex; flex-wrap: wrap;
-          a{
-            h3.title{
-              line-height: 1.4;
-              font-size: 16px;
-              color: #333;
-              font-weight: 500;
-              transition: color .1s ease-in-out;
-            }
-            p.user-info{
-              font-size: 13px;
-              color: #7e8c9a;
-            }
-            p.buttons{
-              font-size: .7rem;
-              color: #7e8c9a;
-              position: absolute;
-              bottom: .2rem; left: 16;
-              span {margin-right:.7rem;}
-            }
-            &:hover{
-              text-decoration: none;
-              h3.title{color: #35b15a;}
-            }
-          }
-        }
-      }
-    }
-    .pagination-nav{
-      padding:3rem 0; text-align:center;nav{width:100%; }
-			.spinner-grow{color: #5fcf80;}
-    }
-  }
-}
-
 #question-show{
   background: #fbfbf9;
   padding-bottom: 4rem;
@@ -171,27 +9,8 @@
     .qs-internal{
       margin: 0 auto;
       max-width: 52rem;
+      padding-top: 4.6rem;
       font-family: 'mattrab-content-sans-serif-font';
-      .returning-option{
-        padding-top: 2rem;
-        a.returning-option-link{
-          color: #3c4043;
-          font-size: .9rem;
-          border-radius: 4px;
-          padding: .4rem .7rem;
-          border: 1px solid rgba(48,73,97,0.1);
-          transition: border-color .01s ease, background-color .01s ease, color .01s ease;
-          &:hover{
-            text-decoration: none;
-            border: 1px solid #5fcf80;
-          }
-        }
-        @media (max-width: 767.98px) {
-          a.returning-option-link{
-            font-size: .8rem;
-          }
-        }
-      }
       .thread-article{
         .thread-question{
           border: none;
@@ -288,7 +107,13 @@
               p.buttons{
                 font-size: .8rem;
                 color: #a9b3bc;
-                span {margin-right:.7rem;}
+                span {
+                  margin-right:.7rem;
+                  a{
+                    color: #a9b3bc;transition: all .2s ease-in-out;
+                    &:hover{text-decoration:none;color:#5fcf80;}
+                  }
+                }
               }
               @media (max-width: 575.98px) {p.buttons{font-size: .7rem;}}
             }
@@ -583,7 +408,7 @@
       max-width: 52rem;
       font-family: 'mattrab-content-sans-serif-font';
       .returning-option{
-        padding-top: 2rem;
+        padding-top: 3rem;
         a.returning-option-link{
           color: #3c4043;
           font-size: .9rem;
@@ -649,10 +474,11 @@
                   }
                 }
                 .question_grade_id,
-                .question_category_id{
+                .question_category_id,
+                .question_chapter_id{
                   float: left;
-                  width: 50%;
-                  max-width: 50%;
+                  width: 33.32%;
+                  max-width: 33.33%;
                   label{
                     color: #a1a2a3;
                     font-size: .8rem;
@@ -661,6 +487,7 @@
                   select{
                     width: 100%;
                     font-size: .9rem;
+                    color: #737373;
                     box-sizing: border-box;
                   	-webkit-box-sizing: border-box;
                   	-moz-box-sizing: border-box;
@@ -673,7 +500,8 @@
                   }
                 }
                 .question_grade_id{padding-right: .4rem;}
-                .question_category_id{padding-left: .4rem;}
+                .question_category_id{padding-left: .4rem;padding-right: .4rem;}
+                .question_chapter_id{padding-left: .4rem;}
                 .question_tag_list{
                   padding-top: .5rem;
                   label{
