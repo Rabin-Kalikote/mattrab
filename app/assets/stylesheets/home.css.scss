@@ -616,13 +616,10 @@ header{
           }
         }
         .voted-notes{
-          border: none;
           margin: 1.5rem 0 1rem;
           background: #ffffff;
           border: 1px solid #d9d9d9;
           border-radius: 8px;
-          overflow-x: hidden;
-          position: relative;
           font-family:'mattrab-content-sans-serif-font'!important;
           .upvoted-note{
             display: none;
@@ -685,7 +682,7 @@ header{
                 iframe.note-video-clip{max-width: 100%;display:block!important;}
               }
               .note {
-                height: 11rem;
+                min-height: 11rem;
                 background: #ffffff;
                 align-items: stretch;
                 padding: .5rem 0;
@@ -868,7 +865,7 @@ header{
           }
         }
         @media (max-width: 575.98px) {
-          .feed-item,.intro-item{
+          .feed-item,.voted-notes,.intro-item{
             border-radius: 0!important;
             border-left: none!important;
             border-right: none!important;

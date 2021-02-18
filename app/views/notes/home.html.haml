@@ -139,7 +139,7 @@
                       = image_tag note.image.url(:small), class: 'img-note'
                     .note_content.col-lg-7.col-md-12
                       %h3.title.mb-1= truncate note.title, length: 31
-                      %p.body.mb-4
+                      %p.body.mb-1
                         = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
                 .feed-item-actions.btn-group
                   %a.prev-note.u-note-action ❮

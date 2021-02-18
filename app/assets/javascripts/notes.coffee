@@ -55,15 +55,6 @@ $ ->
       return
     $(window).resize()
 
-    # handling the voded notes slides
-    showSlides 1
-    $('.prev-note').click (e) ->
-      e.preventDefault
-      showSlides -1
-    $('.next-note').click (e) ->
-      e.preventDefault
-      showSlides 1
-
     #summernote assignments.
     $('[data-provider="summernote"]').each ->
       $(this).summernote
@@ -224,6 +215,19 @@ $ ->
     $('#admin').change ->
       $('.req_veri').html 'Request Verification'
       return
+
+    # handling the voded notes slides
+    if $('.upvoted-note').length
+      showSlides 1
+      $('.prev-note').click (e) ->
+        e.preventDefault
+        showSlides -1
+        return
+      $('.next-note').click (e) ->
+        e.preventDefault
+        showSlides 1
+        return
+
     # infinite scrolling
     if $('.is .pagination').length
       $(window).scroll ->
