@@ -7,12 +7,12 @@ class NotesController < ApplicationController
     # global feeds
     if user_signed_in?
       general_feeds = Question.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
-      @feeds = general_feeds.concat(current_user.feeds).uniq.paginate(page: params[:page], per_page: 7)
-      @voted_notes = current_user.voted_notes
+      @feeds = general_feeds.concat(current_user.feeds).uniq.shuffle.paginate(page: params[:page], per_page: 7)
+      @voted_notes = current_user.voted_notes.shuffle
     else
       general_feeds = Question.all.order("created_at DESC, view DESC").limit(18).to_a
-      @feeds = general_feeds.paginate(page: params[:page], per_page: 7)
-      @voted_notes = Note.published.order("created_at DESC, view DESC").limit(7)
+      @feeds = general_feeds.shuffle.paginate(page: params[:page], per_page: 7)
+      @voted_notes = Note.published.order("created_at DESC, view DESC").limit(11).shuffle
     end
     @top_creators = User.where(:role => 'creator').joins(:notes).where("notes.status = ?", 1).group("users.id").order("count(users.id) DESC").limit(3)
     @top_learners = User.where(:role => 'learner').joins(:questions).group("users.id").order("count(users.id) DESC").limit(3)

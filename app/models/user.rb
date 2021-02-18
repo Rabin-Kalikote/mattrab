@@ -62,7 +62,7 @@ class User < ApplicationRecord
   end
 
   def voted_notes
-    self.get_up_voted Note.limit(7)
+    self.get_up_voted Note.limit(11)
   end
 
   def feeds
