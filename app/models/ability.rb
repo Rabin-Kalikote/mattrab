@@ -13,6 +13,8 @@ class Ability
     cannot :create, Note
     cannot :read, Note, status: 'draft'
     cannot :verify, Note
+    cannot :import, Note
+    cannot :change_role, User
 
     return unless user.present?
     can :vote, Note
@@ -22,16 +24,22 @@ class Ability
     can :manage, Answer, user_id: user.id
     can :manage, Answer, question: { user: { id: user.id } }
 
-    return unless user.creator? or user.teacher? or user.admin?
+    return unless user.creator? or user.teacher? or user.admin? or user.superadmin?
     can :manage, Question, note: { user: { id: user.id } }
     can :manage, Answer, question: { note: { user: { id: user.id } } }
     can :manage, Note, user_id: user.id
     cannot :verify, Note
+    cannot :import, Note
 
-    return unless user.admin?
+    return unless user.admin? or user.superadmin?
     can :manage, Note
     can :manage, Question
     can :manage, Answer
+    cannot :import, Note
+
+    return unless user.superadmin?
+    can :import, Note
+    can :change_role, User
 
     # # anybody can
     # can :read, :all

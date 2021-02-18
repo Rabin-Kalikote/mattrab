@@ -31,7 +31,7 @@
                 = link_to notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}", :chapter=>"#{category.chapters.first.try(:id)}") do
                   %i.fa{class: "fa-#{@icons[category.name]}"}
                   = category.name.humanize
-                  
+
 #feed-assets
   .container
     .row.fa-row
@@ -44,7 +44,7 @@
             - @top_creators.each do |top_creator|
               .mattrabian-info
                 .user-avater
-                  = link_to (image_tag top_creator.avatar.url(:medium)), top_creator
+                  = link_to (image_tag top_creator.avatar_address(:medium)), top_creator
                 .user-info
                   = link_to top_creator do
                     %span.name= top_creator.name
@@ -66,7 +66,7 @@
             - @top_learners.each do |top_learner|
               .mattrabian-info
                 .user-avater
-                  = link_to (image_tag top_learner.avatar.url(:medium)), top_learner
+                  = link_to (image_tag top_learner.avatar_address(:medium)), top_learner
                 .user-info
                   = link_to top_learner do
                     %span.name= top_learner.name
@@ -88,7 +88,7 @@
             - @recent_users.each do |recent_user|
               .mattrabian-info
                 .user-avater
-                  = link_to (image_tag recent_user.avatar.url(:medium)), recent_user
+                  = link_to (image_tag recent_user.avatar_address(:medium)), recent_user
                 .user-info
                   = link_to recent_user do
                     %span.name= recent_user.name
@@ -121,6 +121,7 @@
               .intro-item-body
                 .welcome
                   Namaste! Look aroud what your friends are doing at Mattrab.
+                  -# Happy Basant Panchami 2021! May goddess Saraswati bless you.
           = render :partial => "feed", :collection => @feeds if @feeds.present?
         .pagination-nav.is.justify-content-center
           = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
@@ -130,7 +131,7 @@
           - if user_signed_in?
             .current-user-info
               .c-user-avater
-                = link_to (image_tag current_user.avatar.url(:medium)), current_user
+                = link_to (image_tag current_user.avatar_address(:medium)), current_user
               .c-user-info
                 = link_to current_user do
                   %span.name= current_user.name
@@ -143,7 +144,7 @@
               %h2.en-title Mattrab Community
               %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
               .actions
-                = link_to "Join Community, it's free!", new_user_registration_path, class: 'action-button mx-auto'
+                %a.trigger-sign-in.action-button.mx-auto{"data-toggle" => "modal", :href => "#sign-in"} Join Community, it's free!
             - elsif can? :create, Note
               %h2.en-title Showcase your Knowledge
               %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.

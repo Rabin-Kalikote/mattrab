@@ -323,6 +323,74 @@ header{
     }
   }
 }
+.sing-in-modal{
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255,255,255,.9);
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.1s;
+  animation-name: fadeIn;
+  animation-duration: 0.1s;
+  .sign-in-content {
+    width: 400px;
+    max-width:80%;
+    margin: 14rem auto;
+    -webkit-animation-name: fadeIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    a.close-sign-in{
+      color: #4d4d4d;
+      font-size:1.5rem;
+      position: absolute;
+      top:3rem;right:3.3rem;
+    }
+    span{display: block;text-align: center;padding: .4rem 1rem;}
+    .sign-in-action,
+    .sign-up-action{
+      display: block;
+      font-size: 1.1rem;
+      padding: .4rem 2rem;
+      color: #fff!important;
+      text-align: center;
+      border-radius: 3rem!important;
+      text-decoration: none;
+      transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+      font-family: 'mattrab-content-sans-serif-font';
+    }
+    .sign-in-action{margin-bottom: 1.5rem;}
+    .with-email{
+      background: #5fcf80;
+      border: 2px solid #5fcf80;
+      &:hover{
+        background: #2ec66d;
+        border: 2px solid #2ec66d;
+      }
+    }
+    .with-google{
+      background: #db4437;
+      border: 2px solid #db4437;
+      &:hover{
+        background: #d73628;
+        border: 2px solid #d73628;
+      }
+    }
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {opacity: .7;}
+  to {opacity: 1;}
+}
+@keyframes fadeIn {
+  from {opacity: .7;}
+  to {opacity: 1;}
+}
 
 .banner{
   z-index: 2!important;

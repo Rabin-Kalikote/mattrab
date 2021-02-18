@@ -115,7 +115,7 @@
           .author.justify-content-center
             .user-main
               .user-avater
-                = link_to (image_tag @note.user.avatar.url(:medium)), @note.user
+                = link_to (image_tag @note.user.avatar_address(:medium)), @note.user
               .user-name
                 = link_to @note.user.name, @note.user, class: 'name'
             .user-info

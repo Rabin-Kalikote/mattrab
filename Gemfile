@@ -1,8 +1,8 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
+  "http://github.com/#{repo_name}.git"
 end
 
 gem 'rails', '~> 5.1.3'
@@ -34,6 +34,8 @@ gem 'serviceworker-rails'
 gem 'fog-aws'
 gem 'sitemap_generator'
 gem 'select2-rails'
+gem 'omniauth', '~> 1.9.1'
+gem 'omniauth-google-oauth2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

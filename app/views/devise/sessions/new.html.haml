@@ -15,6 +15,11 @@
             = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
           .form-actions.pt-2
             = f.button :submit, "Sign In", class: 'btn-std btn-submit btn-login btn-block'
+            %span.or or
+            = link_to user_google_oauth2_omniauth_authorize_path, "data-turbolinks" => false, class: 'sign-in-with-google' do
+              %i.fab.fa-google
+              Sign in with Google
+
     .welcome.col-md-5
       %h2.title Welcome Back!
       %p.messege.d-sm-none.d-md-block

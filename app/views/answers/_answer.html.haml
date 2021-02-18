@@ -3,7 +3,7 @@
   .answer-card-content
     .answer-card-header
       .a-user-avater
-        = link_to (image_tag answer.user.avatar.url(:medium)), answer.user
+        = link_to (image_tag answer.user.avatar_address(:medium)), answer.user
       .a-user-info
         = link_to answer.user do
           %span.name= answer.user.name

@@ -7,10 +7,10 @@
           %span.badge-base
             %span.badge.center= @user.role
           .this-face
-            .face= image_tag @user.avatar.url(:pro), class: "img-circle center"
+            .face= image_tag @user.avatar_address(:pro), class: "img-circle center"
             %h2.name.mt-3.mb-2
               = @user.name
-              - if @user.notes.count >= 15 or @user.creator? or @user.admin?
+              - if @user.notes.count >= 15 or @user.creator? or @user.admin? or @user.superadmin?
                 %span
                   %i.fa.fa-check-circle
             %ul.has.mt-0
@@ -106,6 +106,10 @@
                   = @user.about
               %p.joined.mb-1= "Joined Mattrab Community on #{@user.created_at.strftime("%B %d, %Y")}."
               %p.views= "Total #{@total_views} views."
+            - if can? :change_role, @user
+              .d-flex.flex-row.py-2
+                = select_tag "role", options_for_select(User.roles)
+                %button.change-role.ml-3{:id=>"#{@user.id}@#!"}= 'Change Role'
           - else
             - if @user.creator? or @user.admin?
               .notes.pt-4

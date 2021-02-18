@@ -2,7 +2,7 @@
   .question.mt-4.mb-2
     .q-header
       .avatar.d-inline
-        = image_tag question.user.avatar.url(:small)
+        = image_tag question.user.avatar_address(:small)
       .body.d-inline.ml-1
         = link_to question.user.name, question.user, class: 'username'
         %span.at
@@ -20,7 +20,7 @@
     .answer.mt-4.mb-2{:id =>"answer_#{question.top_ans.id}"}
       .a-header
         .avatar.d-inline
-          = image_tag question.answers.first.user.avatar.url(:small)
+          = image_tag question.answers.first.user.avatar_address(:small)
         .body.d-inline.ml-1
           = link_to question.answers.first.user.name, question.answers.first.user, class: 'username'
           %span.at

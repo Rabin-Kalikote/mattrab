@@ -1,17 +1,18 @@
 Rails.application.routes.draw do
 
-  # get '/sitemap', to: redirect("https://#{ENV.fetch('S3_BUCKET_NAME')}.s3.amazonaws.com/sitemaps/sitemap.xml.gz")
+  get '/sitemap', to: redirect("https://#{ENV.fetch('S3_BUCKET_NAME')}.s3.amazonaws.com/sitemaps/sitemap.xml.gz")
 
   %w[about faqs affiliate_program terms privacy creator_appeal admin_action].each do |page|
     get page, controller: "info", action: page
   end
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users' }
   get 'users/show'
   resources :users do
     resources :categorizations
     member do
       get :following, :followers
+      get "change_role",  to: "users#change_role"
     end
   end
   resources :relationships

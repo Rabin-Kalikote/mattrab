@@ -43,6 +43,9 @@ iframe.d-block{display: none!important;}
   margin-right: auto;
 }
 
+sup{vertical-align:super;font-style:oblique}
+sub{vertical-align:sub;font-style:oblique}
+
 @media (min-width: 768px) {
   .sticky-in-desktop{
     position: -webkit-sticky;

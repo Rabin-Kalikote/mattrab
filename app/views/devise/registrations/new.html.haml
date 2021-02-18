@@ -10,13 +10,17 @@
               = f.input :name, required: true, label: false, placeholder: "Your full name", autofocus: true, input_html: { autocomplete: "name", class: 'form-control' }
             .form-label-group.mb-3
               = f.input :email, required: true, label: false, placeholder: "you@mail.com", hint: "you have to confirm your email", input_html: { autocomplete: "email", class: 'form-control' }
-            .form-label-group.mb-3
-              = f.input :password, required: true, label: false, placeholder: "Password", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password", class: 'form-control' }
-            .form-label-group.mb-3
-              = f.input :password_confirmation, required: true, label: false, placeholder: "Confirm Password", input_html: { autocomplete: "new-password", class: 'form-control' }
+            - if f.object.password_required?
+              .form-label-group.mb-3
+                = f.input :password, required: true, label: false, placeholder: "Password", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password", class: 'form-control' }
+              .form-label-group.mb-3
+                = f.input :password_confirmation, required: true, label: false, placeholder: "Confirm Password", input_html: { autocomplete: "new-password", class: 'form-control' }
           .form-actions.pt-3
             = f.button :submit, "Sign up", class: 'btn-std btn-block btn-submit btn-signup'
-
+            %span.or or
+            = link_to user_google_oauth2_omniauth_authorize_path, "data-turbolinks" => false, class: 'sign-in-with-google' do
+              %i.fab.fa-google
+              Sign in with Google
     .welcome.col-md-5
       %h2.title Hello, Friend!
       %p.messege.d-sm-none.d-md-block

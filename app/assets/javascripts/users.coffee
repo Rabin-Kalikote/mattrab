@@ -13,6 +13,24 @@ $ ->
         return
       return
 
+    # handling change role request.
+    $('.change-role').click ->
+      u_id = $('.change-role').attr('id').split('@#!')[0]
+      $.ajax
+        url: "/users/"+u_id+"/change_role?role="+$('#role :selected').val()
+        type: 'get'
+        data: {}
+        success: (data) ->
+          $('.change-role').html 'Changed'
+          return
+        error: (data) ->
+          $('.change-role').html 'Couldn\'t Change'
+          return
+      return
+    $('#role').change ->
+      $('.change-role').html 'Change Role'
+      return
+
     # filtering the options of category in edit view.
     filterOptions = ->
       grade = $('#user_grade_id :selected').text()

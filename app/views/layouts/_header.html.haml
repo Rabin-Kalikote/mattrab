@@ -19,11 +19,11 @@
               %i.fa.fa-search
           - if !user_signed_in?
             %li.nav-item
-              = link_to new_user_session_path, class: 'btn-action nav-link' do
+              %a.trigger-sign-in.btn-action.nav-link{"data-toggle" => "modal", :href => "#sign-in"}
                 %i.fa.fa-sign-in-alt.d-md-inline.d-lg-none
                 %span.d-none.d-lg-inline= 'Sign In'
             %li.nav-item
-              = link_to new_user_registration_path, class: 'btn-action nav-link' do
+              %a.trigger-sign-in.btn-action.nav-link{"data-toggle" => "modal", :href => "#sign-in"}
                 %i.fa.fa-user-plus.d-md-inline.d-lg-none
                 %span.d-none.d-lg-inline= 'Sign Up'
           - else
@@ -63,7 +63,7 @@
 
             %li.nav-item.btn-group.dropdown.udropdown
               %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button",  "data-offset" => "0,8" }
-                = image_tag current_user.avatar.url(:small)
+                = image_tag current_user.avatar_address(:small)
               .dropdown-menu.dropdown-menu-right
                 %p.nav-user-name.mb-0= current_user.name
                 %p.nav-user-email.mb-0= current_user.email
@@ -74,3 +74,14 @@
                 = link_to "FAQs and Help", faqs_path, class: 'dropdown-item'
                 = link_to "Settings", edit_user_registration_path, class: 'dropdown-item'
                 = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item'
+
+#sign-in.sing-in-modal
+  .sign-in-content
+    %a.close-sign-in{"data-toggle" => "modal", :href => "#sign-in"}
+      %i.fas.fa-times
+    = link_to 'Sign in with email', new_user_session_path, class: 'sign-in-action with-email'
+    = link_to 'Sign up with email', new_user_registration_path, class: 'sign-up-action with-email'
+    %span or
+    = link_to user_google_oauth2_omniauth_authorize_path, "data-turbolinks" => false, class: 'sign-in-action with-google' do
+      %i.fab.fa-google
+      Sign in with Google

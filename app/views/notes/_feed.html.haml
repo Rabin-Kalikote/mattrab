@@ -4,7 +4,7 @@
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = image_tag feed.user.avatar.url(:medium)
+          = image_tag feed.user.avatar_address(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
@@ -29,7 +29,7 @@
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = image_tag feed.user.avatar.url(:medium)
+          = image_tag feed.user.avatar_address(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name
@@ -54,7 +54,7 @@
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = image_tag feed.user.avatar.url(:medium)
+          = image_tag feed.user.avatar_address(:medium)
         .f-user-info
           = link_to feed.user do
             %span.name= feed.user.name

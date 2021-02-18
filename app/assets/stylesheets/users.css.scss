@@ -76,6 +76,25 @@
             }
           }
         }
+        span.or{display: block;text-align: center;padding: .4rem 1rem;}
+        .sign-in-with-google{
+          display: block;
+          font-size: 1rem;
+          margin-top: .3rem;
+          padding: .4rem 2rem;
+          color: #fff!important;
+          text-align: center;
+          border-radius: 3rem!important;
+          text-decoration: none;
+          transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+          font-family: 'mattrab-content-sans-serif-font';
+          background: #db4437;
+          border: 2px solid #db4437;
+          &:hover{
+            background: #d73628;
+            border: 2px solid #d73628;
+          }
+        }
       }
       @media (max-width: 575.98px) {.this-form{padding: 3rem 0;}}
     }

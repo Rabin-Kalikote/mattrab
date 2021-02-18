@@ -7,7 +7,7 @@
           .question-card-content
             .question-card-header
               .q-user-avater
-                = link_to (image_tag @question.user.avatar.url(:medium)), @question.user
+                = link_to (image_tag @question.user.avatar_address(:medium)), @question.user
               .q-user-info
                 = link_to @question.user do
                   %span.name= @question.user.name

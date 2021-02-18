@@ -44,7 +44,7 @@
   .user-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
     .user
       .user_avatar.col-md-4.col-sm-12
-        = link_to (image_tag result.avatar.url(:pro)), result, class: 'avatar-user'
+        = link_to (image_tag result.avatar_address(:pro)), result, class: 'avatar-user'
       .user_about.col-md-8.col-sm-12
         = link_to result do
           %h2.title.mb-1= result.name

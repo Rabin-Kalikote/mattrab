@@ -9,7 +9,7 @@
               %span.badge.center= @user.role
             .this-face
               .face
-                = image_tag @user.avatar.url(:pro), class: "img-circle center img-edit-preview"
+                = image_tag @user.avatar_address(:pro), class: "img-circle center img-edit-preview"
                 %label{:for => "user_avatar", :title => "Update Photo"}
                   %i.fa.fa-camera
                 = f.input :avatar, label: false
@@ -64,9 +64,11 @@
                   -#   %label.label.mb-1{:for => "user_admin_category"} Admin
                   -#   = f.select :admin_category, User.admin_categories.map { |key, value| [key.humanize, key] }, input_html: { class: 'form-control' }
 
+
                   = f.input :password, placeholder: "New Password", hint: "leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password"}
                   = f.input :password_confirmation, placeholder: "Confirm New Password", required: false, input_html: { autocomplete: "new-password"}
-                  = f.input :current_password, placeholder: "Current Password", hint: "current password is needed to confirm your changes", required: true, input_html: { autocomplete: "current-password"}
+                  - if f.object.encrypted_password.present?
+                    = f.input :current_password, placeholder: "Current Password", hint: "current password is needed to confirm your changes", required: true, input_html: { autocomplete: "current-password"}
                   = f.error_notification
                   .form-actions.py-2
                     = f.button :submit, "Update", class: 'btn-sm btn-update'
