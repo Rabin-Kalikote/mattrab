@@ -69,7 +69,7 @@
                 %p.nav-user-email.mb-0= current_user.email
                 .dropdown-divider
                 = link_to "My Library", current_user, class: 'dropdown-item'
-                = link_to "My Notes", user_path(current_user, :tab => :note), class: 'dropdown-item' if current_user.creator? or current_user.admin?
+                = link_to "My Questions", user_path(current_user, :tab => :question), class: 'dropdown-item' if current_user.creator? or current_user.admin? or current_user.superadmin?
                 .dropdown-divider
                 = link_to "FAQs and Help", faqs_path, class: 'dropdown-item'
                 = link_to "Settings", edit_user_registration_path, class: 'dropdown-item'
