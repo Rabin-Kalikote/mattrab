@@ -17,7 +17,7 @@
               %li.has-info
                 %i.fa.fa-link
                 = "Has #{pluralize(@user.followers.count, "Follower")}"
-              - if @user.creator? or @user.admin?
+              - if @user.creator? or @user.admin? or @user.superadmin?
                 %li.has-info
                   %i.fa.fa-edit
                   = "Created #{pluralize(@user.notes.published.count, "Note")}"
@@ -47,7 +47,7 @@
           .this-property-nav
             .navbar-internal
               .left-links
-                - if @user.creator? or @user.admin?
+                - if @user.creator? or @user.admin? or @user.superadmin?
                   = link_to user_path(@user, :tab => :note), class: "qi-navbar-link", id: (@tab=="note" ? 'active' : '') do
                     %i.fas.fa-edit
                     %span.d-none.d-lg-inline= 'Academic/Research'
@@ -111,7 +111,7 @@
                 = select_tag "role", options_for_select(User.roles)
                 %button.change-role.ml-3{:id=>"#{@user.id}@#!"}= 'Change Role'
           - else
-            - if @user.creator? or @user.admin?
+            - if @user.creator? or @user.admin? or @user.superadmin?
               .notes.pt-4
                 - if @notes.present?
                   - @notes.each do |note|

@@ -120,8 +120,35 @@
                   %span.about Largest students' community in Nepal.
               .intro-item-body
                 .welcome
-                  Namaste! Look aroud what your friends are doing at Mattrab.
+                  = "Namaste! #{!user_signed_in? ? 'Sign in to ask your questions and follow your friends.' : (user_signed_in? and current_user.about.present?) ? 'Look aroud what your friends are doing at Mattrab.' : 'Update your setting to experience the best.'}"
                   -# Happy Basant Panchami 2021! May goddess Saraswati bless you.
+          .voted-notes
+            - @voted_notes.each do |note|
+              .upvoted-note
+                .feed-item-header
+                  .f-upvoted-avater
+                    %span
+                      %i.fas.fa-heart
+                  .f-upvoted-info
+                    = link_to current_user do
+                      %span.name= "#{user_signed_in? ? 'Your Favorite Readings' : 'Top Readings'}"
+                    %span.asked= "#{user_signed_in? ? 'You thanked for these notes.' : 'These notes are most read.'}"
+                .feed-item-body
+                  .note.mb-1
+                    .note_image.col-lg-5.col-md-12
+                      = image_tag note.image.url(:small), class: 'img-note'
+                    .note_content.col-lg-7.col-md-12
+                      %h3.title.mb-1= truncate note.title, length: 31
+                      %p.body.mb-4
+                        = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
+                .feed-item-actions.btn-group
+                  %a.prev-note.u-note-action ❮
+                  = link_to note_path(note), class: 'u-note-action' do
+                    %i.far.fa-eye
+                    Read this Note
+                  %a.next-note.u-note-action ❯
+                  %p.u-note-info
+                    = "Read #{note.view} times"
           = render :partial => "feed", :collection => @feeds if @feeds.present?
         .pagination-nav.is.justify-content-center
           = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

@@ -23,11 +23,11 @@
 
             .editor.unit-body
               = f.input :body, as: :summernote
-          .tags.my-3
-            = f.input :tag_list, :label=>"Tags (seperated by commas)", placeholder: "Eg. class 12, physics, modern physics, radioactivity, radio carbon dating, ...", :input_html=>{:value => @note.tag_list.join(", ")}
+          -# .tags.my-3
+          -#   = f.input :tag_list, :label=>"Tags (seperated by commas)", placeholder: "Eg. class 12, physics, modern physics, radioactivity, radio carbon dating, ...", :input_html=>{:value => @note.tag_list.join(", ")}
 
         .this-controls.col-md-3
-          .control-wrap.sticky-in-desktop#settings
+          .control-wrap.sticky-in-desktop#settings.mb-5
             %h3.title.mb-3= 'Settings'
             - if @note.is_verified
               .form-label-group.mb-3

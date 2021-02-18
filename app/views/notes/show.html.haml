@@ -63,10 +63,15 @@
             .ad
               = image_tag 'adhere.png'
             .tags
-              - @note.tag_list.each do |tag|
-                = link_to search_url(:tag => tag), class: "tag" do
-                  %i.fa.fa-hashtag
-                  = tag
+              = link_to search_url(:query => @note.grade.name), class: "tag" do
+                %i.fa.fa-hashtag
+                = @note.grade.name
+              = link_to search_url(:query => @note.category.name), class: "tag" do
+                %i.fa.fa-hashtag
+                = @note.category.name
+              = link_to search_url(:query => @note.chapter.name), class: "tag" do
+                %i.fa.fa-hashtag
+                = @note.chapter.name
 
             %p.paper-message Visit www.askmattrab.com for more academic resources.
 
@@ -89,7 +94,7 @@
               = render 'questions/inlinequestion', question: question
 
       .random-notes.col-md-3
-        .rn-wrap
+        .rn-wrap.mb-5
           -# %h3.title.mb-3 Related Notes
           .random-note
             = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'

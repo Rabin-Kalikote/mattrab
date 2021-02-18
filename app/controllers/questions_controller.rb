@@ -44,7 +44,6 @@ class QuestionsController < ApplicationController
       @question.grade_id = @note.grade.id
       @question.category_id = @note.category.id
       @question.chapter_id = @note.chapter.id
-      @question.tag_list = @note.tag_list
       @question.save
     else
       @question = current_user.questions.build(question_params)
@@ -96,7 +95,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:content, :note_id, :grade_id, :category_id, :chapter_id, :tag_list)
+    params.require(:question).permit(:content, :note_id, :grade_id, :category_id, :chapter_id)
   end
 
   def find_parent

@@ -27,6 +27,21 @@ $ ->
       contentType: false
       processData: false
 
+  slideIndex = 1
+  showSlides = (n) ->
+    notes = $('.upvoted-note')
+    slideIndex += n
+    if slideIndex > notes.length
+      slideIndex = 1
+    if slideIndex < 1
+      slideIndex = notes.length
+    i = 0
+    while i < notes.length
+      notes[i].style.display = 'none'
+      i++
+    notes[slideIndex-1].style.display = 'block'
+    return
+
   ready = ->
     #header assignments.
     $('.header-space').height($('header').height())
@@ -39,6 +54,15 @@ $ ->
         $('.sm-nav-fixed-bottom').removeClass('scrolled-down')
       return
     $(window).resize()
+
+    # handling the voded notes slides
+    showSlides 1
+    $('.prev-note').click (e) ->
+      e.preventDefault
+      showSlides -1
+    $('.next-note').click (e) ->
+      e.preventDefault
+      showSlides 1
 
     #summernote assignments.
     $('[data-provider="summernote"]').each ->

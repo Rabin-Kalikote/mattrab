@@ -20,7 +20,6 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :recipient_id
 
   acts_as_voter
-  acts_as_tagger
   enum role: [:learner, :creator, :admin, :teacher, :superadmin]
   enum admin_category: [:physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum egrade: [:twelve, :eleven, :ten]
@@ -62,12 +61,15 @@ class User < ApplicationRecord
     end
   end
 
+  def voted_notes
+    self.get_up_voted Note.limit(7)
+  end
+
   def feeds
-    notes = Note.published.where(user_id: self.following).where('updated_at > ?', 24.hours.ago).to_a
     fquestions = Question.where(user_id: self.followers).where('updated_at > ?', 24.hours.ago).to_a
     nquestions = Question.where(note_id: self.notes).where('updated_at > ?', 24.hours.ago).to_a
     aquestions = Answer.where(question_id: self.questions).where('updated_at > ?', 24.hours.ago).to_a
-    return [notes, fquestions, nquestions, aquestions].reduce([], :concat).uniq.shuffle
+    return [fquestions, nquestions, aquestions].reduce([], :concat).uniq.shuffle
   end
 
   ## helper methods

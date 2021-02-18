@@ -17,53 +17,41 @@
               = "asked a question."
       .feed-item-body
         = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+      -if feed.answers.present?
+        .answered-by
+          .avatar.d-inline
+            = image_tag feed.top_ans.user.avatar_address(:small)
+          .body.d-inline.ml-1
+            %span.at
+              = 'Answered'
+        .feed-answer-body
+          = simple_format(feed.top_ans.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
       .feed-item-actions.btn-group
         = link_to question_path(feed), class: 'f-card-action' do
           %i.far.fa-eye
           Read this Thread
         %p.feed-item-info
           = "Has #{feed.answers.count} Answers"
-
-- elsif feed.is_a? Note
-  .feed-item
-    .feed-item-content
-      .feed-item-header
-        .f-user-avater
-          = image_tag feed.user.avatar_address(:medium)
-        .f-user-info
-          = link_to feed.user do
-            %span.name= feed.user.name
-          %span.asked= "#{feed.created_at == feed.updated_at ? 'created' : 'had added'} a #{feed.category.name.humanize} note."
-      .feed-item-body
-        .note.mb-3
-          .note_image.col-lg-5.col-md-12
-            = image_tag feed.image.url(:small), class: 'img-note'
-          .note_content.col-lg-7.col-md-12
-            %h3.title.mb-1= truncate feed.title, length: 31
-            %p.body.mb-4
-              = truncate sanitize(feed.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
-      .feed-item-actions.btn-group
-        = link_to note_path(feed), class: 'f-card-action' do
-          %i.far.fa-eye
-          Read this Note
-        %p.feed-item-info
-          = "Read #{feed.view} times"
-
 - else
   .feed-item
     .feed-item-content
       .feed-item-header
         .f-user-avater
-          = image_tag feed.user.avatar_address(:medium)
+          = image_tag feed.question.user.avatar_address(:medium)
         .f-user-info
-          = link_to feed.user do
-            %span.name= feed.user.name
-          %span.asked= "answered to your question."
+          = link_to feed.question.user do
+            %span.name= feed.question.user.name
+          %span.asked= "Your question is answered."
       .feed-item-body
-        .question
-          = simple_format(feed.question.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
-        .answer
-          = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+        = simple_format(feed.question.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+      .answered-by
+        .avatar.d-inline
+          = image_tag feed.user.avatar_address(:small)
+        .body.d-inline.ml-1
+          %span.at
+            = 'Answered'
+      .feed-answer-body
+        = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
       .feed-item-actions.btn-group
         = link_to question_path(feed.question), class: 'f-card-action' do
           %i.far.fa-eye

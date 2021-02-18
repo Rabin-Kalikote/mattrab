@@ -9,7 +9,6 @@ class Question < ApplicationRecord
   validates :content, presence: true
 
   acts_as_votable
-  acts_as_taggable_on :tags
   after_create :create_notifications
 
   include PgSearch

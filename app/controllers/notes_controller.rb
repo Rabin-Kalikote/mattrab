@@ -4,18 +4,15 @@ class NotesController < ApplicationController
   before_action :find_note, only: [:show, :edit, :update, :destroy, :vote, :verify]
 
   def home
-    @question_tags = Question.tag_counts.limit(25)
     # global feeds
     if user_signed_in?
-      notes = Note.published.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
-      questions = Question.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
-      general_feeds = notes.concat(questions).uniq.shuffle
+      general_feeds = Question.where.not(user_id: current_user).order("created_at DESC, view DESC").limit(18).to_a
       @feeds = general_feeds.concat(current_user.feeds).uniq.paginate(page: params[:page], per_page: 7)
+      @voted_notes = current_user.voted_notes
     else
-      notes = Note.published.order("created_at DESC, view DESC").limit(18).to_a
-      questions = Question.all.order("created_at DESC, view DESC").limit(18).to_a
-      general_feeds = notes.concat(questions).uniq.shuffle
+      general_feeds = Question.all.order("created_at DESC, view DESC").limit(18).to_a
       @feeds = general_feeds.paginate(page: params[:page], per_page: 7)
+      @voted_notes = Note.published.order("created_at DESC, view DESC").limit(7)
     end
     @top_creators = User.where(:role => 'creator').joins(:notes).where("notes.status = ?", 1).group("users.id").order("count(users.id) DESC").limit(3)
     @top_learners = User.where(:role => 'learner').joins(:questions).group("users.id").order("count(users.id) DESC").limit(3)
@@ -129,6 +126,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :chapter_id, :tag_list)
+    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :chapter_id)
   end
 end

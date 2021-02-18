@@ -19,7 +19,7 @@
               %i.fa.fa-search
           - if !user_signed_in?
             %li.nav-item
-              %a.trigger-sign-in.btn-action.nav-link{"data-toggle" => "modal", :href => "#sign-in"}
+              = link_to new_user_session_path, class: 'btn-action nav-link' do
                 %i.fa.fa-sign-in-alt.d-md-inline.d-lg-none
                 %span.d-none.d-lg-inline= 'Sign In'
             %li.nav-item

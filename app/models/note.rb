@@ -10,7 +10,6 @@ class Note < ApplicationRecord
   enum status: [:draft, :published]
 
   acts_as_votable
-  acts_as_taggable_on :tags
 
   belongs_to :user
   belongs_to :grade
@@ -24,7 +23,7 @@ class Note < ApplicationRecord
   include PgSearch
   pg_search_scope :search, against: [:title, :body],
     using: {tsearch: {dictionary: 'english'}},
-    associated_against: {user: :name, questions: :content}
+    associated_against: {user: :name, chapter: :name, questions: :content}
 
   def to_param
     "#{id} #{title}".parameterize
