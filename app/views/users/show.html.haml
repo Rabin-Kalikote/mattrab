@@ -40,7 +40,7 @@
                 - else
                   = link_to "Settings", edit_user_registration_path, class: 'btn-std btn-sm btn-follow-edit'
               - else
-                = link_to "Follow", new_user_session_path, class: "btn-std btn-sm btn-follow-edit"
+                %a.trigger-sign-in.btn-std.btn-sm.btn-follow-edit{"data-toggle" => "modal", :href => "#sign-in"} Follow
 
       .col-md-9
         .this-property

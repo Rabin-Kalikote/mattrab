@@ -1,5 +1,5 @@
 !!!
-%html
+%html{lang: "en"}
   %head
     = csrf_meta_tags
     = display_meta_tags(default_meta_tags)
@@ -13,6 +13,7 @@
     %meta{:name => "google-site-verification", :content => "hFEpZ1lvpst_QL9-WkObIRbzM7B_hsoOC5Hg2k4gdvw"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
     %meta{:content => "default", :name => "apple-mobile-web-app-status-bar-style"}
+    %meta{content: "en", "http-equiv" => "Content-Language"}
 
     = favicon_link_tag 'icons/mattrab-57x57.png', rel: 'apple-touch-icon', sizes: '57x57'
     = favicon_link_tag 'icons/mattrab-60x60.png', rel: 'apple-touch-icon', sizes: '60x60'

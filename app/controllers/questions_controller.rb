@@ -20,15 +20,15 @@ class QuestionsController < ApplicationController
                   joins(:chapter).where(chapters: { id: @chapter }).
                   order("created_at ASC")
 
-    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Class #{@grade.humanize} #{@category.humanize} notes", keywords: "Class #{@grade.humanize} #{@category.humanize} notes",
-                  og: { title: "Class #{@grade.humanize} #{@category.humanize}", description: "Class #{@grade.humanize} #{@category.humanize} notes", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}")},
-                  twitter: { card: 'note', site: '@askmattrab', title: "Class #{@grade.humanize} #{@category.humanize}", description: "Class #{@grade.humanize} #{@category.humanize} notes" }
+    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", keywords: "Class #{@grade}, #{@category}, #{Chapter.find(@chapter).name}, notes for class #{@grade} #{@category}, notes for #{Chapter.find(@chapter).name}, question answer for class #{@grade} #{@category}",
+                  og: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>@chapter)},
+                  twitter: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject." }
   end
 
   def show
-    set_meta_tags title: @question.content.gsub(/<[^>]*>/, '').truncate(50), site: 'Mattrab', description: @question.content.gsub(/<[^>]*>/, '').truncate(150), keywords: @question.category.name+" class "+@question.grade.name,
+    set_meta_tags title: @question.content.gsub(/<[^>]*>/, '').truncate(50), site: 'Mattrab', description: @question.content.gsub(/<[^>]*>/, '').truncate(150), keywords: "#{@question.chapter.name}, question on #{@question.chapter.name}, class #{@question.grade.name} #{@question.category.name} note, class #{@question.grade.name} questions, #{@question.chapter.name} questions", author: @question.user.name,
                   og: { title: @question.content.gsub(/<[^>]*>/, '').truncate(50), description: @question.content.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: question_url(@question) },
-                  twitter: { card: 'question', site: '@askmattrab', title: @question.content.gsub(/<[^>]*>/, '').truncate(50), description: @question.content.gsub(/<[^>]*>/, '').truncate(150) }
+                  twitter: { title: @question.content.gsub(/<[^>]*>/, '').truncate(50), description: @question.content.gsub(/<[^>]*>/, '').truncate(150) }
 
     @question.update_attribute "view", @question.view += 1
     @answers = @question.answers.order(:cached_votes_up => :desc)

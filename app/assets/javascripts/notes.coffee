@@ -143,7 +143,11 @@ $ ->
     $('.chapters-menu input').focusin ->
       $('.chapters-menu').addClass 'focused'
       return
-    $('.chapters-menu input').focusout ->
+    $('.chapters-menu .chapters li a').click (e) ->
+      $('.chapters-menu').removeClass 'focused'
+      return
+    $('.close-chapter-menu').click (e) ->
+      e.preventDefault
       $('.chapters-menu').removeClass 'focused'
       return
 

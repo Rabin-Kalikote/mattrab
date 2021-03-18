@@ -10,13 +10,14 @@
               %ul.chapters
                 - Category.joins(:grade).where(grades: { name: @grade }, name: @category).first.chapters.each do |chapter|
                   %li= link_to chapter.name, notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>"#{chapter.id}")
-
+            %a.close-chapter-menu.d-block.d-md-none
+              %i.fas.fa-times
+              Close Menu
         .motes-questions-col.col-md-8.col-lg-7
           .ni-note-info
             %nav{"aria-label" => "breadcrumb"}
               %ol.breadcrumb
-                %li.breadcrumb-item.active{"aria-current" => "page"}= "Class #{@grade.humanize}"
-                %li.breadcrumb-item.active{"aria-current" => "page"}= @category.humanize
+                %li.breadcrumb-item.active{"aria-current" => "page"}= "Class #{@grade.humanize} #{@category.humanize}"
                 %li.breadcrumb-item.active{"aria-current" => "page"}= Chapter.find(@chapter).name
           #notes.row.flex-grid
             - if @notes.present? or @questions.present?

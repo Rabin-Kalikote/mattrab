@@ -8,7 +8,7 @@ class Answer < ApplicationRecord
   after_create :create_notifications
 
   def to_param
-    "#{id} #{content.truncate(170)}".parameterize
+    "#{id} class #{self.question.grade.name} #{self.question.category.name} answer".parameterize
   end
 
   def create_notifications

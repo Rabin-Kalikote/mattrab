@@ -39,7 +39,7 @@
                     %i.fa.fa-heart
                     %span.thanks-count= pluralize(@note.get_upvotes.size, "Thank")
                 - else
-                  = link_to new_user_session_path, class: "nav-link first mb-0" do
+                  %a.trigger-sign-in.nav-link.first.mb-0{"data-toggle" => "modal", :href => "#sign-in"}
                     %i.fa.fa-heart
                     %span.thanks-count= pluralize(@note.get_upvotes.size, "Thank")
                 %p.nav-link.mb-0
@@ -87,7 +87,7 @@
               - else
                 %p.login-msg
                   = 'Please '
-                  = link_to "Sign In", new_user_session_path
+                  %a.trigger-sign-in{"data-toggle" => "modal", :href => "#sign-in"} Sign In
                   = 'to ask your question.'
           .qa-threads
             - @questions.each do |question|

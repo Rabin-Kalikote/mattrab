@@ -43,8 +43,8 @@ $content-font-size: 17px;
         // &::-webkit-scrollbar{display: none;}
         .search-chapters{
           width: 100%;
-          font-size: 16px;
-          padding: 13px 20px;
+          font-size: 1rem;
+          padding: .8rem 1.3rem;
           border: 1px solid #ddd;
           outline: none;
           &:hover{border: 1px solid #b3b3b3;}
@@ -66,7 +66,7 @@ $content-font-size: 17px;
               border: 1px solid #ddd;
               margin-top: -1px;
               background-color: #f6f6f6;
-              padding: 12px;
+              padding: .75rem;
               text-decoration: none;
               font-size: .9rem;
               color: #4d4d4d;
@@ -75,6 +75,17 @@ $content-font-size: 17px;
               &:last-of-type{border-bottom: none;}
             }
           }
+        }
+        .close-chapter-menu{
+          display: block;
+          color: #4d4d4d;
+          margin-top: 1.5rem;
+          text-align: center;
+          font-size: .8rem;
+          padding: .4rem 1rem;
+          background-color: #ffe6e6;
+          border: 1px solid #ffcccc;
+          &:hover{text-decoration: none;}
         }
       }
       @media (min-width: 768px) {
@@ -88,7 +99,6 @@ $content-font-size: 17px;
     @media (max-width: 767.98px) {
       .menu{
         position: fixed;
-        bottom: -88%;left: 0;
         background: #fbfbf9;
         z-index: 1000;
         width: 100%;
@@ -96,8 +106,10 @@ $content-font-size: 17px;
         padding-top: 1rem!important;
         border-top: 1px solid #ddd;
         transition: all .2s ease;
+        top: calc(100vh - 63px);left: 0;
+        .search-chapters{padding: .5rem .6rem!important;}
       }
-      .menu.focused{bottom: -8%;}
+      .menu.focused{top: 63px;}
     }
     .flex-grid{
       padding: 0;
@@ -176,7 +188,7 @@ $content-font-size: 17px;
           border: 1px solid #e6e6e6;
           display: -webkit-box; display: flex; flex-wrap: wrap;
           a{
-            h3.title{
+            h3.title,h3{
               line-height: 1.4;
               font-size: 16px;
               color: #333;

@@ -62,7 +62,7 @@
                     - else
                       = link_to "Settings", edit_user_registration_path, class: 'follow'
                   - else
-                    = link_to "Follow", new_user_session_path, class: "follow"
+                    %a.trigger-sign-in.follow{"data-toggle" => "modal", :href => "#sign-in"} Follow
             - @top_learners.each do |top_learner|
               .mattrabian-info
                 .user-avater
@@ -84,7 +84,7 @@
                     - else
                       = link_to "Settings", edit_user_registration_path, class: 'follow'
                   - else
-                    = link_to "Follow", new_user_session_path, class: "follow"
+                    %a.trigger-sign-in.follow{"data-toggle" => "modal", :href => "#sign-in"} Follow
             - @recent_users.each do |recent_user|
               .mattrabian-info
                 .user-avater
@@ -106,7 +106,7 @@
                     - else
                       = link_to "Settings", edit_user_registration_path, class: 'follow'
                   - else
-                    = link_to "Follow", new_user_session_path, class: "follow"
+                    %a.trigger-sign-in.follow{"data-toggle" => "modal", :href => "#sign-in"} Follow
 
       .col-12.col-sm-12.col-md-8.col-lg-6.feed-col
         .mattrab-feed

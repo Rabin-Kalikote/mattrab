@@ -7,10 +7,6 @@ class InfoController < ApplicationController
     # @m_admins = User.where(:admin_category => "maths").order("created_at ASC")
     # @n_admins = User.where(:admin_category => "nepali").order("created_at ASC")
     # @e_admins = User.where(:admin_category => "english").order("created_at ASC")
-
-    set_meta_tags title: 'Online Learning Platform', site: 'About Mattrab',
-                  og: { title: 'Online Learning Platform' },
-                  twitter: { title: 'Online Learning Platform' }
   end
 
   def faqs
@@ -44,5 +40,8 @@ class InfoController < ApplicationController
   end
 
   def admin_action
+  end
+
+  def apply
   end
 end

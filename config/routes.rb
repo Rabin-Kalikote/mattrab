@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get '/sitemap', to: redirect("https://#{ENV.fetch('S3_BUCKET_NAME')}.s3.amazonaws.com/sitemaps/sitemap.xml.gz")
 
-  %w[about faqs affiliate_program terms privacy creator_appeal admin_action].each do |page|
+  %w[about faqs affiliate_program terms privacy creator_appeal admin_action apply].each do |page|
     get page, controller: "info", action: page
   end
 

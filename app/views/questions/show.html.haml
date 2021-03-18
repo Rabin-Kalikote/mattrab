@@ -12,10 +12,10 @@
                 = link_to @question.user do
                   %span.name= @question.user.name
                   %span.followers= pluralize(@question.user.followers.count, "Follower")
-              .q-options.dropdown.show
-                %a#options-menu.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                  %i.fas.fa-ellipsis-v
-                - if can? :destroy, @question
+              - if can? :destroy, @question
+                .q-options.dropdown.show
+                  %a#options-menu.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                    %i.fas.fa-ellipsis-v
                   .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "options-menu"}
                     = link_to edit_question_path(@question), class: 'action-edit dropdown-item' do
                       %i.fas.fa-edit
@@ -45,7 +45,7 @@
                 %a.q-upvote.q-card-action{:id => "#{@question.id}@#!"}= "Helpful (#{@question.get_upvotes.size})"
                 %a.toggle-answer-modal.btn-sm.q-card-action= 'Answer this thread'
               - else
-                = link_to 'Sign in to Answer this Thread', new_user_session_path, class: 'q-card-action'
+                %a.trigger-sign-in.q-card-action{"data-toggle" => "modal", :href => "#sign-in"} Sign in to Answer this Thread
         %h2.answers-flash-title= @question.answers.any? ? "All Answers (#{@question.answers.count})" : "No Answers yet."
         .thread-answers
           - @answers.each do |answer|

@@ -10,7 +10,7 @@ class NotesController < ApplicationController
       @feeds = general_feeds.concat(current_user.feeds).uniq.shuffle.paginate(page: params[:page], per_page: 7)
       @voted_notes = current_user.voted_notes.shuffle
     else
-      general_feeds = Question.all.order("created_at DESC, view DESC").limit(18).to_a
+      general_feeds = Question.all.order("created_at DESC, view DESC").limit(49).to_a
       @feeds = general_feeds.shuffle.paginate(page: params[:page], per_page: 7)
       @voted_notes = Note.published.order("created_at DESC, view DESC").limit(11).shuffle
     end
@@ -40,15 +40,12 @@ class NotesController < ApplicationController
                   joins(:chapter).where(chapters: { id: @chapter }).
                   order("created_at ASC")
 
-    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Class #{@grade.humanize} #{@category.humanize} notes for #{Chapter.find(@chapter).name} chapter", keywords: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes",
-                  og: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>@chapter)},
-                  twitter: { card: 'note', site: '@askmattrab', title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Class #{@grade.humanize} #{@category.humanize} #{Chapter.find(@chapter).name} notes" }
+    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", keywords: "Class #{@grade}, #{@category}, #{Chapter.find(@chapter).name}, notes for class #{@grade} #{@category}, notes for #{Chapter.find(@chapter).name}, question answer for class #{@grade} #{@category}",
+                  og: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>@chapter)},
+                  twitter: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject." }
   end
 
   def show
-    set_meta_tags title: @note.title, site: 'Mattrab', description: @note.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @note.category.name+" class "+@note.grade.name,
-                  og: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@note), image: @note.image },
-                  twitter: { card: 'note', site: '@askmattrab', title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(150), image: @note.image }
     @questions = Question.where(note_id: @note).order("created_at DESC")
     @random_note = Note.joins(:chapter).where(chapters: { id: @note.chapter.id }).
                           published.where.not(id: @note).order("RANDOM()").first
@@ -56,6 +53,9 @@ class NotesController < ApplicationController
                           published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @note.update_attribute "view", @note.view += 1
+    set_meta_tags title: @note.title, site: "Class #{@note.grade.name.humanize} #{@note.category.name.humanize}", description: @note.body.gsub(/<[^>]*>/, '').truncate(350), keywords: "#{@note.chapter.name}, note on #{@note.chapter.name}, class #{@note.grade.name} #{@note.category.name} note, class #{@note.grade.name} notes, #{@note.chapter.name} notes", author: @note.user.name, next: note_url(@random_note),
+                  og: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(350), type: 'website', url: note_url(@note), image: @note.image },
+                  twitter: { title: @note.title, description: @note.body.gsub(/<[^>]*>/, '').truncate(350), image: @note.image }
   end
 
   def new

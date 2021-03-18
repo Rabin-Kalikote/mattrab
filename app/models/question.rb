@@ -17,7 +17,7 @@ class Question < ApplicationRecord
     associated_against: {user: :name, answers: :content}
 
   def to_param
-    "#{id} #{content.truncate(170)}".parameterize
+    "#{id} class #{self.grade.name} #{self.category.name} question".parameterize
   end
 
   def top_ans

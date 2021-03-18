@@ -1,8 +1,7 @@
 .col-sm-12
   .question.p-3
     = link_to question do
-      %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
-      %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+      %h3.title.mb-3= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
       %p.buttons.align-self-end.mb-2
         %span
           %i.fa.fa-reply
@@ -13,3 +12,5 @@
         %span
           %i.fa.fa-eye
           = pluralize(question.view, "View")
+      - if question.top_ans.present?
+        %h3.mb-4= truncate sanitize(question.top_ans.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200

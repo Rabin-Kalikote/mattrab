@@ -16,18 +16,10 @@ class SearchesController < ApplicationController
       @results = notes.concat(questions).uniq.shuffle.paginate(page: params[:page], per_page: 7)
     end
 
-    if @results.present? and @results.first.is_a? Note
-      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.body.gsub(/<[^>]*>/, '').truncate(150), keywords: @results.first.category.name+" class "+@results.first.grade.name,
-                    og: { title: @query, description: @results.first.body.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: note_url(@results.first), image: @results.first.image },
-                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.body.gsub(/<[^>]*>/, '').truncate(150), image: @results.first.image }
-    elsif @results.present? and @results.first.is_a? Question
-      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150), keywords: @results.first.category.name+" class "+@results.first.grade.name,
-                    og: { title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150), type: 'website', url: question_url(@results.first) },
-                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.content.gsub(/<[^>]*>/, '').truncate(150) }
-    elsif @results.present? and @results.first.is_a? User
-      set_meta_tags title: @query, site: 'Mattrab Search', description: @results.first.about, keywords: "Mattrab user at class "+@results.first.grade.name,
-                    og: { title: @query, description: @results.first.about, type: 'website', url: user_url(@results.first), image: @results.first.avatar },
-                    twitter: { card: 'note', site: '@askmattrab', title: @query, description: @results.first.about, image: @results.first.avatar }
+    if @results.present?
+      set_meta_tags title: @query, site: 'Mattrab Search', description: "Search form hundreds of notes, questions, and answers. Find notes for every subject of class 12, 11, 10, and 9. Also, find the users of askmattrab", keywords: "#{@query}, Mattrab Search, Search notes, Search questions, Search answers, Search askmattrab",
+                    og: { title: @query, description: "Search form hundreds of notes, questions, and answers. Find notes for every subject of class 12, 11, 10, and 9. Also, find the users of askmattrab", type: 'website' },
+                    twitter: { title: @query, description: "Search form hundreds of notes, questions, and answers. Find notes for every subject of class 12, 11, 10, and 9. Also, find the users of askmattrab"}
     else
       set_meta_tags title: "No results found for #{@query}", site: 'Mattrab Search'
     end
