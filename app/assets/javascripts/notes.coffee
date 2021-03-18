@@ -44,7 +44,8 @@ $ ->
 
   ready = ->
     #header assignments.
-    $('.header-space').height($('header').height())
+    $('.header-space').height($('nav.main').height())
+    $('.wysiwyg *:empty').remove()
     #updating if the window has mobile-view.
     $(window).resize (e) ->
       if $(window).width() <= 767.98

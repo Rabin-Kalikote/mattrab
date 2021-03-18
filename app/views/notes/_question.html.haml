@@ -1,16 +1,8 @@
-.col-sm-12
-  .question.p-3
-    = link_to question do
-      %h3.title.mb-3= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-      %p.buttons.align-self-end.mb-2
-        %span
-          %i.fa.fa-reply
-          = pluralize(question.answers.count, "Answer")
-        %span
-          %i.fa.fa-thumbs-up
-          = "Helpful (#{question.get_upvotes.size})"
-        %span
-          %i.fa.fa-eye
-          = pluralize(question.view, "View")
+%li.col-sm-12
+  .question
+    .title.wysiwyg
+      = link_to question do
+        = simple_format(question.content, {}, :sanitize => false)
+    .answer.wysiwyg
       - if question.top_ans.present?
-        %h3.mb-4= truncate sanitize(question.top_ans.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
+        = simple_format(question.top_ans.content, {}, :sanitize => false)

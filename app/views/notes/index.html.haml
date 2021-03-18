@@ -8,7 +8,7 @@
             .chapters-wrap
               %ul.chapters
                 - Category.joins(:grade).where(grades: { name: @grade }, name: @category).first.chapters.each do |chapter|
-                  %li= link_to chapter.name, notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>"#{chapter.id}")
+                  %li= link_to chapter.name, notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>"#{chapter.id}"), class: "#{'active' if chapter.id == @chapter.to_i}"
             %a.close-chapter-menu.d-block.d-md-none
               %i.fas.fa-times
               Close Menu
@@ -17,19 +17,23 @@
             %nav{"aria-label" => "breadcrumb"}
               %ol.breadcrumb
                 %li.breadcrumb-item.active{"aria-current" => "page"}= "Class #{@grade.humanize} #{@category.humanize}"
-                %li.breadcrumb-item.active{"aria-current" => "page"}= Chapter.find(@chapter).name
+                %li.breadcrumb-item.active{"aria-current" => "page"}
+                  %h1= Chapter.find(@chapter).name
           #notes.row.flex-grid
             - if @notes.present? or @questions.present?
+              %h2.n-title Chapter Notes
               = render @notes
-              = render @questions
+              %h2.q-title Exercise Questions
+              %ol.questions
+                = render @questions
             - else
               %p.mt-5.no-notes-message
                 %i.fas.fa-info-circle
                 There are no notes or questions in Mattrab Library for this chapter yet.
                 %br
                 - if can? :create, Note
-                  = link_to 'Create Note', creator_appeal_path, class: "btn btn-sm btn-std px-5 mt-4"
+                  = link_to 'Create Note', new_note_path, class: "btn btn-sm btn-std px-5 mt-4"
                 - else
-                  = link_to 'Be a creator', creator_appeal_path, class: "btn btn-sm btn-std px-5 mt-4"
+                  = link_to 'Ask a question', new_question_path, class: "btn btn-sm btn-std px-5 mt-4"
           -# .row.pagination-nav.is.justify-content-center
             = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
