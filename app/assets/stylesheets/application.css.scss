@@ -43,14 +43,11 @@ iframe.d-block{display: none!important;}
   margin-right: auto;
 }
 
-sup{vertical-align:super;font-style:oblique}
-sub{vertical-align:sub;font-style:oblique}
-
 .wysiwyg{
   width: 100%;
   line-height: 29px;
   font-family: 'mattrab-content-sans-serif-font';
-  *{position: static!important;right: auto!important;top: auto!important;}
+  *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
   div{position: static!important;right: auto!important;top: auto!important;}
   iframe.note-video-clip{max-width: 100%;display:block!important;}
   p{
@@ -61,7 +58,7 @@ sub{vertical-align:sub;font-style:oblique}
     img{max-width: 100%;}
     img.note-float-right{float: right;}
     iframe.note-video-clip{max-width: 100%;display:block!important;}
-    *{position: static!important;right: auto!important;top: auto!important;}
+    *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
   }
 }
 

@@ -85,7 +85,7 @@
             }
             .question-card-body{
               margin-bottom: 1rem;
-              *{position: static!important;right: auto!important;top: auto!important;}
+              *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
               iframe.note-video-clip{max-width: 100%;display:block!important;}
               p{
                 color: #3c4043;
@@ -98,7 +98,7 @@
                 img{max-width: 100%;}
                 img.note-float-right{float: right;}
                 iframe.note-video-clip{max-width: 100%;display:block!important;}
-                *{position: static!important;right: auto!important;top: auto!important;}
+                *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
               }
               div{position: static!important;right: auto!important;top: auto!important;}
             }
@@ -228,7 +228,7 @@
               .answer-card-body{
                 margin-bottom: 1rem;
                 overflow-x: hidden;
-                *{position: static!important;right: auto!important;top: auto!important;}
+                *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
                 iframe.note-video-clip{max-width: 100%;display:block!important;}
                 p{
                   color: #3c4043;
@@ -239,7 +239,7 @@
                   img{max-width: 100%;}
                   img.note-float-right{float: right;}
                   iframe.note-video-clip{max-width: 100%;display:block!important;}
-                  *{position: static!important;right: auto!important;top: auto!important;}
+                  *:not(sup,sub){position: static!important;right: auto!important;top: auto!important;}
                 }
                 div{position: static!important;right: auto!important;top: auto!important;}
               }
