@@ -171,7 +171,8 @@
               %h2.en-title Mattrab Community
               %p.en-message.mx-auto Create, share and learn from the unlimited notes, photos and videos and ask your questions, answer your friends all over Nepal and grow. Create, share and learn.
               .actions
-                %a.trigger-sign-in.action-button.mx-auto{"data-toggle" => "modal", :href => "#sign-in"} Join Community, it's free!
+                %a.trigger-sign-in.action-button.mx-auto.mb-2{"data-toggle" => "modal", :href => "#sign-in"} Join Community, it's free!
+                %a.trigger-about-video.action-button.mx-auto{"data-toggle" => "modal", :href => "#about-video"} Watch about Mattrab
             - elsif can? :create, Note
               %h2.en-title Showcase your Knowledge
               %p.en-message.mx-auto Yay! You are creator in Mattrab Community. Share what you have learned around your friends, help them learn like you do and get recognized around the Community.
@@ -192,3 +193,9 @@
                 = link_to creator_appeal_path, class: 'action-button mx-auto' do
                   %i.far.fa-edit
                   Be a Creator
+
+#about-video.about-video-modal
+  .video-content
+    %a.close-about-video{"data-toggle" => "modal", :href => "#about-video"}
+      %i.fas.fa-times
+    %iframe.raLsWLhsVZ.about-video{:allow => "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", :allowfullscreen => "", :frameborder => "0", :src => "https://www.youtube.com/embed/bVckO9Psd1E"}

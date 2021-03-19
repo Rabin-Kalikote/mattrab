@@ -108,3 +108,5 @@ $('.a-upvote').click(function(e) {
 
 $('.trigger-sign-in').click(function(e) {e.preventDefault;$('#sign-in').show();});
 $('.close-sign-in').click(function(e) {e.preventDefault;$('#sign-in').hide();});
+$('.trigger-about-video').click(function(e) {e.preventDefault;$('#about-video').show();});
+$('.close-about-video').click(function(e) {e.preventDefault;$('#about-video').hide();});
