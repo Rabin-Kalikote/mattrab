@@ -2,44 +2,26 @@
 - if result.is_a? Note
   .note-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
     .note
-      .note_image.col-md-4.col-sm-12
-        = link_to (image_tag result.image.url(:small)), result, class: 'img-note'
-      .note_content.col-md-8.col-sm-12
-        %p.info.mb-0= "#{result.grade.name.capitalize} › #{result.category.name.capitalize} › #{result.chapter.name.capitalize}"
+      .note_content.col-lg-8.col-md-12
+        %p.info.mb-0
+          = result.user.name
+          = '•'
+          = pluralize(result.view, "Read")
         = link_to result do
-          %h2.title.mb-1= result.title
-          %p.body.mb-4
-            = truncate sanitize(result.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 250
-        %p.buttons.align-self-end.mb-2
-          %span
-            %i.fa.fa-comment-alt
-            = pluralize(result.questions.count, "Question")
-          %span
-            %i.fa.fa-heart
-            = pluralize(result.get_upvotes.size, "Thank")
-          %span
-            %i.fa.fa-eye
-            = pluralize(result.view, "View")
+          %h3.title.my-1= result.title
+          %p.body.mb-1
+            = truncate sanitize(result.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 330 #truncate(strip_tags(note.body), length: 170)
+      .note_image.col-lg-4.col-md-12.d-none.d-lg-block
+        = link_to (image_tag result.image.url(:small)), result, class: 'img-note'
 - elsif result.is_a? Question
   .question-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
-    .question.p-3
-      = link_to result do
-        %p.user-info.mb-2= "'#{result.user.name}' asked in '#{result.note.present? ? result.note.title : 'Library'}'"
-        %h3.title.mb-4= truncate sanitize(result.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-        %p.buttons.align-self-end.mb-2
-          %span
-            %i.fa.fa-reply
-            = pluralize(result.answers.count, "Answer")
-          %span
-            %i.fa.fa-thumbs-up
-            = "Helpful (#{result.get_upvotes.size})"
-          %span
-            %i.fa.fa-eye
-            = pluralize(result.view, "View")
-          %span
-            %i.fa.fa-check-square
-            = "#{result.grade.name.capitalize} › #{result.category.name.capitalize} › #{result.chapter.name.capitalize}"
-
+    .question
+      .title.wysiwyg
+        = link_to result do
+          = simple_format(result.content, {}, :sanitize => false)
+      .answer.wysiwyg
+        - if result.top_ans.present?
+          = simple_format(result.top_ans.content, {}, :sanitize => false)
 - else
   .user-wrap.col-md-8.offset-md-2.col-sm-12.offset-md-none.my-4
     .user

@@ -81,86 +81,61 @@
 			.note-wrap.col-md-8.col-sm-12,
 			.user-wrap.col-md-8.col-sm-12{
   			margin-bottom:2rem;
-        .question{
+				.question{
           height: 100%;
-          border-radius: 3px;
-          background: #ffffff;
           align-items: stretch;
-          background-color: #fff;
-          border: 1px solid #e6e6e6;
           display: -webkit-box; display: flex; flex-wrap: wrap;
-          a{
-            h3.title{
-              line-height: 1.4;
-              font-size: 16px;
-              color: #333;
-              font-weight: 500;
-              transition: color .1s ease-in-out;
-            }
-            p.user-info{
-              font-size: 13px;
-              color: #7e8c9a;
-            }
-            p.buttons{
-              font-size: .7rem;
-              color: #7e8c9a;
-              position: absolute;
-              bottom: .2rem; left: 16;
-              span {margin-right:.7rem;}
-            }
-            &:hover{
-              text-decoration: none;
-              h3.title{color: #35b15a;}
-            }
+          .title a{
+            color: #42515f;
+            text-decoration: none;
+            &:hover{color: #2f9d50;}
           }
+          .answer{color: #99a2ac!important;}
         }
-  			.note{
-  				height: 100%;
-  				background: #ffffff;
-  				align-items: stretch;
-  				border: 1px solid #e6e6e6;
-  				display: -webkit-box; display: flex; flex-wrap: wrap;
-  				.note_image{
-  					padding: 0!important;
-  					.img-note{ img{ height: 100%; max-height: 11rem; width: 100%!important; } }
-  				}
-  				.note_content{
-  					padding: .4rem 4%;
-  					p.info{
-  						font-family: 'mattrab-content-sans-serif-font';
-  						font-size: .7rem;
-  						color: #b2bac2;
-  						margin-top: .4rem;
-  					}
-  					a{
-  						text-decoration: none;
-  						h2.title {
-  							color: #333;
-  							font-family: 'mattrab-content-sans-serif-font';
-  							font-size: 1.1rem;
-  							display: -webkit-box;
-  							font-weight: bold;
-  							overflow: hidden;
-  							color: #2e353b;
-  							transition: color 100ms ease-in-out;
-  						}
-  						p.body{
-  							font-family: 'mattrab-content-sans-serif-font';
-  							font-size: .8rem;
-  							color: #576366;
-  						}
-  						&:hover{ h2.title { color: #35b15a;}}
-  					}
-  					p.buttons{
-  						font-family: 'mattrab-content-sans-serif-font';
-  						font-size: .7rem;
-  						color: #7e8c9a;
-  						position: absolute;
-  						bottom: .2rem; left: 6%;
-  						span {margin-right:.7rem;}
-  					}
-  				}
-  			}
+				.note{
+	        height: 100%;
+	        background: #ffffff;
+	        align-items: stretch;
+	        border: 1px solid #d9d9d9;
+	        display: -webkit-box; display: flex; flex-wrap: wrap;
+	        // -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+	        // -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+	        // box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+	        .note_image{
+	          padding: 0!important;
+	          .img-note{
+              vertical-align: middle;
+              img{ height: 100%; max-height: 12rem; width: 100%!important;padding:1rem .7rem;}
+            }
+	        }
+	        .note_content {
+	          padding: .4rem 3%;
+	          p.info{
+	            font-family: 'mattrab-content-sans-serif-font';
+	            font-size: .7rem;
+	            color: #b2bac2;
+	            margin-top: .4rem;
+	          }
+	          a{
+	            text-decoration: none;
+	            h3.title {
+	              font-family: 'mattrab-content-sans-serif-font';
+	              font-size: 1.2rem;
+	              font-weight: bold;
+	              display: -webkit-box;
+	              overflow: hidden;
+	              color: #2e353b;
+	              transition: color 100ms ease-in-out;
+	            }
+	            p.body{
+	              font-family: 'mattrab-content-sans-serif-font';
+	              font-size: .9rem;
+	              color: #576366;
+	            }
+	            &:hover{ h3.title { color: #35b15a;}}
+	          }
+	        }
+	      }
 				.user {
   				height: 100%;
   				background: #fbfbf9;

@@ -13,7 +13,7 @@ class SearchesController < ApplicationController
     else
       notes = Note.search(@query).published.to_a
       questions = Question.search(@query).to_a
-      @results = notes.concat(questions).uniq.shuffle.paginate(page: params[:page], per_page: 7)
+      @results = notes.concat(questions).uniq.paginate(page: params[:page], per_page: 7)
     end
 
     if @results.present?

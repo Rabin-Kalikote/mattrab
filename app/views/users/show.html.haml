@@ -72,21 +72,10 @@
                     .col-lg-9.col-md-10.col-sm-12
                       .question.p-3
                         = link_to question do
-                          %p.user-info.mb-2= "'#{question.user.name}' asked in '#{question.note.present? ? question.note.title : 'Library'}'"
-                          %h3.title.mb-4= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
-                          %p.buttons.align-self-end.mb-2
-                            %span
-                              %i.fa.fa-reply
-                              = pluralize(question.answers.count, "Answer")
-                            %span
-                              %i.fa.fa-thumbs-up
-                              = "Helpful (#{question.get_upvotes.size})"
-                            %span
-                              %i.fa.fa-eye
-                              = pluralize(question.view, "View")
-                            %span
-                              %i.fa.fa-check-square
-                              = "#{question.grade.name.capitalize} › #{question.category.name.capitalize} › #{question.chapter.name.capitalize}"
+                          %p.user-info.mb-2
+                            = "#{question.chapter.name.humanize} •"
+                            = pluralize(question.answers.count, "Answer")
+                          %h3.title.mb-2= truncate sanitize(question.content, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 200
                     .col-lg-3.col-md-2.col-sm-12
                       - if can? :update, question
                         = link_to "Edit", edit_question_path(question), class: "btn-sm"
@@ -118,24 +107,16 @@
                     .row
                       .col-lg-9.col-md-10.col-sm-12
                         .note
-                          .note_image.col-md-5.col-sm-12
-                            = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
-                          .note_content.col-md-7.col-sm-12
-                            %p.info.mb-0= "#{note.grade.name.capitalize} › #{note.category.name.capitalize} › #{note.chapter.name.capitalize}"
+                          .note_content.col-lg-8.col-md-12
+                            %p.info.mb-0
+                              = "Class #{note.grade.name.humanize} #{note.category.name.humanize} •"
+                              = pluralize(note.view, "Read")
                             = link_to note do
-                              %h2.title.mb-1= note.title
-                              %p.body.mb-4
-                                = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 170
-                            %p.buttons.align-self-end.mb-2
-                              %span
-                                %i.fa.fa-comment-alt
-                                = pluralize(note.questions.count, "Question")
-                              %span
-                                %i.fa.fa-heart
-                                = pluralize(note.get_upvotes.size, "Thank")
-                              %span
-                                %i.fa.fa-eye
-                                = pluralize(note.view, "View")
+                              %h3.title.my-1= note.title
+                              %p.body.mb-1
+                                = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 330 #truncate(strip_tags(note.body), length: 170)
+                          .note_image.col-lg-4.col-md-12.d-none.d-lg-block
+                            = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
                       .col-lg-3.col-md-2.col-sm-12
                         - if current_user.present?
                           - if note.user == current_user or current_user.admin?

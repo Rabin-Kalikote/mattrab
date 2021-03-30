@@ -16,16 +16,13 @@
             - else
               = "asked a question."
       .feed-item-body
-        = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
-      -if feed.answers.present?
-        .answered-by
-          .avatar.d-inline
-            = image_tag feed.top_ans.user.avatar_address(:small)
-          .body.d-inline.ml-1
-            %span.at
-              = 'Answered'
-        .feed-answer-body
-          = simple_format(feed.top_ans.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+        .question
+          .title.wysiwyg
+            = link_to feed do
+              = simple_format(feed.content, {}, :sanitize => false)
+          .answer.wysiwyg
+            - if feed.top_ans.present?
+              = simple_format(feed.top_ans.content, {}, :sanitize => false)
       .feed-item-actions.btn-group
         = link_to question_path(feed), class: 'f-card-action' do
           %i.far.fa-eye
@@ -43,15 +40,13 @@
             %span.name= feed.question.user.name
           %span.asked= "Your question is answered."
       .feed-item-body
-        = simple_format(feed.question.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
-      .answered-by
-        .avatar.d-inline
-          = image_tag feed.user.avatar_address(:small)
-        .body.d-inline.ml-1
-          %span.at
-            = 'Answered'
-      .feed-answer-body
-        = simple_format(feed.content.gsub('method="delete"', '').gsub("method='delete'", ''), {}, :sanitize => false)
+        .question
+          .title.wysiwyg
+            = link_to feed do
+              = simple_format(feed.content, {}, :sanitize => false)
+          .answer.wysiwyg
+            - if feed.top_ans.present?
+              = simple_format(feed.top_ans.content, {}, :sanitize => false)
       .feed-item-actions.btn-group
         = link_to question_path(feed.question), class: 'f-card-action' do
           %i.far.fa-eye

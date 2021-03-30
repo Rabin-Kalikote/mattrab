@@ -803,30 +803,19 @@ nav.main{
                 .f-user-info{padding-left: .7rem;}
               }
             }
-            .feed-item-body,
-            .feed-answer-body{
+            .feed-item-body{
+              .question{
+                height: 100%;
+                align-items: stretch;
+                display: -webkit-box; display: flex; flex-wrap: wrap;
+                .title a{
+                  color: #42515f;
+                  text-decoration: none;
+                  &:hover{color: #2f9d50;}
+                }
+                .answer{color: #8f98a3!important;}
+              }
               margin-bottom: 1rem;
-              p{
-                color: #3c4043;
-                font-size: 1rem;
-                font-weight: normal;
-                line-height: 1.4;
-                img{max-width: 100%;}
-                img.note-float-right{float: right;}
-                iframe.note-video-clip{max-width: 100%;display:block!important;}
-              }
-            }
-            .answered-by{
-              padding-right: 0!important;
-              padding-left: 0!important;
-              .avatar img{
-                margin-top: -0.3rem;
-                object-fit: cover;
-                height:22px;width:22px;
-                border-radius: 50%!important;
-                border: 1px solid #89dca2;
-              }
-              .body{.at{font-size: 1rem;color: #9a989a;}}
             }
             .feed-item-actions{
               .f-card-action{
