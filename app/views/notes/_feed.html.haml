@@ -42,11 +42,10 @@
       .feed-item-body
         .question
           .title.wysiwyg
-            = link_to feed do
-              = simple_format(feed.content, {}, :sanitize => false)
+            = link_to feed.question do
+              = simple_format(feed.question.content, {}, :sanitize => false)
           .answer.wysiwyg
-            - if feed.top_ans.present?
-              = simple_format(feed.top_ans.content, {}, :sanitize => false)
+            = simple_format(feed.content, {}, :sanitize => false)
       .feed-item-actions.btn-group
         = link_to question_path(feed.question), class: 'f-card-action' do
           %i.far.fa-eye
