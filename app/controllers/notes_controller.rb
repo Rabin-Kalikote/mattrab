@@ -40,7 +40,7 @@ class NotesController < ApplicationController
                   joins(:chapter).where(chapters: { id: @chapter }).
                   order("created_at ASC")
 
-    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", site: 'Mattrab', description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", keywords: "Class #{@grade}, #{@category}, #{Chapter.find(@chapter).name}, notes for class #{@grade} #{@category}, notes for #{Chapter.find(@chapter).name}, question answer for class #{@grade} #{@category}",
+    set_meta_tags title: "Class #{@grade.humanize} #{@category.humanize}", site: 'Mattrab', description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", keywords: "Class #{@grade}, #{@category}, #{Chapter.find(@chapter).name}, notes for class #{@grade} #{@category}, notes for #{Chapter.find(@chapter).name}, question answer for class #{@grade} #{@category}",
                   og: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject.", type: 'website', url: notes_url(:grade=>"#{@grade}", :category=>"#{@category}", :chapter=>@chapter)},
                   twitter: { title: "Class #{@grade.humanize} #{@category.humanize}: #{Chapter.find(@chapter).name}", description: "Browse high-quality notes, questions, and answers for #{Chapter.find(@chapter).name} of class #{@grade} #{@category} subject." }
   end
