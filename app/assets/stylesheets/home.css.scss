@@ -609,6 +609,19 @@ nav.main{
               font-size: 1rem;
               font-weight: normal;
               line-height: 1.4;
+              .immediate-action{
+                font-size: 1rem;
+                width: 100%;
+                text-align: center;
+                padding: 8px 18px;
+                margin-top: 1rem;
+                color: #fff!important;
+                background-color: #2ec66d!important;
+                text-decoration: none!important;
+                border-radius: .3rem!important;
+                display: inline-block;
+                &:hover{background-color: #2ec66d!important;text-decoration: none;}
+              }
             }
           }
           @media (max-width: 767.98px) {

@@ -120,8 +120,11 @@
                   %span.about Largest students' community in Nepal.
               .intro-item-body
                 .welcome
-                  = "Namaste! #{!user_signed_in? ? 'Sign in to ask your questions and follow your friends.' : (user_signed_in? and current_user.about.present?) ? 'Look aroud what your friends are doing at Mattrab.' : 'Update your setting to experience the best.'}"
-                  -# Happy Basant Panchami 2021! May goddess Saraswati bless you.
+                  -# = "Namaste! #{!user_signed_in? ? 'Sign in to ask your questions and follow your friends.' : (user_signed_in? and current_user.about.present?) ? 'Look aroud what your friends are doing at Mattrab.' : 'Update your setting to experience the best.'}"
+                  Welcome! We are accepting application from all over Nepal.
+                  = link_to apply_path, class: 'immediate-action' do
+                    %i.far.fa-edit
+                    Apply to Mattrab Community
           - if @voted_notes.present?
             .voted-notes
               - @voted_notes.each do |note|
