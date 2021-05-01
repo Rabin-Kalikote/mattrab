@@ -61,7 +61,12 @@
           .unit-body
             = simple_format(@note.body, {}, :sanitize => false)
             .ad
-              = image_tag 'adhere.png'
+              -# = image_tag 'adhere.png'
+              %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+              / Notes inPage
+              %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "horizontal", "data-ad-slot" => "8293088026", "data-full-width-responsive" => "true", :style => "display:block"}
+              :javascript
+                (adsbygoogle = window.adsbygoogle || []).push({});
             .tags
               = link_to search_url(:query => @note.grade.name), class: "tag" do
                 %i.fa.fa-hashtag
@@ -73,7 +78,11 @@
                 %i.fa.fa-hashtag
                 = @note.chapter.name
 
-            %p.paper-message Visit www.askmattrab.com for more academic resources.
+            %p.paper-message
+              %span.brand-print
+                %span.ask ask
+                mattrab
+              Visit www.askmattrab.com for more academic resources.
 
         .page-discussions.mb-5
           %h2.title.mb-3 Discussions

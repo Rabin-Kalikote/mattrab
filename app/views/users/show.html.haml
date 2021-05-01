@@ -114,7 +114,7 @@
                             = link_to note do
                               %h3.title.my-1= note.title
                               %p.body.mb-1
-                                = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 330 #truncate(strip_tags(note.body), length: 170)
+                                = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 250 #truncate(strip_tags(note.body), length: 170)
                           .note_image.col-lg-4.col-md-12.d-none.d-lg-block
                             = link_to (image_tag note.image.url(:small)), note, class: 'img-note'
                       .col-lg-3.col-md-2.col-sm-12

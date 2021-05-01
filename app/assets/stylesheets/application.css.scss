@@ -30,9 +30,10 @@ html, body{
   height:100%;
   background: #fbfbf9!important;
 }
-iframe:not(.raLsWLhsVZ),
+iframe:not(.raLsWLhsVZ):not([id^='aswift']),
 iframe.d-block{display: none!important;}
 .centered-text,.c-t{text-align: center;}
+.modal-backdrop{display: none;}
 
 .turbolinks-progress-bar{
   background-color: #5fcf80;

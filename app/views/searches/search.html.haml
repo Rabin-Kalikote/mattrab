@@ -2,7 +2,12 @@
 #search
   .container.pb-5
     .ad.col-md-8.offset-md-2.mt-5
-      = image_tag 'adhere.png'
+      -# = image_tag 'adhere.png'
+      %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+      / inSearch
+      %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "horizontal", "data-ad-slot" => "4246973750", "data-full-width-responsive" => "true", :style => "display:block"}
+      :javascript
+        (adsbygoogle = window.adsbygoogle || []).push({});
     .header.col-md-8.offset-md-2.mt-4
       %h3.title= "Search Results for '#{@query}'"
 

@@ -153,6 +153,17 @@
                     %a.next-note.u-note-action ❯
                     %p.u-note-info
                       = "Read #{note.view} times"
+          .feed-ad
+            .feed-ad-header
+              .f-sponsor-avater
+                = image_tag 'google.png'
+              .f-sponsor-info
+                %span.name Google Adsense
+                %span.message We thank Google for helping us through our journey.
+            %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+            %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "fluid", "data-ad-layout-key" => "-fc-p-2q-dn+191", "data-ad-slot" => "7280578627", :style => "display:block"}
+            :javascript
+              (adsbygoogle = window.adsbygoogle || []).push({});
           = render :partial => "feed", :collection => @feeds if @feeds.present?
         .pagination-nav.is.justify-content-center
           = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

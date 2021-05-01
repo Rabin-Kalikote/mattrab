@@ -2,6 +2,12 @@
 #question-show
   .container
     .qs-internal
+      .ad.mb-4
+        %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+        / Questions inPage
+        %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "horizontal", "data-ad-slot" => "9850137305", "data-full-width-responsive" => "true", :style => "display:block"}
+        :javascript
+          (adsbygoogle = window.adsbygoogle || []).push({});
       .thread-article
         .thread-question
           .question-card-content

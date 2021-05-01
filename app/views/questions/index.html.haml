@@ -13,28 +13,56 @@
             %a.close-chapter-menu.d-block.d-md-none
               %i.fas.fa-times
               Close Menu
-        .motes-questions-col.col-md-8.col-lg-7
+        .notes-questions-col.col-md-8.col-lg-7
           .ni-note-info
             %nav{"aria-label" => "breadcrumb"}
               %ol.breadcrumb
                 %li.breadcrumb-item.active{"aria-current" => "page"}= "Class #{@grade.humanize} #{@category.humanize}"
                 %li.breadcrumb-item.active{"aria-current" => "page"}
                   %h1= Chapter.find(@chapter).name
-          #notes.row.flex-grid
-            - if @notes.present? or @questions.present?
-              %h2.n-title Chapter Notes
+          %ul.ni-note-tab
+            %li.tab-link
+              %a#notes
+                %span.badge= @notes.count
+                Chapter Notes
+            %li.tab-link
+              %a#questions.active
+                %span.badge= @questions.count
+                Exercise Questions
+          .tabcontent#notes.row.flex-grid
+            .index-ad
+              %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+              / Notes inPage
+              %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "horizontal", "data-ad-slot" => "8293088026", "data-full-width-responsive" => "true", :style => "display:block"}
+              :javascript
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            - if @notes.present?
               = render @notes
-              %h2.q-title Exercise Questions
-              %ol.questions
-                = render @questions
             - else
               %p.mt-5.no-notes-message
                 %i.fas.fa-info-circle
-                There are no notes or questions in Mattrab Library for this chapter yet.
+                There are no notes in Mattrab Library for this chapter yet.
                 %br
                 - if can? :create, Note
                   = link_to 'Create Note', new_note_path, class: "btn btn-sm btn-std px-5 mt-4"
                 - else
                   = link_to 'Ask a question', new_question_path, class: "btn btn-sm btn-std px-5 mt-4"
+          .tabcontent#questions.active.row.flex-grid
+            .index-ad
+              %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+              / Questions inPage
+              %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "horizontal", "data-ad-slot" => "9850137305", "data-full-width-responsive" => "true", :style => "display:block"}
+              :javascript
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            - if @questions.present?
+              %ol.questions
+                = render @questions
+            - else
+              %p.mt-5.no-notes-message
+                %i.fas.fa-info-circle
+                There are questions in Mattrab Library for this chapter yet.
+                %br
+                = link_to 'Ask a question', new_question_path, class: "btn btn-sm btn-std px-5 mt-4"
+
           -# .row.pagination-nav.is.justify-content-center
             = will_paginate @notes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0

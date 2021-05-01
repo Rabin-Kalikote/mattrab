@@ -14,8 +14,8 @@ class NotesController < ApplicationController
       @feeds = general_feeds.shuffle.paginate(page: params[:page], per_page: 7)
       @voted_notes = Note.published.order("created_at DESC, view DESC").limit(11).shuffle
     end
-    @top_creators = User.joins(:notes).where("notes.status = ?", 1).group("users.id").order("count(users.id) DESC").limit(3)
-    @top_learners = User.joins(:questions).group("users.id").order("count(users.id) DESC").limit(3)
+    @top_creators = User.where(:role => "creator").joins(:notes).where("notes.status = ?", 1).group("users.id").order("count(users.id) DESC").limit(3)
+    @top_learners = User.where(:role => "learner").joins(:questions).group("users.id").order("count(users.id) DESC").limit(3)
     @recent_users = User.all.order("created_at DESC").limit(2)
     @icons = {'physics'=>'satellite', 'chemistry'=>'flask', 'biology'=>'microscope', 'maths'=>'subscript', 'computer'=>'plug', 'english'=>'sort-alpha-up-alt', 'nepali'=>'torah', 'economics'=>'chart-line', 'account'=>'funnel-dollar', 'science'=>'magnet', 'social'=>'globe-asia', 'health'=>'walking', 'moral'=>'balance-scale', 'obt'=>'chart-bar', 'opt_math'=>'square-root-alt', 'pastpapers'=>'paste', 'solution'=>'pencil-ruler', 'trivia'=>'bullhorn', 'philosopy'=>'hourglass-start'}
   end

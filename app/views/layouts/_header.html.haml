@@ -1,7 +1,7 @@
-%nav.main
+%header.main
   .container.clearfix
     .row
-      .col-3.col-sm-3.col-md-9.d-flex.justify-content-start
+      .col-3.col-sm-3.col-md-8.d-flex.justify-content-start
         %a.nav-brand{:href => root_path}
           %span.d-none.d-md-inline= 'ask'
           mattrab
@@ -9,14 +9,19 @@
           %a.nav-link.d-inline-block.d-md-none.btn-action.search-toggle
             %i.fa.fa-arrow-left
           %form.ml-2{:action => "/search"}
-            %i.fa.fa-search
             %input.ask-ah{"aria-label" => "Search", :placeholder => "Your question or any topic", :name => "query", :type => "search"}
-
-      .col-9.col-sm-9.col-md-3.d-flex.justify-content-end
+            %button.submit{:type => "submit"}
+              %i.fa.fa-search
+      .col-9.col-sm-9.col-md-4.d-flex.justify-content-end
         %ul.nav.justify-content-end
           %li.nav-item.d-block.d-md-none
             %a.nav-link.btn-action.search-toggle
               %i.fa.fa-search
+          - unless current_page?(root_path) or  current_page?(home_path)
+            %li.nav-item
+              %a.trigger-browse.btn-action.nav-link{"data-toggle" => "modal", :href => "#browse"}
+                %i.fa.fa-book.d-md-inline.d-lg-none
+                %span.d-none.d-lg-inline= 'Browse'
           - if !user_signed_in?
             %li.nav-item
               = link_to new_user_session_path, class: 'btn-action nav-link' do
@@ -85,3 +90,15 @@
     = link_to user_google_oauth2_omniauth_authorize_path, "data-turbolinks" => false, class: 'sign-in-action with-google' do
       %i.fab.fa-google
       Sign in with Google
+- unless current_page?(root_path) or  current_page?(home_path)
+  #browse.browse-modal
+    .container
+      %a.close-browse{"data-toggle" => "modal", :href => "#browse"}
+        %i.fas.fa-times
+      .row.browse-content
+        - Grade.all.each do |grade|
+          .col-6.col-md-3.mb-4
+            %h4.grade-name= grade.name.humanize
+            %ul.chapters
+              - grade.categories.each do |category|
+                %li.category-item= link_to category.name.humanize, notes_url(:grade=>"#{grade.name}", :category=>"#{category.name}", :chapter=>"#{category.chapters.first.try(:id)}")

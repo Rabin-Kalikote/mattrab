@@ -44,7 +44,7 @@ $ ->
 
   ready = ->
     #header assignments.
-    $('.header-space').height($('nav.main').height())
+    $('.header-space').height($('header.main').height())
     $('.wysiwyg p:empty').remove()
     #updating if the window has mobile-view.
     $(window).resize (e) ->
@@ -203,6 +203,16 @@ $ ->
         $('.sticky-subnav-list.active').hide().removeClass 'active'
         $(".category-list##{id}").fadeIn(200).addClass 'active'
 
+    # note index tabs.
+    if $('.tab-link').length
+      $('.tab-link a').click (e) ->
+        e.preventDefault()
+        id = $(this).attr("id")
+        $('.tab-link a').removeClass 'active'
+        $(this).addClass 'active'
+        $('.tabcontent.active').hide().removeClass 'active'
+        $(".tabcontent##{id}").fadeIn(200).addClass 'active'
+
     # handling verification request
     $('.req_veri').click ->
       n_id = $('.req_veri').attr('id').split('@#!')[0]
@@ -248,4 +258,4 @@ $ ->
   # $(document).on('ready', ready)
   $(document).on('turbolinks:load', ready)
 
-  $('html').find('iframe').not('.note-video-clip').not('.raLsWLhsVZ').remove()
+  $('html').find('iframe').not('.note-video-clip').not('.raLsWLhsVZ').not('[id^="aswift"]').remove()
