@@ -5,32 +5,20 @@
       .this-note.col-md-9
         .page
           .unit-head
-            .info-action.row
+            .info-action
               .actions
                 %nav.nav
+                  = link_to notes_url(:grade => @note.grade.name, :category => @note.category.name, :chapter => @note.chapter.id), class: "nav-link note-back-action" do
+                    %i.fas.fa-angle-left
+                    Back
                   - if can? :update, @note
                     = link_to "Edit", edit_note_path(@note), class: "nav-link note-edit-action"
                     = link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure? Deleting your note is irreversible." }, class: "nav-link note-delete-action"
-              %ol.breadcrumb
-                %li.breadcrumb-item
-                  = link_to "Class #{@note.grade.name.humanize}", notes_url(:grade => @note.grade.name)
-                %li.breadcrumb-item
-                  = link_to @note.category.name.humanize, notes_url(:grade => @note.grade.name, :category => @note.category.name)
-                %li.breadcrumb-item
-                  = link_to @note.chapter.name, notes_url(:grade => @note.grade.name, :category => @note.category.name, :chapter => @note.chapter.id)
             .headline
               .col-md-8.heading
                 %h1.unit-name.mb-0.mt-1= @note.title
               .col-md-4.image
                 = image_tag @note.image.url(:small)
-
-            -# .objective.row
-            -#   %ul.items
-            -#     - @note.tags.each do |tag|
-            -#       %li
-            -#         %i.fas.fa-check-square-o
-            -#         = tag
-
           .head-nav
             .col-md-12
               %nav.nav.justify-content-center
@@ -96,7 +84,7 @@
               - else
                 %p.login-msg
                   = 'Please '
-                  %a.trigger-sign-in{"data-toggle" => "modal", :href => "#sign-in"} Sign In
+                  %a.trigger-sign-in{"data-toggle" => "modal", :href => "#sign-in"} Log In
                   = 'to ask your question.'
           .qa-threads
             - @questions.each do |question|
@@ -104,14 +92,9 @@
 
       .random-notes.col-md-3
         .rn-wrap.mb-5
-          -# %h3.title.mb-3 Related Notes
           .random-note
-            = link_to (image_tag @random_note.image.url(:small)), @random_note, class: 'img-note'
             .note_content
-              %p.info.mb-2
-                = @random_note.user.name
-                = '•'
-                = @random_note.category.name.capitalize
+              %p.info.mb-2= "Next topic by #{@random_note.user.name}"
               %h2.title= link_to @random_note.title, @random_note
               %p.body
                 = truncate sanitize(@random_note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 150
@@ -121,10 +104,17 @@
                   = pluralize(@random_note.questions.count, "Question")
                 %span
                   %i.fa.fa-thumbs-o-up
-                  = pluralize(@random_note.get_upvotes.size, "Like")
+                  = pluralize(@random_note.get_upvotes.size, "Thank")
                 %span
                   %i.fa.fa-eye
                   = pluralize(@random_note.view, "View")
+
+          .ad
+            %script{:async => "", :crossorigin => "anonymous", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740559156368061"}
+            / Notes inSide
+            %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "auto", "data-ad-slot" => "2095301175", "data-full-width-responsive" => "true", :style => "display:block"}
+            :javascript
+              (adsbygoogle = window.adsbygoogle || []).push({});
 
           .author.justify-content-center
             .user-main
@@ -133,7 +123,7 @@
               .user-name
                 = link_to @note.user.name, @note.user, class: 'name'
             .user-info
-              %p.about.mb-2= truncate @note.user.about, length: 150
+              %p.about.mb-2= truncate @note.user.about, length: 110
               %p.has
                 %i.fa.fa-link
                 = "Has #{pluralize(@note.user.followers.count, 'Follower')}"

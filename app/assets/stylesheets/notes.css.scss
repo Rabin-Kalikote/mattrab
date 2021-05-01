@@ -340,7 +340,7 @@ $content-font-size: 17px;
             }
           }
           .info-action{
-            padding: 0 4rem;
+            padding: 0 3rem;
             .breadcrumb{
               padding:.3rem .5rem;
               font-size: .9rem;
@@ -457,8 +457,6 @@ $content-font-size: 17px;
           padding: 0 20px;
           background: #fff;
           border: 1px solid rgba(0,0,0,.09);
-          -webkit-border-radius: 3px;
-          border-radius: 3px;
           .question-form{
             padding-top: 30px;
             padding-bottom: 10px;
@@ -501,8 +499,6 @@ $content-font-size: 17px;
           .qa-thread{
             background: #fff;
             border: 1px solid rgba(0,0,0,.09);
-            -webkit-border-radius: 3px;
-            border-radius: 3px;
             margin-top: 20px!important;
             padding: 15px 20px 10px;
             .question,
@@ -590,25 +586,12 @@ $content-font-size: 17px;
       }
     }
     .random-notes{
-      h3.title{
-        color: #b3b3b3;
-        font-size: 1.1rem;
-        text-align: center;
-        font-family: 'mattrab-content-sans-serif-font';
-      }
       .random-note {
         background: #fff;
-        border: solid 1px #E5E4E2;
-        border-radius: 5px;
+        border: solid 1px #e6e6e6;
         align-items: stretch;
         padding: 0!important;
-        margin-bottom: 2rem;
-        .img-note {
-          img{
-            width: 100%!important;
-            border-radius:3px 3px 0 0;
-          }
-        }
+        margin-bottom: 1.3rem;
         .note_content {
           padding: .5rem 7%;
           p.info{
@@ -652,6 +635,7 @@ $content-font-size: 17px;
           }
         }
       }
+      .ad{margin-bottom: 1.3rem;}
       .author{
         width:100%;
         .user-main{
@@ -688,7 +672,7 @@ $content-font-size: 17px;
         .rn-wrap{
           position: -webkit-sticky;
           position: sticky;
-          top: 90px;
+          top: 87px;
         }
       }
     }
@@ -873,7 +857,7 @@ $content-font-size: 17px;
 									padding: .3rem auto;
 									background: #f9f9f9;
 									border-bottom:1px solid #E5E4E2;
-									position: initial;
+									position: sticky; top: 55px;
 									button.note-btn{background: #fff!important;border-color: #E5E4E2;}
 								}
 								@media (max-width: 767.98px) {.note-toolbar{padding: .3rem auto!important;text-align: center;}}

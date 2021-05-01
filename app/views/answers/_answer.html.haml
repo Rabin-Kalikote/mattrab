@@ -7,7 +7,7 @@
       .a-user-info
         = link_to answer.user do
           %span.name= answer.user.name
-          %span.followers= pluralize(answer.user.followers.count, "Follower")
+          %span.answered answered
       - if can? :destroy, answer
         .a-options.dropdown.show
           %a#options-menu.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}

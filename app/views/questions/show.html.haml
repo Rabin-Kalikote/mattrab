@@ -9,6 +9,15 @@
         :javascript
           (adsbygoogle = window.adsbygoogle || []).push({});
       .thread-article
+        .info-action
+          .actions
+            %nav.nav
+              = link_to (@question.note.present? ? note_path(@question.note) : questions_url(:grade => @question.grade.name, :category => @question.category.name, :chapter => @question.chapter.id)), class: "nav-link question-back-action" do
+                %i.fas.fa-angle-left
+                Back
+              - if can? :update, @question
+                = link_to "Edit", edit_question_path(@question), class: "nav-link questionquestion-edit-action"
+                = link_to "Delete", question_path(@question), method: :delete, data: { confirm: "Are you sure? Deleting your question is irreversible." }, class: "nav-link question-delete-action"
         .thread-question
           .question-card-content
             .question-card-header
@@ -17,42 +26,27 @@
               .q-user-info
                 = link_to @question.user do
                   %span.name= @question.user.name
-                  %span.followers= pluralize(@question.user.followers.count, "Follower")
-              - if can? :destroy, @question
-                .q-options.dropdown.show
-                  %a#options-menu.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                    %i.fas.fa-ellipsis-v
-                  .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "options-menu"}
-                    = link_to edit_question_path(@question), class: 'action-edit dropdown-item' do
-                      %i.fas.fa-edit
-                      Edit Question
-                    = link_to question_path(@question), method: :delete, data: { confirm: "Are you sure? Deleting your question and its answers is irreversible." }, class: 'action-delete dropdown-item' do
-                      %i.fas.fa-trash
-                      Delete Thread
+                  %span.asked= "asked in #{@question.note.present? ? @question.note.title : @question.chapter.name}"
+            - if @question.note.present?
+              .question-card-note
+                .note.mb-1
+                  %h3.title= truncate @question.note.title, length: 40
+                  %p.body.mb-0
+                    = truncate sanitize(@question.note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 290
             .question-card-body
               = simple_format(@question.content, {}, :sanitize => false)
-            .question-card-infos
-              %p.buttons.align-self-end.mb-2
-                %span
-                  %i.fa.fa-reply
-                  = pluralize(@question.answers.count, "Answer")
-                %span
-                  %i.fa.fa-eye
-                  = pluralize(@question.view, "View")
-                %span
-                  %i.fa.fa-check-square
-                  = link_to "Class #{@question.grade.name.humanize}", questions_url(:grade => @question.grade.name)
-                  %i.fa.fa-angle-right
-                  = link_to @question.category.name.humanize, questions_url(:grade => @question.grade.name, :category => @question.category.name)
-                  %i.fa.fa-angle-right
-                  = link_to @question.chapter.name, questions_url(:grade => @question.grade.name, :category => @question.category.name, :chapter => @question.chapter.id)
             .question-card-actions.btn-group
               - if user_signed_in?
                 %a.q-upvote.q-card-action{:id => "#{@question.id}@#!"}= "Helpful (#{@question.get_upvotes.size})"
-                %a.toggle-answer-modal.btn-sm.q-card-action= 'Answer this thread'
+                %a.toggle-answer-modal.q-card-action= 'Answer this thread'
               - else
                 %a.trigger-sign-in.q-card-action{"data-toggle" => "modal", :href => "#sign-in"} Sign in to Answer this Thread
-        %h2.answers-flash-title= @question.answers.any? ? "All Answers (#{@question.answers.count})" : "No Answers yet."
+              %a.q-card-info.muted
+                %i.fa.fa-reply
+                = pluralize(@question.answers.count, "Answer")
+              %a.q-card-info.muted
+                %i.fa.fa-eye
+                = pluralize(@question.view, "View")
         .thread-answers
           - @answers.each do |answer|
             = render 'answers/answer', question: @question, answer: answer
