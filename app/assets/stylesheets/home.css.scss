@@ -612,7 +612,8 @@ header.main{
       padding-left: 0!important;
       padding-right: 0!important;
       .mattrab-feed{
-        .intro-item{
+        .intro-item,
+        .collab-item{
           border: none;
           margin: 1.5rem 0 1rem;
           background: #ffffff;
@@ -679,6 +680,33 @@ header.main{
           }
           @media (max-width: 767.98px) {
             .intro-item-content{padding: 1.5rem;}
+          }
+        }
+        .collab-item{
+          .collab-item-body{
+            margin-bottom: 1rem;
+            color: #3c4043;
+            font-size: .9rem;
+            font-weight: normal;
+            line-height: 1.4;
+            .collab-action{
+              color: #4f5964;
+              cursor: pointer;
+              display: block;
+              text-align: center;
+              font-size: .9rem;
+              border-radius: 4px;
+              padding: .4rem .7rem;
+              background: #ebf9ef;
+              margin-top: 1rem;
+              font-family: 'mattrab-content-sans-serif-font';
+              border: 1px solid rgba(48,73,97,0.2);
+              transition: border-color .01s ease, background-color .01s ease, color .01s ease;
+              &:hover{
+                text-decoration: none;
+                border: 1px solid #5fcf80;
+              }
+            }
           }
         }
         .voted-notes{

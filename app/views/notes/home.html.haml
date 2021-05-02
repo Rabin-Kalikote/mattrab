@@ -125,34 +125,52 @@
                   = link_to apply_path, class: 'immediate-action' do
                     %i.far.fa-edit
                     Apply to Mattrab Community
-          - if @voted_notes.present?
-            .voted-notes
-              - @voted_notes.each do |note|
-                .upvoted-note
-                  .feed-item-header
-                    .f-upvoted-avater
-                      %span
-                        %i.fas.fa-heart
-                    .f-upvoted-info
-                      = link_to current_user do
-                        %span.name= "#{user_signed_in? ? 'Your Favorite Readings' : 'Top Readings'}"
-                      %span.asked= "#{user_signed_in? ? 'You thanked for these notes.' : 'These notes are most read.'}"
-                  .feed-item-body
-                    .note.mb-1
-                      .note_image.col-lg-5.col-md-12
-                        = image_tag note.image.url(:small), class: 'img-note'
-                      .note_content.col-lg-7.col-md-12
-                        %h3.title.mb-1= truncate note.title, length: 31
-                        %p.body.mb-1
-                          = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
-                  .feed-item-actions.btn-group
-                    %a.prev-note.u-note-action ❮
-                    = link_to note_path(note), class: 'u-note-action' do
-                      %i.far.fa-eye
-                      Read this Note
-                    %a.next-note.u-note-action ❯
-                    %p.u-note-info
-                      = "Read #{note.view} times"
+          .collab-item
+            .intro-item-content
+              .intro-item-header
+                .i-user-avater
+                  = image_tag 'eu-5-logo.png'
+                .i-user-info
+                  %span.name EU 5 Series
+                  %span.about EU 5 is celebrating May as Mental Health Month.
+              .collab-item-body
+                .welcome
+                  May as a mental health awareness month was first observed in USA in 1949.
+                  The purpose is to raise awareness among the larger public and the policymakers about mental health issues, the stigma surrounding it and a reminder to individuals to take care of their mental health.
+                  Mattrab Community and EU 5 series, we are celebrating this month by sharing a letter each day.
+                  = link_to notes_url(:grade=>'twelve',:category=>'trivia',:chapter=>787), class: 'collab-action' do
+                    %i.fas.fa-palette
+                    Read the Letters
+
+          -# - if @voted_notes.present?
+          -#   .voted-notes
+          -#     - @voted_notes.each do |note|
+          -#       .upvoted-note
+          -#         .feed-item-header
+          -#           .f-upvoted-avater
+          -#             %span
+          -#               %i.fas.fa-heart
+          -#           .f-upvoted-info
+          -#             = link_to current_user do
+          -#               %span.name= "#{user_signed_in? ? 'Your Favorite Readings' : 'Top Readings'}"
+          -#             %span.asked= "#{user_signed_in? ? 'You thanked for these notes.' : 'These notes are most read.'}"
+          -#         .feed-item-body
+          -#           .note.mb-1
+          -#             .note_image.col-lg-5.col-md-12
+          -#               = image_tag note.image.url(:small), class: 'img-note'
+          -#             .note_content.col-lg-7.col-md-12
+          -#               %h3.title.mb-1= truncate note.title, length: 31
+          -#               %p.body.mb-1
+          -#                 = truncate sanitize(note.body, tags: ['<h1>', '<h2>', '<h3>', '<a>', '<p>', '<span>', '<div>', '<img>']), length: 180
+          -#         .feed-item-actions.btn-group
+          -#           %a.prev-note.u-note-action ❮
+          -#           = link_to note_path(note), class: 'u-note-action' do
+          -#             %i.far.fa-eye
+          -#             Read this Note
+          -#           %a.next-note.u-note-action ❯
+          -#           %p.u-note-info
+          -#             = "Read #{note.view} times"
+
           .feed-ad
             .feed-ad-header
               .f-sponsor-avater
