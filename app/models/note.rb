@@ -23,7 +23,7 @@ class Note < ApplicationRecord
   include PgSearch
   pg_search_scope :search, against: [:title, :body],
     using: {tsearch: {dictionary: 'english'}},
-    associated_against: {user: :name, chapter: :name, questions: :content}
+    associated_against: {user: :name, grade: :name, category: :name, chapter: :name, questions: :content}
 
   def to_param
     "#{id} #{title}".parameterize
@@ -39,6 +39,11 @@ class Note < ApplicationRecord
     if self.is_verified == false
       Notification.create(recipient: admin, actor: self.user, action: 'asked for Verification of', notifiable: self)
     end
+  end
+
+  def suggest(feedback, user)
+    self.update_attribute(:feedback, feedback)
+    Notification.create(recipient: self.user, actor: user, action: 'has suggestions for', notifiable: self)
   end
 
   def create_notifications

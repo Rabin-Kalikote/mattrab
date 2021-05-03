@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
     member do
       put "thank", to: "notes#vote"
+      get "suggest", to: "notes#suggest"
       get "verify", to: "notes#verify"
       get "request_verification",  to: "notes#request_verification"
     end

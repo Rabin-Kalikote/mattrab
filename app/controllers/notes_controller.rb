@@ -104,13 +104,19 @@ class NotesController < ApplicationController
     render :json => { :count => @note.get_upvotes.size }
   end
 
-  def verify
-    @note.update_attribute(:is_verified, params[:is_verified])
+  def request_verification
+    @note.request_verification(User.find(params[:admin]))
     redirect_back fallback_location: @note
   end
 
-  def request_verification
-    @note.request_verification(User.find(params[:admin]))
+  def suggest
+    @note.suggest(params[:feedback], current_user)
+    redirect_back fallback_location: @note
+  end
+
+  def verify
+    @note.update_attribute(:is_verified, params[:is_verified])
+    @note.update_attribute(:feedback, nil)
     redirect_back fallback_location: @note
   end
 
@@ -126,6 +132,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :chapter_id)
+    params.require(:note).permit(:title, :body, :image, :category, :status, :grade, :grade_id, :category_id, :chapter_id, :feedback)
   end
 end

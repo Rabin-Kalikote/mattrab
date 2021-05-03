@@ -1,13 +1,23 @@
 
 #note-edition.pt-5
   .edition-head-nav.container
-    .d-flex.flex-row-reverse.py-2
+    .d-flex.flex-row-reverse
       - if can? :destroy, @note
         = link_to "Delete Note", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "note-action ml-3 delete"
       - if can? :verify, @note
         = link_to @note.is_verified? ? "Unverify Note" : "Verify Note", verify_note_path(@note, :is_verified => !@note.is_verified), method: :get, class: "note-action ml-3"
+      - if can? :verify, @note and @note.user != current_user and !@note.is_verified
+        %button.suggest_action.note-action.ml-0{:id=>"#{@note.id}@#!"}
+          Suggest Note
       - if !@note.is_verified? and !current_user.admin? and !current_user.superadmin?
         %button.req_veri.note-action.ml-0.request_verification{:id=>"#{@note.id}@#!"}
-          = 'Request Verification'
+          Request Verification
         = select_tag "admin", options_from_collection_for_select(@admins, "id", "name")
+    - if can? :verify, @note and @note.user != current_user and !@note.is_verified
+      .this-feedback.mb-3
+        = text_field_tag 'feedback-contant', @note.feedback, placeholder: 'Add suggestions for this note'
+    - elsif @note.feedback.present?
+      .info.alert.alert-info.mb-3
+        %i.fas.fa-info.mr-2
+        = @note.feedback
   = render 'form'

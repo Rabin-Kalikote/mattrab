@@ -231,6 +231,21 @@ $ ->
       $('.req_veri').html 'Request Verification'
       return
 
+    # handling note suggestions
+    $('.suggest_action').click ->
+      n_id = $('.suggest_action').attr('id').split('@#!')[0]
+      $.ajax
+        url: "/notes/"+n_id+"/suggest?feedback="+$('#feedback-contant').val()
+        type: 'get'
+        data: {}
+        success: (data) ->
+          $('.suggest_action').html 'Suggested'
+          return
+        error: (data) ->
+          $('.suggest_action').html 'Couldn\'t Suggest'
+          return
+      return
+
     # handling the voded notes slides
     if $('.upvoted-note').length
       showSlides 1
