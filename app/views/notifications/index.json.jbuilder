@@ -3,7 +3,11 @@ json.array! @notifications do |notification|
   # json.recipient notification.recipient
   json.actor do
     json.name notification.actor.name
-    json.avatar notification.actor.avatar
+    if notification.actor.avatar_url.present?
+      json.avatar notification.actor.avatar_url
+    else
+      json.avatar notification.actor.avatar
+    end
   end
   json.action notification.action
   json.read_at notification.read_at
@@ -11,7 +15,7 @@ json.array! @notifications do |notification|
   case notification.notifiable_type
     when 'Note'
       json.type "a #{notification.notifiable_type}."
-      if notification.action == 'asked for Verification of'
+      if notification.action == 'asked for Verification of' or notification.action == 'has suggestions for'
         json.url edit_note_path(notification.notifiable_id)
       else
         json.url note_path(notification.notifiable_id)
