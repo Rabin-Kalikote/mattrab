@@ -120,11 +120,11 @@
                   %span.about Largest students' community in Nepal.
               .intro-item-body
                 .welcome
-                  -# = "Namaste! #{!user_signed_in? ? 'Sign in to ask your questions and follow your friends.' : (user_signed_in? and current_user.about.present?) ? 'Look aroud what your friends are doing at Mattrab.' : 'Update your setting to experience the best.'}"
-                  Welcome! We are accepting application from all over Nepal.
-                  = link_to apply_path, class: 'immediate-action' do
-                    %i.far.fa-edit
-                    Apply to Mattrab Community
+                  = "Namaste! #{!user_signed_in? ? 'Sign in to ask your questions and follow your friends.' : (user_signed_in? and current_user.about.present?) ? 'Look aroud what your friends are doing at Mattrab.' : 'Update your setting to experience the best.'}"
+                  -# Welcome! We are accepting application from all over Nepal.
+                  -# = link_to apply_path, class: 'immediate-action' do
+                  -#   %i.far.fa-edit
+                  -#   Apply to Mattrab Community
           .collab-item
             .intro-item-content
               .intro-item-header
@@ -138,7 +138,7 @@
                   May as a mental health awareness month was first observed in USA in 1949.
                   The purpose is to raise awareness among the larger public and the policymakers about mental health issues, the stigma surrounding it and a reminder to individuals to take care of their mental health.
                   Mattrab Community and EU 5 series, we are celebrating this month by sharing a letter each day.
-                  = link_to notes_url(:grade=>'twelve',:category=>'trivia',:chapter=>787), class: 'collab-action' do
+                  = link_to notes_url(:grade=>'twelve',:category=>'trivia',:chapter=>787), class: 'immediate-action' do
                     %i.fas.fa-palette
                     Read the Letters
 
@@ -171,17 +171,17 @@
           -#           %p.u-note-info
           -#             = "Read #{note.view} times"
 
-          .feed-ad
-            .feed-ad-header
-              .f-sponsor-avater
-                = image_tag 'google.png'
-              .f-sponsor-info
-                %span.name Google Adsense
-                %span.message We thank Google for helping us through our journey.
-            %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
-            %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "fluid", "data-ad-layout-key" => "-fc-p-2q-dn+191", "data-ad-slot" => "7280578627", :style => "display:block"}
-            :javascript
-              (adsbygoogle = window.adsbygoogle || []).push({});
+          -# .feed-ad
+          -#   .feed-ad-header
+          -#     .f-sponsor-avater
+          -#       = image_tag 'google.png'
+          -#     .f-sponsor-info
+          -#       %span.name Google Adsense
+          -#       %span.message We thank Google for helping us through our journey.
+          -#   %script{:async => "", :src => "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+          -#   %ins.adsbygoogle{"data-ad-client" => "ca-pub-8740559156368061", "data-ad-format" => "fluid", "data-ad-layout-key" => "-fc-p-2q-dn+191", "data-ad-slot" => "7280578627", :style => "display:block"}
+          -#   :javascript
+          -#     (adsbygoogle = window.adsbygoogle || []).push({});
           = render :partial => "feed", :collection => @feeds if @feeds.present?
         .pagination-nav.is.justify-content-center
           = will_paginate @feeds, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center), previous_label: '&laquo;', next_label: '&raquo;', inner_window: 1, outer_window: 0
