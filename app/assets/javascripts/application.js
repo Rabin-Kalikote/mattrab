@@ -18,6 +18,6 @@
 //= require bootstrap-sprockets
 //= require summernote/summernote-bs4.min
 //= require initglobal
-//= require_tree .
 //= require serviceworker-companion
 //= require select2
+//= require_tree .

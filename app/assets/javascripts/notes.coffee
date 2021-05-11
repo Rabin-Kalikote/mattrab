@@ -18,6 +18,11 @@ $ ->
         img.src = data.url
         img.setAttribute('id', data.image_id)
         $(that).summernote 'insertNode', img
+        # clearing the file_inputs for remote submission.
+        form = $(that).parents('form')
+        fileInputs = form.find('input[type="file"]')
+        fileInputs.wrap('form').closest('form').get(0).reset()
+        fileInputs.unwrap()
 
   deleteFile = (file_id) ->
     $.ajax
