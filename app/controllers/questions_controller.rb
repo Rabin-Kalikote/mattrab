@@ -38,7 +38,7 @@ class QuestionsController < ApplicationController
   def create
     if params[:note_id].present?
       params[:question][:content] = params[:question][:content].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '')
-                                  .gsub('onerror', '<span>onerror</span>').gsub('onclick', '<span>onclick</span>').gsub('onload', '<span>onload</span>').gsub('onchange', '<span>onchange</span>').gsub('onmouseover', '<span>onmouseover</span>').gsub('onmouseout', '<span>onmouseout</span>').gsub('onmousedown', '<span>onmousedown</span>').gsub('onmouseup', '<span>onmouseup</span>').gsub('onfocus', '<span>onfocus</span>').html_safe
+                                  .gsub('onerror', '<span>onerror</span>').gsub('onclick', '<span>onclick</span>').gsub('onload', '<span>onload</span>').gsub('onchange', '<span>onchange</span>').gsub('onmouseover', '<span>onmouseover</span>').gsub('onmouseout', '<span>onmouseout</span>').gsub('onmousedown', '<span>onmousedown</span>').gsub('onmouseup', '<span>onmouseup</span>').gsub('onfocus', '<span>onfocus</span>').gsub(/[\r\n]+/, ' ').html_safe
       @question = @note.questions.new(question_params)
       @question.user_id = current_user.id
       @question.grade_id = @note.grade.id
@@ -65,7 +65,7 @@ class QuestionsController < ApplicationController
 
   def update
     params[:question][:content] = params[:question][:content].gsub('source', '<span>source</span>').gsub('position: fixed', '<span>position: fixed</span>').gsub('position:fixed', '<span>position:fixed</span>').gsub('method="delete"', '').gsub('link', '<span>link</span>').gsub('script', '<span>script</span>').gsub("method='delete'", '').gsub(/<iframe .*src="(https?:\/\/)?(?!(?:\/\/www.youtube.com\/embed\/|\/\/player.vimeo.com\/video\/)).*><\/iframe>/, '')
-                                .gsub('onerror', '<span>onerror</span>').gsub('onclick', '<span>onclick</span>').gsub('onload', '<span>onload</span>').gsub('onchange', '<span>onchange</span>').gsub('onmouseover', '<span>onmouseover</span>').gsub('onmouseout', '<span>onmouseout</span>').gsub('onmousedown', '<span>onmousedown</span>').gsub('onmouseup', '<span>onmouseup</span>').gsub('onfocus', '<span>onfocus</span>').html_safe
+                                .gsub('onerror', '<span>onerror</span>').gsub('onclick', '<span>onclick</span>').gsub('onload', '<span>onload</span>').gsub('onchange', '<span>onchange</span>').gsub('onmouseover', '<span>onmouseover</span>').gsub('onmouseout', '<span>onmouseout</span>').gsub('onmousedown', '<span>onmousedown</span>').gsub('onmouseup', '<span>onmouseup</span>').gsub('onfocus', '<span>onfocus</span>').gsub(/[\r\n]+/, ' ').html_safe
     if @question.update(question_params)
       redirect_to @question, notice: 'Question updated successfully.'
     else
