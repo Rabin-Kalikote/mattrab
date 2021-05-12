@@ -44,35 +44,6 @@ function deleteFile(file_id) {
   });
 };
 
-function initSummernote() {
-  $('[data-provider="summernote"]').each(function() {
-    $(this).summernote({
-      tabsize: 2,
-      height: 200,
-      placeholder: '....',
-      toolbar: [['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
-                ['font', ['style', 'color']],
-                ['para', ['ul', 'ol', 'paragraph', 'height']],
-                ['insert', ['link', 'picture', 'video', 'hr', 'table']],
-                ['view', ['fullscreen', 'help']]],
-      callbacks: {
-        onImageUpload: function(files) {
-          var img;
-          img = sendFile(this, files[0]);
-        },
-        onMediaDelete: function(target, editor, editable) {
-          var image_id;
-          image_id = target[0].id;
-          if (!!image_id) {
-            deleteFile(image_id);
-          }
-          target.remove();
-        }
-      }
-    });
-  });
-};
-
 $('.q-upvote').click(function(e) {
   var elem, q_id;
   e.preventDefault;

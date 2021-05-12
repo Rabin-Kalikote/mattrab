@@ -3,6 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  msg = 'Changes you made may not be saved.'
+  unsaved = false
+  $(document).on 'change', 'form[role="check-modified"]:not([data-remote]) :input', ->
+    unsaved = true
+  $(document).on 'turbolinks:load', ->
+    unsaved = false
+  $(document).on 'submit', 'form[role="check-modified"]', ->
+    unsaved = false
+    return
+  $(window).bind 'beforeunload', ->
+    if unsaved
+      return msg
+    return
+  $(document).on 'turbolinks:before-visit', (event) ->
+    if unsaved and !confirm(msg)
+      return event.preventDefault()
+    return
+
   sendFile = (that, file) ->
     data = new FormData
     data.append 'image[image]', file
@@ -67,12 +85,15 @@ $ ->
         tabsize: 2
         height: 200
         placeholder: '....'
+        fontSizes: ['14', '17', '20', '24', '36'],
         toolbar: [['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
-                  ['font', ['style', 'color']],
-                  ['para', ['ul', 'ol', 'paragraph', 'height']],
+                  ['font', ['fontsize', 'color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
                   ['insert', ['link', 'picture', 'video', 'hr', 'table']],
                   ['view', ['fullscreen', 'help']]]
         callbacks:
+          onChange: (e) ->
+            unsaved = true
           onImageUpload: (files) ->
             img = sendFile(this, files[0])
           onMediaDelete: (target, editor, editable) ->

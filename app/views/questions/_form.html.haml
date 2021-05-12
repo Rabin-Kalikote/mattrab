@@ -1,4 +1,4 @@
-= simple_form_for @question, html: { multipart: true } do |f|
+= simple_form_for @question, html: { multipart: true, role: 'check-modified' } do |f|
   = f.input :content, as: :summernote, label: false, placeholder: "Your Question...", required: true
   = f.input :grade_id, collection: Grade.order(:name), label_method: :name, value_method: :id, include_blank: false
   = f.input :category_id, collection: Grade.order(:name), as: :grouped_select, group_method: :categories, group_label_method: :id, include_blank: false
