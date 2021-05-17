@@ -69,3 +69,6 @@ class Notifications
 
 jQuery ->
   new Notifications
+
+$(document).on 'turbolinks:load', ->
+  new Notifications
