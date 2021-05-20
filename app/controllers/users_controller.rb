@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def show
     if params[:tab].present?
       @tab = params[:tab]
-    elsif @user.creator? or @user.admin? or @user.superadmin?
+    elsif @user.creator? or @user.admin? or @user.executive? or @user.teacher? or @user.superadmin?
       @tab = "note"
     else
       @tab = "question"
