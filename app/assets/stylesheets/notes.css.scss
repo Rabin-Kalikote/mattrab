@@ -291,6 +291,7 @@ $content-font-size: 17px;
             }
             .image img{
               min-height:180px;
+              max-height: 200px;
               width:90%;
               margin:-65px 5%;
               box-shadow:  0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);

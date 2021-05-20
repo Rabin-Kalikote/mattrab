@@ -231,6 +231,7 @@ header.main{
               .col-md-2{
                 .n-img{
                   img{
+                    object-fit: cover;
                     width: 45px; height: 45px;
                     border-radius: 3rem!important;
                     border: 2px solid #9de2b1;
