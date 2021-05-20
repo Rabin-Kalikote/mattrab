@@ -46,14 +46,12 @@
                     %p Currently waiting confirmation for: #{resource.unconfirmed_email}
                   = f.input :grade_id, collection: Grade.order(:name), label_method: :name, value_method: :id, include_blank: false#, selected: @note.grade
                   .categories
-                    - if current_user.admin? or current_user.teacher?
-                      %label.category-label Moderating Categories
+                    - if can? :verify, Note
+                      %label.category-label Moderating Category
                     - else
-                      %label.category-label Interested Categories
+                      %label.category-label Interested Category
                     %br
-                    - Grade.all.each do |grade|
-                      .grade-category-list{id: grade.name}
-                        = f.collection_check_boxes :category_ids, grade.categories.all, :id, :name
+                    = f.input :category_id, collection: Grade.order(:name), as: :grouped_select, group_method: :categories, group_label_method: :id, label: false, include_blank: false
                   = f.input :about, required: false, placeholder: "Type about yourself here..."
 
                   -# - User.egrades.keys.each do |egrade|

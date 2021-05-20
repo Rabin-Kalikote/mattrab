@@ -75,7 +75,7 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @admins = UserCategorization.where(:category_id => @note.category.id).joins(:user).merge(User.admin).map(&:user)
+    @admins = User.admin.where(:category_id => @note.category.id)
     @admins = User.admin if !@admins.present?
     set_meta_tags title: 'Edit '+@note.title, site: 'Mattrab'
   end

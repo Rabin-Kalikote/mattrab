@@ -24,14 +24,14 @@ class Ability
     can :manage, Answer, user_id: user.id
     can :manage, Answer, question: { user: { id: user.id } }
 
-    return unless user.creator? or user.teacher? or user.admin? or user.superadmin?
+    return unless user.creator? or user.admin? or user.executive? or user.teacher? or user.superadmin?
     can :manage, Question, note: { user: { id: user.id } }
     can :manage, Answer, question: { note: { user: { id: user.id } } }
     can :manage, Note, user_id: user.id
     cannot :verify, Note
     cannot :import, Note
 
-    return unless user.admin? or user.superadmin?
+    return unless user.admin? or user.executive? or user.teacher? or user.superadmin?
     can :manage, Note
     can :manage, Question
     can :manage, Answer

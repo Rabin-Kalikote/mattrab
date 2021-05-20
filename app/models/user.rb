@@ -6,8 +6,7 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: [:google_oauth2]
 
   belongs_to :grade
-  has_many :user_categorizations, dependent: :destroy
-  has_many :categories, through: :user_categorizations
+  belongs_to :category
   has_many :notes, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
@@ -20,7 +19,7 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :recipient_id
 
   acts_as_voter
-  enum role: [:learner, :creator, :admin, :teacher, :superadmin]
+  enum role: [:learner, :creator, :admin, :executive, :teacher, :superadmin]
   enum admin_category: [:physics, :chemistry, :biology, :maths, :computer, :english, :nepali, :pastpapers, :solution]
   enum egrade: [:twelve, :eleven, :ten]
 

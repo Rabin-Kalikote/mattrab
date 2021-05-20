@@ -28,7 +28,7 @@ class Question < ApplicationRecord
     if self.note.present?
       Notification.create(recipient: self.note.user, actor: self.user, action: 'questioned', notifiable: self.note)
     else
-      self.user.following.each do |recipient|
+      User.admin.where(:category_id => self.category.id).each do |recipient|
         Notification.create(recipient: recipient, actor: self.user, action: 'asked', notifiable: self)
       end
     end
