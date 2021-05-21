@@ -47,10 +47,10 @@ class NotesController < ApplicationController
 
   def show
     @questions = Question.where(note_id: @note).order("created_at DESC")
-    @random_note = Note.joins(:chapter).where(chapters: { id: @note.chapter.id }).
-                          published.where.not(id: @note).order("RANDOM()").first
+    @random_note = Note.joins(:chapter).where(chapters: { id: @note.chapter.id }).where("notes.id > ?", @note.id).
+                        published.where.not(id: @note).order("id ASC").first
     @random_note = Note.joins(:category).where(categories: { id: @note.category.id }).
-                          published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
+                        published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @random_note = Note.published.where.not(id: @note).order("RANDOM()").first if !@random_note.present?
     @note.update_attribute "view", @note.view += 1
     set_meta_tags title: @note.title, site: "Class #{@note.grade.name.humanize} #{@note.category.name.humanize}", description: @note.body.gsub(/<[^>]*>/, '').truncate(350), keywords: "#{@note.chapter.name}, note on #{@note.chapter.name}, class #{@note.grade.name} #{@note.category.name} note, class #{@note.grade.name} notes, #{@note.chapter.name} notes", author: @note.user.name, next: note_url(@random_note),
