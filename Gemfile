@@ -33,7 +33,7 @@ gem 'serviceworker-rails'
 gem 'fog-aws'
 gem 'sitemap_generator'
 gem 'select2-rails'
-gem 'omniauth', '~> 1.9.1'
+gem 'omniauth', '~> 1.9.2'
 gem 'omniauth-google-oauth2'
 
 group :development, :test do
